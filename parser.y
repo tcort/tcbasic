@@ -1,7 +1,7 @@
 %{
 
 /*
-    basic - a small BASIC Interpreter written in C.
+    tcb - a small BASIC Interpreter written in C.
     Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify

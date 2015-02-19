@@ -1,4 +1,4 @@
-# basic - a small BASIC Interpreter written in C.
+# tcb - a small BASIC Interpreter written in C.
 # Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,13 +21,13 @@ CLEANFILES = $(BUILT_SOURCES)
 scanner.h: scanner.l
 	$(LEX) --header-file=$@ -o /dev/null $<
 
-bin_PROGRAMS = basic
+bin_PROGRAMS = tcb
 
-basic_SOURCES = \
+tcb_SOURCES = \
 	scanner.l \
 	parser.y \
 	driver.c \
 	ast.h ast.c \
 	runtime.h runtime.c
 
-basic_LDADD = @LEXLIB@
+tcb_LDADD = @LEXLIB@

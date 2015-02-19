@@ -1,6 +1,6 @@
-# basic
+# tcb
 
-basic is a small BASIC Interpreter written in C.
+tcb is a small BASIC Interpreter written in C.
 
 ## Current Status
 
@@ -18,7 +18,6 @@ The following components are in progress:
 
 The following components remain:
 
-* Come up with an original name
 * Unit Tests
 * Refactor/Optimize AST
 * Man page
@@ -39,6 +38,16 @@ Standard autotools build:
     $ ./configure
     $ make
     # make install
+
+## Using
+
+Start the interpreter in interactive mode:
+
+    $ tcb
+
+Execute a program from a file in batch mode:
+
+    $ tcb sample.bas
 
 ## Contributing
 

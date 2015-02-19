@@ -1,8 +1,6 @@
 aclocal.m4
 ast.o
 autom4te.cache/
-basic
-basic*.tar.gz
 compile
 config.h
 config.in
@@ -27,4 +25,6 @@ scanner.h
 scanner.o
 scanner.plist
 stamp-h1
+tcb
+tcb*.tar.gz
 ylwrap
