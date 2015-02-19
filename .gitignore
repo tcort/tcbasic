@@ -1,7 +1,9 @@
 aclocal.m4
+ast.o
 autom4te.cache/
 basic
 basic*.tar.gz
+compile
 config.h
 config.in
 config.in~
@@ -10,6 +12,7 @@ config.status
 configure
 depcomp
 .deps/
+driver.o
 install-sh
 Makefile
 Makefile.in
@@ -18,7 +21,9 @@ parser.c
 parser.h
 parser.o
 parser.plist
+runtime.o
 scanner.c
+scanner.h
 scanner.o
 scanner.plist
 stamp-h1

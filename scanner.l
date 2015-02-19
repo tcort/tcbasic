@@ -20,7 +20,9 @@
 
 #include <stdio.h>
 #include <string.h>
+
 #include "parser.h"
+
 int yyerror(char *);
 %}
 
@@ -38,6 +40,7 @@ int yyerror(char *);
 "LIST"		{ return LIST; }
 "RUN"		{ return RUN; }
 "END"		{ return END; }
+"QUIT"		{ return QUIT; }
 
 "<="		{ return LTEQ; }
 "<>"		{ return LTGT; }
@@ -57,7 +60,8 @@ int yyerror(char *);
 ")"		{ return CPAREN; }
 
 \"[^"]*\"	{
-			yylval.string = strdup(yytext);
+			yylval.string = strdup(yytext + 1);
+			yylval.string[strlen(yylval.string) - 1] = '\0';
 			return STRING;
 		}
 

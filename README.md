@@ -6,6 +6,24 @@ basic is a small BASIC Interpreter written in C.
 
 Under active development.
 
+The following components are complete:
+
+* Scanner
+* Parser
+* Abstract Syntax Tree
+
+The following components are in progress:
+
+* Evaluator
+
+The following components remain:
+
+* Come up with an original name
+* Unit Tests
+* Refactor/Optimize AST
+* Man page
+* i18n/l10n
+
 ## Requirements
 
 * C compiler and standard build tools (make, sh, ...).

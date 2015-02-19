@@ -14,9 +14,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-BUILT_SOURCES = parser.h parser.c scanner.c
+BUILT_SOURCES = scanner.c scanner.h parser.c parser.h
 AM_YFLAGS = -d
+CLEANFILES = $(BUILT_SOURCES)
+
+scanner.h: scanner.l
+	$(LEX) --header-file=$@ -o /dev/null $<
 
 bin_PROGRAMS = basic
-basic_SOURCES = scanner.l parser.y
+
+basic_SOURCES = \
+	scanner.l \
+	parser.y \
+	driver.c \
+	ast.h ast.c \
+	runtime.h runtime.c
+
 basic_LDADD = @LEXLIB@
