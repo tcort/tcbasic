@@ -61,18 +61,18 @@ int yyerror(char *);
 ")"		{ return CPAREN; }
 
 \"[^"]*\"	{
-			yylval.string = strdup(yytext + 1);
-			yylval.string[strlen(yylval.string) - 1] = '\0';
+			yylval.string_literal = strdup(yytext + 1);
+			yylval.string_literal[strlen(yylval.string_literal) - 1] = '\0';
 			return STRING;
 		}
 
 [A-Z]		{
-			yylval.var = yytext[0];
+			yylval.var_name = yytext[0];
 			return VAR;
 		}
 
 [0-9]+		{
-			yylval.number = atoi(yytext);
+			yylval.number_literal = atoi(yytext);
 			return NUMBER;
 		}
 

@@ -16,21 +16,50 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RUNTIME_H
-#define __RUNTIME_H
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-struct line *runtime_get_first_line(void);
-struct line *runtime_get_line(int number);
-void runtime_set_line(struct line *item);
-void runtime_rm_line(int number);
+#include "parser.h"
+#include "runtime.h"
+#include "var.h"
 
-void runtime_reset(void);
-int runtime_continue(void);
+struct var *new_var(int value) {
 
-void runtime_callstack_push(int number);
-int runtime_callstack_pop();
+	struct var *v = NULL;
 
-void runtime_set_var(char var, int value);
-int runtime_get_var(char var);
+	v = (struct var *) malloc(sizeof(struct var));
+	if (v == NULL) {
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	memset(v, '\0', sizeof(struct var));
 
-#endif
+	v->value = value;
+
+	return v;
+}
+
+int eval_var(struct var *v) {
+	if (v == NULL) {
+		return 0;
+	}
+
+	return runtime_get_var(v->value);
+}
+
+void print_var(struct var *v) {
+	if (v == NULL) {
+		return;
+	}
+
+	printf("%c", v->value);
+}
+
+void free_var(struct var *v) {
+	if (v != NULL) {
+		free(v);
+		v = NULL;
+	}
+}

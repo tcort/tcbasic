@@ -16,21 +16,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RUNTIME_H
-#define __RUNTIME_H
+#ifndef __LINE_H
+#define __LINE_H
 
-struct line *runtime_get_first_line(void);
-struct line *runtime_get_line(int number);
-void runtime_set_line(struct line *item);
-void runtime_rm_line(int number);
+struct statement;
+struct number;
 
-void runtime_reset(void);
-int runtime_continue(void);
+struct line {
+	struct statement *statement;
+	int number;
+	struct line *next;
+};
 
-void runtime_callstack_push(int number);
-int runtime_callstack_pop();
-
-void runtime_set_var(char var, int value);
-int runtime_get_var(char var);
+struct line *new_line(struct statement *statement, struct number *number);
+int eval_line(struct line *l);
+void print_line(struct line *l);
+void free_line(struct line *l);
 
 #endif

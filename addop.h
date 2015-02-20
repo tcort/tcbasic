@@ -16,21 +16,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RUNTIME_H
-#define __RUNTIME_H
+#ifndef __ADDOP_H
+#define __ADDOP_H
 
-struct line *runtime_get_first_line(void);
-struct line *runtime_get_line(int number);
-void runtime_set_line(struct line *item);
-void runtime_rm_line(int number);
+struct addop {
+	int type;
+};
 
-void runtime_reset(void);
-int runtime_continue(void);
-
-void runtime_callstack_push(int number);
-int runtime_callstack_pop();
-
-void runtime_set_var(char var, int value);
-int runtime_get_var(char var);
+struct addop *new_addop(int type);
+int eval_addop(struct addop *op);
+void print_addop(struct addop *op);
+void free_addop(struct addop *op);
 
 #endif

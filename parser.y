@@ -22,9 +22,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ast.h"
 #include "runtime.h"
 #include "scanner.h"
+
+#include "addop.h"
+#include "command.h"
+#include "expr_item.h"
+#include "expr_list.h"
+#include "expression.h"
+#include "factor.h"
+#include "line.h"
+#include "mulop.h"
+#include "number.h"
+#include "relop.h"
+#include "rnd.h"
+#include "statement.h"
+#include "str.h"
+#include "term.h"
+#include "var.h"
+#include "var_list.h"
 
 int yyerror(char *s) {
 	fprintf(stdout, "%s\n", s);
@@ -35,15 +51,30 @@ int yyerror(char *s) {
 %}
 
 %union {
-	int number;
-	char var;
-	char *string;
-	struct ast_node *node;
+	int number_literal;
+	char var_name;
+	char *string_literal;
+
+	struct addop *addop;
+	struct command *command;
+	struct expr_item *expr_item;
+	struct expr_list *expr_list;
+	struct expression *expression;
+	struct factor *factor;
+	struct mulop *mulop;
+	struct number *number;
+	struct relop *relop;
+	struct rnd *rnd;
+	struct statement *statement;
+	struct str *str;
+	struct term *term;
+	struct var *var;
+	struct var_list *var_list;
 };
 
-%token <number> NUMBER
-%token <var> VAR
-%token <string> STRING
+%token <number_literal> NUMBER
+%token <var_name> VAR
+%token <string_literal> STRING
 
 /* keywords */
 %token PRINT IF THEN GOTO INPUT LET GOSUB _RETURN CLEAR LIST RUN END
@@ -60,89 +91,103 @@ int yyerror(char *s) {
 /* separators */
 %token COMMA OPAREN CPAREN
 
-%type <node> command expression factor statement term
-%type <node> var_list expr_list expr_item
-%type <node> number rnd string var
-%type <node> addop mulop relop
+/* pseudo-token */
+%token EXPRESSION
+
+%type <addop> addop
+%type <command> command
+%type <expr_item> expr_item
+%type <expr_list> expr_list
+%type <expression> expression
+%type <factor> factor
+%type <mulop> mulop
+%type <number> number
+%type <relop> relop
+%type <rnd> rnd
+%type <statement> statement
+%type <str> str
+%type <term> term
+%type <var> var
+%type <var_list> var_list
 
 %%
 
-line	: number statement { struct ast_node *line = new_ast_node(AST_LINE); line->node_leaves.node_line.number = $1->node_leaves.node_number.value; line->node_leaves.node_line.statement = $2; line->node_leaves.node_line.command = NULL; line->node_leaves.node_line.line_type = AST_LT_STATEMENT; free_ast_node($1); processLine(line); }
-	| number { int number = $1->node_leaves.node_number.value; free_ast_node($1); removeLine(number); }
-	| statement { struct ast_node *line = new_ast_node(AST_LINE); line->node_leaves.node_line.number = -1; line->node_leaves.node_line.statement = $1; line->node_leaves.node_line.command = NULL; line->node_leaves.node_line.line_type = AST_LT_STATEMENT; processLine(line); }
-	| command { struct ast_node *line = new_ast_node(AST_LINE); line->node_leaves.node_line.number = -1; line->node_leaves.node_line.statement = NULL; line->node_leaves.node_line.command = $1; line->node_leaves.node_line.line_type = AST_LT_COMMAND; processLine(line); }
+line	: number statement { runtime_set_line(new_line($2, $1)); }
+	| number { runtime_rm_line(eval_number($1)); free_number($1); }
+	| statement { eval_statement($1, -1, -1); free_statement($1); }
+	| command { exec_command($1); free_command($1); }
 	;
 
-command	: CLEAR { $$ = new_ast_node(AST_COMMAND); $$->node_leaves.node_command.command_type = AST_CT_CLEAR; }
-	| LIST { $$ = new_ast_node(AST_COMMAND); $$->node_leaves.node_command.command_type = AST_CT_LIST; }
-	| RUN { $$ = new_ast_node(AST_COMMAND); $$->node_leaves.node_command.command_type = AST_CT_RUN; }
+command	: CLEAR { $$ = new_command(CLEAR); }
+	| LIST  { $$ = new_command(LIST);  }
+	| RUN   { $$ = new_command(RUN);   }
 	;
 
-statement	: PRINT expr_list { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_PRINT; $$->node_leaves.node_statement.ast_statement_value.ast_statement_print.expr_list = $2; }
-		| IF expression relop expression THEN statement { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_IF; $$->node_leaves.node_statement.ast_statement_value.ast_statement_if.left = $2; $$->node_leaves.node_statement.ast_statement_value.ast_statement_if.relop = $3; $$->node_leaves.node_statement.ast_statement_value.ast_statement_if.right = $4; $$->node_leaves.node_statement.ast_statement_value.ast_statement_if.statement = $6; }
-		| GOTO expression { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_GOTO; $$->node_leaves.node_statement.ast_statement_value.ast_statement_goto.expression = $2; }
-		| INPUT var_list { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_INPUT; $$->node_leaves.node_statement.ast_statement_value.ast_statement_input.var_list = $2; }
-		| LET var EQ expression { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_LET; $$->node_leaves.node_statement.ast_statement_value.ast_statement_let.var = $2; $$->node_leaves.node_statement.ast_statement_value.ast_statement_let.expression = $4; }
-		| GOSUB expression { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_GOSUB; $$->node_leaves.node_statement.ast_statement_value.ast_statement_gosub.expression = $2; }
-		| _RETURN { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_RETURN; }
-		| END { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_END; }
+statement	: PRINT expr_list                               { $$ = new_statement(  PRINT,   $2, NULL, NULL, NULL); }
+		| IF expression relop expression THEN statement { $$ = new_statement(     IF,   $2,   $3,   $4,   $6); }
+		| GOTO expression                               { $$ = new_statement(   GOTO,   $2, NULL, NULL, NULL); }
+		| INPUT var_list                                { $$ = new_statement(  INPUT,   $2, NULL, NULL, NULL); }
+		| LET var EQ expression                         { $$ = new_statement(    LET,   $2,   $4, NULL, NULL); }
+		| GOSUB expression                              { $$ = new_statement(  GOSUB,   $2, NULL, NULL, NULL); }
+		| _RETURN					{ $$ = new_statement(_RETURN, NULL, NULL, NULL, NULL); }
+		| END                                           { $$ = new_statement(    END, NULL, NULL, NULL, NULL); }
 		;
 
-expr_list	: expr_list COMMA expr_item { $$ = new_ast_node(AST_EXPR_LIST); $$->node_leaves.node_expr_list.expr_list_type = AST_EL_LIST; $$->node_leaves.node_expr_list.list = $1;  $$->node_leaves.node_expr_list.single = $3; }
-		| expr_item { $$ = new_ast_node(AST_EXPR_LIST); $$->node_leaves.node_expr_list.expr_list_type = AST_EL_SINGLE; $$->node_leaves.node_expr_list.single = $1; }
+expr_list	: expr_list COMMA expr_item { $$ = new_expr_list($3,   $1); }
+		| expr_item                 { $$ = new_expr_list($1, NULL); }
 		;
 
-expr_item	: expression { $$ = new_ast_node(AST_EXPR_ITEM); $$->node_leaves.node_expr_item.expr_item_type = AST_EI_EXPRESSION; $$->node_leaves.node_expr_item.expr_item_value.expression = $1; }
-		| string { $$ = new_ast_node(AST_EXPR_ITEM); $$->node_leaves.node_expr_item.expr_item_type = AST_EI_STRING; $$->node_leaves.node_expr_item.expr_item_value.string = $1; }
+expr_item	: expression { $$ = new_expr_item($1, NULL); }
+		| str        { $$ = new_expr_item(NULL, $1); }
 		;
 
-var_list	: var_list COMMA var { $$ = new_ast_node(AST_VAR_LIST); $$->node_leaves.node_var_list.var_list_type = AST_VL_LIST; $$->node_leaves.node_var_list.list = $1;  $$->node_leaves.node_var_list.single = $3; }
-		| var { $$ = new_ast_node(AST_VAR_LIST); $$->node_leaves.node_var_list.var_list_type = AST_VL_SINGLE; $$->node_leaves.node_var_list.single = $1; }
+var_list	: var_list COMMA var { $$ = new_var_list($3,   $1); }
+		| var                { $$ = new_var_list($1, NULL); }
 		;
 
-addop		: PLUS  { $$ = new_ast_node(AST_ADDOP); $$->node_leaves.node_addop.op = AST_PLUS;  }
-		| MINUS { $$ = new_ast_node(AST_ADDOP); $$->node_leaves.node_addop.op = AST_MINUS; }
+addop		: PLUS  { $$ = new_addop(PLUS);  }
+		| MINUS { $$ = new_addop(MINUS); }
 		;
 
-expression	: addop term addop term { $$ = new_ast_node(AST_EXPRESSION); $$->node_leaves.node_expression.expression_type = AST_ET_ATAT; $$->node_leaves.node_expression.term1_op = $1; $$->node_leaves.node_expression.term1 = $2; $$->node_leaves.node_expression.term2_op = $3; $$->node_leaves.node_expression.term2 = $4; }
-		| addop term { $$ = new_ast_node(AST_EXPRESSION); $$->node_leaves.node_expression.expression_type = AST_ET_AT; $$->node_leaves.node_expression.term1_op = $1; $$->node_leaves.node_expression.term1 = $2; }
-		| term addop term { $$ = new_ast_node(AST_EXPRESSION); $$->node_leaves.node_expression.expression_type = AST_ET_TAT; $$->node_leaves.node_expression.term1 = $1; $$->node_leaves.node_expression.term2_op = $2; $$->node_leaves.node_expression.term2 = $3; }
-		| term { $$ = new_ast_node(AST_EXPRESSION); $$->node_leaves.node_expression.expression_type = AST_ET_T; $$->node_leaves.node_expression.term1 = $1; }
+expression	: addop term addop term { $$ = new_expression(  $1, $2,   $3,   $4); }
+		| addop term            { $$ = new_expression(  $1, $2, NULL, NULL); }
+		| term addop term       { $$ = new_expression(NULL, $1,   $2,   $3); }
+		| term                  { $$ = new_expression(NULL, $1, NULL, NULL); }
 		;
 
-mulop		: TIMES  { $$ = new_ast_node(AST_MULOP); $$->node_leaves.node_mulop.op = AST_TIMES;  }
-		| DIVIDE { $$ = new_ast_node(AST_MULOP); $$->node_leaves.node_mulop.op = AST_DIVIDE; }
+mulop		: TIMES  { $$ = new_mulop(TIMES);  }
+		| DIVIDE { $$ = new_mulop(DIVIDE); }
 		;
 
-term		: factor mulop factor { $$ = new_ast_node(AST_TERM); $$->node_leaves.node_term.term_type = AST_TT_FMF; $$->node_leaves.node_term.factor1 = $1; $$->node_leaves.node_term.op = $2;  $$->node_leaves.node_term.factor2 = $3; }
-		| factor { $$ = new_ast_node(AST_TERM); $$->node_leaves.node_term.term_type = AST_TT_F; $$->node_leaves.node_term.factor1 = $1; }
+term		: factor mulop factor { $$ = new_term($1,   $2,   $3); }
+		| factor              { $$ = new_term($1, NULL, NULL); }
 		;
 
-factor		: var { $$ = new_ast_node(AST_FACTOR); $$->node_leaves.node_factor.factor_type = AST_FT_VAR; $$->node_leaves.node_factor.factor_value.var = $1; }
-		| number { $$ = new_ast_node(AST_FACTOR); $$->node_leaves.node_factor.factor_type = AST_FT_NUMBER; $$->node_leaves.node_factor.factor_value.number = $1; }
-		| OPAREN expression CPAREN { $$ = new_ast_node(AST_FACTOR); $$->node_leaves.node_factor.factor_type = AST_FT_EXPRESSION; $$->node_leaves.node_factor.factor_value.expression = $2; }
-		| rnd { $$ = new_ast_node(AST_FACTOR); $$->node_leaves.node_factor.factor_type = AST_FT_RND; $$->node_leaves.node_factor.factor_value.rnd = $1; }
+factor		: var                      { $$ = new_factor(       VAR, $1); }
+		| number                   { $$ = new_factor(    NUMBER, $1); }
+		| OPAREN expression CPAREN { $$ = new_factor(EXPRESSION, $2); }
+		| rnd                      { $$ = new_factor(       RND, $1); }
 		;
 
-rnd		: RND OPAREN expression CPAREN { $$ = new_ast_node(AST_STRING); $$->node_leaves.node_rnd.expression = $3; }
+rnd		: RND OPAREN expression CPAREN { $$ = new_rnd($3); }
 		;
 
-string		: STRING { $$ = new_ast_node(AST_STRING); $$->node_leaves.node_string.value = $1; }
+str		: STRING { $$ = new_str($1); }
 		;
 
-var		: VAR { $$ = new_ast_node(AST_VAR); $$->node_leaves.node_var.value = $1; }
+var		: VAR { $$ = new_var($1); }
 		;
 
-number		: NUMBER { $$ = new_ast_node(AST_NUMBER); $$->node_leaves.node_number.value = $1; }
+number		: NUMBER { $$ = new_number($1); }
 		;
 
-relop		: LTEQ { $$ = new_ast_node(AST_RELOP); $$->node_leaves.node_relop.op = AST_LTEQ; }
-		| LTGT { $$ = new_ast_node(AST_RELOP); $$->node_leaves.node_relop.op = AST_LTGT; }
-		| LT   { $$ = new_ast_node(AST_RELOP); $$->node_leaves.node_relop.op = AST_LT;   }
-		| GTEQ { $$ = new_ast_node(AST_RELOP); $$->node_leaves.node_relop.op = AST_GTEQ; }
-		| GTLT { $$ = new_ast_node(AST_RELOP); $$->node_leaves.node_relop.op = AST_GTLT; }
-		| GT   { $$ = new_ast_node(AST_RELOP); $$->node_leaves.node_relop.op = AST_GT;   }
-		| EQ   { $$ = new_ast_node(AST_RELOP); $$->node_leaves.node_relop.op = AST_EQ;   }
+relop		: LTEQ { $$ = new_relop(LTEQ); }
+		| LTGT { $$ = new_relop(LTGT); }
+		| LT   { $$ = new_relop(LT);   }
+		| GTEQ { $$ = new_relop(GTEQ); }
+		| GTLT { $$ = new_relop(GTLT); }
+		| GT   { $$ = new_relop(GT);   }
+		| EQ   { $$ = new_relop(EQ);   }
 		;
 
 %%

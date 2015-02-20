@@ -16,21 +16,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RUNTIME_H
-#define __RUNTIME_H
+#ifndef __EXPRESSION_H
+#define __EXPRESSION_H
 
-struct line *runtime_get_first_line(void);
-struct line *runtime_get_line(int number);
-void runtime_set_line(struct line *item);
-void runtime_rm_line(int number);
+struct addop;
+struct term;
 
-void runtime_reset(void);
-int runtime_continue(void);
+struct expression {
+	struct addop *term1_op;
+	struct term *term1;
+	struct addop *term2_op;
+	struct term *term2;
+};
 
-void runtime_callstack_push(int number);
-int runtime_callstack_pop();
-
-void runtime_set_var(char var, int value);
-int runtime_get_var(char var);
+struct expression *new_expression(struct addop *term1_op, struct term *term1, struct addop *term2_op, struct term *term2);
+int eval_expression(struct expression *e);
+void print_expression(struct expression *e);
+void free_expression(struct expression *e);
 
 #endif

@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	do {
-		line = readline(NULL);
+		line = readline((argc == 1) ? "> " : NULL);
 		if (line == NULL) {
 			break;
 		}

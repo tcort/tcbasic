@@ -23,11 +23,26 @@ scanner.h: scanner.l
 bin_PROGRAMS = tcb
 
 tcb_SOURCES = \
-	scanner.l \
-	parser.y \
-	driver.c \
-	ast.h ast.c \
-	runtime.h runtime.c
+			scanner.l \
+			parser.y \
+			driver.c \
+	runtime.h	runtime.c \
+	addop.h		addop.c \
+	command.h	command.c \
+	expr_item.h	expr_item.c \
+	expr_list.h	expr_list.c \
+	expression.h	expression.c \
+	factor.h	factor.c \
+	line.h		line.c \
+	mulop.h		mulop.c \
+	number.h	number.c \
+	relop.h		relop.c \
+	rnd.h		rnd.c \
+	statement.h	statement.c \
+	str.h		str.c \
+	term.h		term.c \
+	var.h		var.c \
+	var_list.h	var_list.c
 
 tcb_LDADD = @LEXLIB@
 

@@ -16,21 +16,52 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RUNTIME_H
-#define __RUNTIME_H
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-struct line *runtime_get_first_line(void);
-struct line *runtime_get_line(int number);
-void runtime_set_line(struct line *item);
-void runtime_rm_line(int number);
+#include "parser.h"
+#include "mulop.h"
 
-void runtime_reset(void);
-int runtime_continue(void);
+struct mulop *new_mulop(int type) {
 
-void runtime_callstack_push(int number);
-int runtime_callstack_pop();
+	struct mulop *op = NULL;
 
-void runtime_set_var(char var, int value);
-int runtime_get_var(char var);
+	op = (struct mulop *) malloc(sizeof(struct mulop));
+	if (op == NULL) {
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	memset(op, '\0', sizeof(struct mulop));
 
-#endif
+	op->type = type;
+
+	return op;
+}
+
+void print_mulop(struct mulop *op) {
+
+	if (op == NULL) {
+		return;
+	}
+
+	switch (op->type) {
+		case TIMES:
+			printf("*");
+			break;
+		case DIVIDE:
+			printf("/");
+			break;
+		default:
+			printf("?");
+			break;
+	}
+}
+
+void free_mulop(struct mulop *op) {
+	if (op != NULL) {
+		free(op);
+		op = NULL;
+	}
+}
