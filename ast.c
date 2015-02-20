@@ -39,6 +39,30 @@ struct ast_node *new_ast_node(enum ast_node_types node_type) {
 	return node;
 }
 
+struct ast_node * remove_line(struct ast_node *list, int number) {
+	struct ast_node *head = list;
+	struct ast_node *cur = list;
+	struct ast_node *prev = list;
+
+	if (head == NULL) { /* empty list */
+		/* nothing to do */;
+	} else if (head->node_leaves.node_line.number == number) { /* first element in list */
+		head = head->node_leaves.node_line.next;
+		cur->node_leaves.node_line.next = NULL;
+		free_ast_node(cur);
+	} else {
+		for (prev = cur, cur = cur->node_leaves.node_line.next; cur != NULL; prev = cur, cur = cur->node_leaves.node_line.next) {
+			if (cur->node_leaves.node_line.number == number) {
+				prev->node_leaves.node_line.next = cur->node_leaves.node_line.next;
+				cur->node_leaves.node_line.next = NULL;
+				free_ast_node(cur);
+			}
+		}
+	}
+
+	return head;
+}
+
 struct ast_node * insert_line(struct ast_node *list, struct ast_node *item) {
 	struct ast_node *head = list;
 	struct ast_node *cur = list;
@@ -114,19 +138,20 @@ void free_ast_node(struct ast_node *node) {
 				case AST_ST_RETURN:
 					// nothing to free here
 					break;
-				case AST_ST_CLEAR:
-					// nothing to free here
-					break;
-				case AST_ST_LIST:
-					// nothing to free here
-					break;
-				case AST_ST_RUN:
-					// nothing to free here
-					break;
 				case AST_ST_END:
 					// nothing to free here
 					break;
-				case AST_ST_QUIT:
+			}
+			break;
+		case AST_COMMAND:
+			switch (node->node_leaves.node_command.command_type) {
+				case AST_CT_CLEAR:
+					// nothing to free here
+					break;
+				case AST_CT_LIST:
+					// nothing to free here
+					break;
+				case AST_CT_RUN:
 					// nothing to free here
 					break;
 			}
@@ -208,6 +233,9 @@ void free_ast_node(struct ast_node *node) {
 				case AST_FT_EXPRESSION:
 					free_ast_node(node->node_leaves.node_factor.factor_value.expression);
 					break;
+				case AST_FT_RND:
+					free_ast_node(node->node_leaves.node_factor.factor_value.rnd);
+					break;
 			}
 			break;
 		case AST_RELOP:
@@ -221,6 +249,9 @@ void free_ast_node(struct ast_node *node) {
 			break;
 		case AST_VAR:
 			// nothing to free here
+			break;
+		case AST_RND:
+			free_ast_node(node->node_leaves.node_rnd.expression);
 			break;
 		case AST_STRING:
 			free(node->node_leaves.node_string.value);
@@ -288,20 +319,21 @@ void print_ast_node(struct ast_node *node) {
 				case AST_ST_RETURN:
 					printf("RETURN");
 					break;
-				case AST_ST_CLEAR:
-					printf("CLEAR");
-					break;
-				case AST_ST_LIST:
-					printf("LIST");
-					break;
-				case AST_ST_RUN:
-					printf("RUN");
-					break;
 				case AST_ST_END:
 					printf("END");
 					break;
-				case AST_ST_QUIT:
-					printf("QUIT");
+			}
+			break;
+		case AST_COMMAND:
+			switch (node->node_leaves.node_command.command_type) {
+				case AST_CT_CLEAR:
+					printf("CLEAR");
+					break;
+				case AST_CT_LIST:
+					printf("LIST");
+					break;
+				case AST_CT_RUN:
+					printf("RUN");
 					break;
 			}
 			break;
@@ -392,6 +424,9 @@ void print_ast_node(struct ast_node *node) {
 					print_ast_node(node->node_leaves.node_factor.factor_value.expression);
 					printf(")");
 					break;
+				case AST_FT_RND:
+					print_ast_node(node->node_leaves.node_factor.factor_value.rnd);
+					break;
 			}
 			break;
 		case AST_RELOP:
@@ -433,6 +468,11 @@ void print_ast_node(struct ast_node *node) {
 			break;
 		case AST_NUMBER:
 			printf("%d", node->node_leaves.node_number.value);
+			break;
+		case AST_RND:
+			printf("RND(");
+			print_ast_node(node->node_leaves.node_rnd.expression);
+			printf(")");
 			break;
 	}
 

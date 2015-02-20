@@ -27,4 +27,9 @@ scanner.plist
 stamp-h1
 tcb
 tcb*.tar.gz
+test-driver
+test-suite.log
+testsuite/*.out
+testsuite/*.log
+testsuite/*.trs
 ylwrap

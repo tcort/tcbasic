@@ -22,6 +22,7 @@
 struct ast_node {
 	enum ast_node_types {
 		AST_LINE,
+		AST_COMMAND,
 		AST_STATEMENT,
 		AST_EXPR_LIST,
 		AST_EXPR_ITEM,
@@ -34,15 +35,28 @@ struct ast_node {
 		AST_MULOP,
 		AST_VAR,
 		AST_STRING,
-		AST_NUMBER
+		AST_NUMBER,
+		AST_RND
 	} node_type;
 
 	union ast_leaves {
 		struct ast_line {
 			int number;
+			enum ast_line_types {
+				AST_LT_COMMAND,
+				AST_LT_STATEMENT
+			} line_type;
+			struct ast_node *command;
 			struct ast_node *statement;
 			struct ast_node *next;
 		} node_line;
+		struct ast_command {
+			enum ast_command_types {
+				AST_CT_CLEAR,
+				AST_CT_LIST,
+				AST_CT_RUN
+			} command_type;
+		} node_command;
 		struct ast_statement {
 			enum statement_type {
 				AST_ST_PRINT,
@@ -52,11 +66,7 @@ struct ast_node {
 				AST_ST_LET,
 				AST_ST_GOSUB,
 				AST_ST_RETURN,
-				AST_ST_CLEAR,
-				AST_ST_LIST,
-				AST_ST_RUN,
-				AST_ST_END,
-				AST_ST_QUIT
+				AST_ST_END
 			} statement_type;
 			union ast_statement_values {
 				struct ast_statement_print {
@@ -144,11 +154,13 @@ struct ast_node {
 		} node_term;
 		struct ast_factor {
 			enum ast_factor_types {
+				AST_FT_RND,
 				AST_FT_VAR,
 				AST_FT_NUMBER,
 				AST_FT_EXPRESSION
 			} factor_type;
 			union ast_factor_values {
+				struct ast_node *rnd;
 				struct ast_node *var;
 				struct ast_node *number;
 				struct ast_node *expression;
@@ -165,6 +177,9 @@ struct ast_node {
 				AST_EQ
 			} op;
 		} node_relop;
+		struct ast_rnd {
+			struct ast_node *expression;
+		} node_rnd;
 		struct ast_var {
 			char value;
 		} node_var;
@@ -179,6 +194,7 @@ struct ast_node {
 
 struct ast_node *new_ast_node(enum ast_node_types node_type);
 struct ast_node * insert_line(struct ast_node *list, struct ast_node *item);
+struct ast_node * remove_line(struct ast_node *list, int number);
 void free_ast_node(struct ast_node *node);
 void print_ast_node(struct ast_node *node);
 

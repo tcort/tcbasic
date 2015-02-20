@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "ast.h"
 #include "runtime.h"
@@ -30,6 +31,7 @@ static struct ast_node * evalLine(struct ast_node *line);
 static int evalExpression(struct ast_node *expression);
 static int evalTerm(struct ast_node *term);
 static int evalFactor(struct ast_node *factor);
+static int evalRnd(struct ast_node *rnd);
 static void printExprItem(struct ast_node *expr_item);
 static void printExprList(struct ast_node *expr_list);
 static struct ast_node *getLine(int number);
@@ -76,12 +78,40 @@ static struct ast_node * stack_pop() {
 	return val;
 }
 
+void removeLine(int number) {
+	lines = remove_line(lines, number);
+}
+
 void processLine(struct ast_node *line) {
-	if (line->node_leaves.node_line.number != -1) {
-		lines = insert_line(lines, line);
-	} else {
-		evalLine(line);
-		free_ast_node(line);
+
+	struct ast_node *cur;
+	struct ast_node *command = line->node_leaves.node_line.command;
+
+	switch (line->node_leaves.node_line.line_type) {
+		case AST_LT_COMMAND:
+			switch (command->node_leaves.node_command.command_type) {
+				case AST_CT_CLEAR:
+					runtime_reset();
+					break;
+				case AST_CT_LIST:
+					print_ast_node(lines);
+					break;
+				case AST_CT_RUN:
+					cur = lines;
+					while (cur != NULL) {
+						cur = evalLine(cur);
+					}
+					break;
+			}
+			break;
+		case AST_LT_STATEMENT:
+			if (line->node_leaves.node_line.number != -1) {
+				lines = insert_line(lines, line);
+			} else {
+				evalLine(line);
+				free_ast_node(line);
+			}
+			break;
 	}
 }
 
@@ -131,13 +161,14 @@ static struct ast_node * evalLine(struct ast_node *line) {
 
 			if (r) {
 				cur = new_ast_node(AST_LINE);
-				cur->node_leaves.node_line.next = NULL;
+				cur->node_leaves.node_line.next = line->node_leaves.node_line.next;
 				cur->node_leaves.node_line.statement = statement->node_leaves.node_statement.ast_statement_value.ast_statement_if.statement;
 				cur->node_leaves.node_line.number = line->node_leaves.node_line.number;
-				evalLine(cur);
+				next = evalLine(cur);
+				cur->node_leaves.node_line.next = NULL;
 				cur->node_leaves.node_line.statement = NULL;
+				cur->node_leaves.node_line.number = -1;
 				free_ast_node(cur);
-				
 			}
 			break;
 		case AST_ST_GOTO:
@@ -159,23 +190,8 @@ static struct ast_node * evalLine(struct ast_node *line) {
 		case AST_ST_RETURN:
 			next = stack_pop();
 			break;
-		case AST_ST_CLEAR:
-			printf("\e[1;1H\e[2J");
-			break;
-		case AST_ST_LIST:
-			print_ast_node(lines);
-			break;
-		case AST_ST_RUN:
-			cur = lines;
-			while (cur != NULL) {
-				cur = evalLine(cur);
-			}
-			break;
 		case AST_ST_END:
 			next = NULL;
-			break;
-		case AST_ST_QUIT:
-			done = 1;
 			break;
 	}
 
@@ -236,6 +252,7 @@ static int evalFactor(struct ast_node *factor) {
 	struct ast_node *var = factor->node_leaves.node_factor.factor_value.var;
 	struct ast_node *number = factor->node_leaves.node_factor.factor_value.number;
 	struct ast_node *expression = factor->node_leaves.node_factor.factor_value.expression;
+	struct ast_node *rnd = factor->node_leaves.node_factor.factor_value.rnd;
 
 	switch (factor->node_leaves.node_factor.factor_type) {
 		case AST_FT_VAR:
@@ -244,7 +261,14 @@ static int evalFactor(struct ast_node *factor) {
 			return number->node_leaves.node_number.value;
 		case AST_FT_EXPRESSION:
 			return evalExpression(expression);
+		case AST_FT_RND:
+			return evalRnd(rnd);
 	}
+}
+
+static int evalRnd(struct ast_node *rnd) {
+	struct ast_node *expression = rnd->node_leaves.node_rnd.expression;
+	return rand() % evalExpression(expression); /* TODO avoid rand() and biasing the output, use arc4random_uniform() instead */
 }
 
 static void printExprItem(struct ast_node *expr_item) {
@@ -285,6 +309,7 @@ void runtime_reset(void) {
 		free_ast_node(lines);
 		lines = NULL;
 	}
+/* TODO clear stack */
 }
 
 int runtime_continue(void) {

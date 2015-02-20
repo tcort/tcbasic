@@ -22,6 +22,7 @@
 #include "ast.h"
 
 void processLine(struct ast_node *line);
+void removeLine(int number);
 void runtime_reset(void);
 int runtime_continue(void);
 

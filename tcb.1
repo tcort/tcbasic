@@ -1,0 +1,78 @@
+.\" tcb - a small BASIC Interpreter written in C.
+.\" Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
+.\"
+.\" This program is free software: you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.TH TCB "1" "February 2015" "edgar 1.0.0" "User Commands"
+.SH NAME
+tcb \- a small BASIC Interpreter written in C
+.SH SYNOPSIS
+.B tcb
+[\fIOPTION\fR] [\fIfilename\fR]
+.SH DESCRIPTION
+tcb implements a small subset of BASIC in portable C. If the user specifies
+a filename on the command line or pipes data to tcb, the results will be
+written to standard out. If no file is specified, an interactive mode is
+started where a user can interact with the BASIC system directly.
+.SH OPTIONS
+.TP
+\fB\-h\fR, \-?            \fB\-\-help\fR
+Print a helpful message and exit
+.TP
+\fB\-v\fR                 \fB\-\-version\fR
+Print version information and exit
+.SH LANGUAGE REFERENCE
+.TP
+\fBPRINT list\fR
+Prints the contents of 'list' to the console where 'list' is a
+comma separated list of one or more quoted strings and variables.
+.TP
+\fBIF expression relop expression THEN statement\fR
+Evaluates both 'expression's and compares them using relational
+operator 'relop'. If the relation is true, then the statement
+will be executed. Otherwise, the statement is skipped.
+.TP
+\fBGOTO expression\fR
+Evaluates 'expression' and jumps to the corresponding line number.
+.TP
+\fBGOSUB expression\fR
+Evaluates 'expression' and jumps to the corresponding line number
+after saving the current line number.
+.TP
+\fBRETURN\fR
+Returns control to the line after the last 'GOSUB' call.
+.TP
+\fBLET var = expression\fR
+Assigns the value of expression to variable 'var' where 'var' is
+a single character variable name in the range from A to Z.
+.TP
+\fBCLEAR\fR
+Clears the program from memory and sets all variables to 0.
+.TP
+\fBLIST\fR
+Prints the current program.
+.TP
+\fBRUN\fR
+Executes the current program.
+.TP
+\fBEND\fR
+Ends the execution of the program.
+.SH AUTHORS
+See https://github.com/tcort/tcb/graphs/contributors
+.SH "REPORTING BUGS"
+See https://github.com/tcort/tcb/issues
+.SH COPYRIGHT
+Copyright \(co 2015 Thomas Cort <linuxgeek@gmail.com>
+.br
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

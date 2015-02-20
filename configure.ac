@@ -24,13 +24,34 @@ AC_LANG([C])
 AC_PROG_CC
 AC_PROG_LEX
 AC_PROG_YACC
+
 AC_HEADER_STDC
 
 AC_CHECK_HEADER([readline/readline.h], , AC_MSG_ERROR([error: no readline/readline.h found]))
+AC_CHECK_HEADER([readline/history.h], , AC_MSG_ERROR([error: no readline/history.h found]))
 AC_CHECK_LIB(readline, readline, ,
         [AC_MSG_ERROR([error: no readline library found])])
 
+AC_CHECK_HEADERS([getopt.h])
+AC_CHECK_FUNCS([getopt_long])
+
 AC_CONFIG_HEADERS([config.h:config.in])
+
+AC_ARG_VAR([DIFF],[the 'diff' program to use for test output comparison])
+AC_PATH_PROG([DIFF],[diff],[])
+if test "x$DIFF" = "x"; then
+	AC_MSG_NOTICE([==> diff command not found!])
+	AC_MSG_NOTICE([==> Set DIFF variable if present in non-standard path!])
+	AC_MSG_NOTICE([diff is mandatory to run the tests])
+fi
+
+AC_ARG_VAR([SED],[the 'sed' program to use for test output massaging])
+AC_PATH_PROG([SED],[sed],[])
+if test "x$SED" = "x"; then
+	AC_MSG_NOTICE([==> sed command not found!])
+	AC_MSG_NOTICE([==> Set SED variable if present in non-standard path!])
+	AC_MSG_NOTICE([sed is mandatory to run the tests])
+fi
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

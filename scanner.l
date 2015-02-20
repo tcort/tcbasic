@@ -40,7 +40,8 @@ int yyerror(char *);
 "LIST"		{ return LIST; }
 "RUN"		{ return RUN; }
 "END"		{ return END; }
-"QUIT"		{ return QUIT; }
+
+"RND"		{ return RND; }
 
 "<="		{ return LTEQ; }
 "<>"		{ return LTGT; }

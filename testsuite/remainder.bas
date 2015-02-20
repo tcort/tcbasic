@@ -1,0 +1,4 @@
+10 LET A = 123456
+20 LET N = 1337
+30 LET C = (A - (N * (A/N)))
+40 PRINT C

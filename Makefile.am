@@ -16,10 +16,9 @@
 
 BUILT_SOURCES = scanner.c scanner.h parser.c parser.h
 AM_YFLAGS = -d
-CLEANFILES = $(BUILT_SOURCES)
 
 scanner.h: scanner.l
-	$(LEX) --header-file=$@ -o /dev/null $<
+	$(LEX) --header-file=$@ -o /dev/null $(top_srcdir)/scanner.l
 
 bin_PROGRAMS = tcb
 
@@ -31,3 +30,34 @@ tcb_SOURCES = \
 	runtime.h runtime.c
 
 tcb_LDADD = @LEXLIB@
+
+man_MANS = tcb.1
+
+TESTS = \
+	./testsuite/abs.sh \
+	./testsuite/fib.sh \
+	./testsuite/hello.sh \
+	./testsuite/remainder.sh
+
+TESTS_ENVIRONMENT = \
+	DIFF=$(DIFF)  \
+	SED=$(SED)  \
+	TCB=$(top_builddir)/tcb    \
+	TOP_SRCDIR=$(top_srcdir)    \
+	TCB_IN_DIR=$(top_srcdir)/testsuite   \
+	TCB_OUT_DIR=$(top_builddir)/testsuite \
+	TCB_EX_DIR=$(top_srcdir)/testsuite   \
+	TEST_RUNNER=$(top_srcdir)/test-runner.sh
+
+CLEANFILES = $(BUILT_SOURCES) \
+	$(top_builddir)/testsuite/abs.out \
+	$(top_builddir)/testsuite/fib.out \
+	$(top_builddir)/testsuite/hello.out \
+	$(top_builddir)/testsuite/remainder.out
+
+EXTRA_DIST = $(man_MANS) $(top_srcdir)/test-runner.sh \
+	$(top_srcdir)/testsuite/abs.sh		$(top_srcdir)/testsuite/abs.bas		$(top_srcdir)/testsuite/abs.ex	\
+	$(top_srcdir)/testsuite/fib.sh		$(top_srcdir)/testsuite/fib.bas		$(top_srcdir)/testsuite/fib.ex	\
+	$(top_srcdir)/testsuite/hello.sh	$(top_srcdir)/testsuite/hello.bas	$(top_srcdir)/testsuite/hello.ex \
+	$(top_srcdir)/testsuite/remainder.sh	$(top_srcdir)/testsuite/remainder.bas	$(top_srcdir)/testsuite/remainder.ex
+

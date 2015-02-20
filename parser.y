@@ -46,7 +46,10 @@ int yyerror(char *s) {
 %token <string> STRING
 
 /* keywords */
-%token PRINT IF THEN GOTO INPUT LET GOSUB _RETURN CLEAR LIST RUN END QUIT
+%token PRINT IF THEN GOTO INPUT LET GOSUB _RETURN CLEAR LIST RUN END
+
+/* built-in functions */
+%token RND
 
 /* relational operators */
 %token LTEQ LTGT LT GTEQ GTLT GT EQ
@@ -57,15 +60,22 @@ int yyerror(char *s) {
 /* separators */
 %token COMMA OPAREN CPAREN
 
-%type <node> expression factor statement term
+%type <node> command expression factor statement term
 %type <node> var_list expr_list expr_item
-%type <node> number string var
+%type <node> number rnd string var
 %type <node> addop mulop relop
 
 %%
 
-line	: number statement { struct ast_node *line = new_ast_node(AST_LINE); line->node_leaves.node_line.number = $1->node_leaves.node_number.value; line->node_leaves.node_line.statement = $2; free_ast_node($1); processLine(line); }
-	| statement { struct ast_node *line = new_ast_node(AST_LINE); line->node_leaves.node_line.number = -1; line->node_leaves.node_line.statement = $1; processLine(line); }
+line	: number statement { struct ast_node *line = new_ast_node(AST_LINE); line->node_leaves.node_line.number = $1->node_leaves.node_number.value; line->node_leaves.node_line.statement = $2; line->node_leaves.node_line.command = NULL; line->node_leaves.node_line.line_type = AST_LT_STATEMENT; free_ast_node($1); processLine(line); }
+	| number { int number = $1->node_leaves.node_number.value; free_ast_node($1); removeLine(number); }
+	| statement { struct ast_node *line = new_ast_node(AST_LINE); line->node_leaves.node_line.number = -1; line->node_leaves.node_line.statement = $1; line->node_leaves.node_line.command = NULL; line->node_leaves.node_line.line_type = AST_LT_STATEMENT; processLine(line); }
+	| command { struct ast_node *line = new_ast_node(AST_LINE); line->node_leaves.node_line.number = -1; line->node_leaves.node_line.statement = NULL; line->node_leaves.node_line.command = $1; line->node_leaves.node_line.line_type = AST_LT_COMMAND; processLine(line); }
+	;
+
+command	: CLEAR { $$ = new_ast_node(AST_COMMAND); $$->node_leaves.node_command.command_type = AST_CT_CLEAR; }
+	| LIST { $$ = new_ast_node(AST_COMMAND); $$->node_leaves.node_command.command_type = AST_CT_LIST; }
+	| RUN { $$ = new_ast_node(AST_COMMAND); $$->node_leaves.node_command.command_type = AST_CT_RUN; }
 	;
 
 statement	: PRINT expr_list { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_PRINT; $$->node_leaves.node_statement.ast_statement_value.ast_statement_print.expr_list = $2; }
@@ -75,11 +85,7 @@ statement	: PRINT expr_list { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.
 		| LET var EQ expression { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_LET; $$->node_leaves.node_statement.ast_statement_value.ast_statement_let.var = $2; $$->node_leaves.node_statement.ast_statement_value.ast_statement_let.expression = $4; }
 		| GOSUB expression { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_GOSUB; $$->node_leaves.node_statement.ast_statement_value.ast_statement_gosub.expression = $2; }
 		| _RETURN { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_RETURN; }
-		| CLEAR { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_CLEAR; }
-		| LIST { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_LIST; }
-		| RUN { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_RUN; }
 		| END { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_END; }
-		| QUIT { $$ = new_ast_node(AST_STATEMENT); $$->node_leaves.node_statement.statement_type = AST_ST_QUIT; }
 		;
 
 expr_list	: expr_list COMMA expr_item { $$ = new_ast_node(AST_EXPR_LIST); $$->node_leaves.node_expr_list.expr_list_type = AST_EL_LIST; $$->node_leaves.node_expr_list.list = $1;  $$->node_leaves.node_expr_list.single = $3; }
@@ -115,6 +121,10 @@ term		: factor mulop factor { $$ = new_ast_node(AST_TERM); $$->node_leaves.node_
 factor		: var { $$ = new_ast_node(AST_FACTOR); $$->node_leaves.node_factor.factor_type = AST_FT_VAR; $$->node_leaves.node_factor.factor_value.var = $1; }
 		| number { $$ = new_ast_node(AST_FACTOR); $$->node_leaves.node_factor.factor_type = AST_FT_NUMBER; $$->node_leaves.node_factor.factor_value.number = $1; }
 		| OPAREN expression CPAREN { $$ = new_ast_node(AST_FACTOR); $$->node_leaves.node_factor.factor_type = AST_FT_EXPRESSION; $$->node_leaves.node_factor.factor_value.expression = $2; }
+		| rnd { $$ = new_ast_node(AST_FACTOR); $$->node_leaves.node_factor.factor_type = AST_FT_RND; $$->node_leaves.node_factor.factor_value.rnd = $1; }
+		;
+
+rnd		: RND OPAREN expression CPAREN { $$ = new_ast_node(AST_STRING); $$->node_leaves.node_rnd.expression = $3; }
 		;
 
 string		: STRING { $$ = new_ast_node(AST_STRING); $$->node_leaves.node_string.value = $1; }
