@@ -78,12 +78,16 @@ void free_expression(struct expression *e) {
 	if (e != NULL) {
 		free_addop(e->term1_op);
 		e->term1_op = NULL;
+
 		free_term(e->term1);
 		e->term1 = NULL;
+
 		free_addop(e->term2_op);
 		e->term2_op = NULL;
+
 		free_term(e->term2);
 		e->term2 = NULL;
+
 		free(e);
 		e = NULL;
 	}

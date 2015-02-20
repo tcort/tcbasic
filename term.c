@@ -77,8 +77,14 @@ void print_term(struct term *t) {
 void free_term(struct term *t) {
 	if (t != NULL) {
 		free_factor(t->left);
+		t->left = NULL;
+
 		free_mulop(t->op);
+		t->op = NULL;
+
 		free_factor(t->right);
+		t->right = NULL;
+
 		free(t);
 		t = NULL;
 	}

@@ -209,25 +209,38 @@ void free_statement(struct statement *s) {
 		switch (s->type) {
 			case PRINT:
 				free_expr_list(s->u.print_stmt.expr_list);
+				s->u.print_stmt.expr_list = NULL;
 				break;
 			case IF:
 				free_expression(s->u.if_stmt.left);
+				s->u.if_stmt.left = NULL;
+
 				free_relop(s->u.if_stmt.relop);
+				s->u.if_stmt.relop = NULL;
+
 				free_expression(s->u.if_stmt.right);
+				s->u.if_stmt.right = NULL;
+
 				free_statement(s->u.if_stmt.statement);
+				s->u.if_stmt.statement = NULL;
 				break;
 			case GOTO:
 				free_expression(s->u.goto_stmt.expression);
+				s->u.goto_stmt.expression = NULL;
 				break;
 			case INPUT:
 				free_var_list(s->u.input_stmt.var_list);
+				s->u.input_stmt.var_list = NULL;
 				break;
 			case LET:
 				free_var(s->u.let_stmt.var);
+				s->u.let_stmt.var = NULL;
 				free_expression(s->u.let_stmt.expression);
+				s->u.let_stmt.expression = NULL;
 				break;
 			case GOSUB:
 				free_expression(s->u.gosub_stmt.expression);
+				s->u.gosub_stmt.expression = NULL;
 				break;
 			case _RETURN:
 				break;

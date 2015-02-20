@@ -72,10 +72,13 @@ void print_line(struct line *l) {
 
 void free_line(struct line *l) {
 	if (l != NULL) {
+
 		free_statement(l->statement);
 		l->statement = NULL;
+
 		free_line(l->next);
 		l->next = NULL;
+
 		free(l);
 		l = NULL;
 	}

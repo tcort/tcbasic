@@ -70,8 +70,10 @@ void free_expr_list(struct expr_list *el) {
 	if (el != NULL) {
 		free_expr_item(el->expr_item);
 		el->expr_item = NULL;
+
 		free_expr_list(el->list);
 		el->list = NULL;
+
 		free(el);
 		el = NULL;
 	}

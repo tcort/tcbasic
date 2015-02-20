@@ -60,8 +60,10 @@ void free_var_list(struct var_list *vl) {
 	if (vl != NULL) {
 		free_var(vl->var);
 		vl->var = NULL;
+
 		free_var_list(vl->list);
 		vl->list = NULL;
+
 		free(vl);
 		vl = NULL;
 	}

@@ -69,6 +69,13 @@ void print_expr_item(struct expr_item *ei) {
 
 void free_expr_item(struct expr_item *ei) {
 	if (ei != NULL) {
+
+		free_str(ei->str);
+		ei->str = NULL;
+
+		free_expression(ei->e);
+		ei->e = NULL;
+
 		free(ei);
 		ei = NULL;
 	}
