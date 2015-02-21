@@ -42,7 +42,7 @@
 #include "var.h"
 #include "var_list.h"
 
-int yyerror(yyscan_t scanner, char *s) {
+int yyerror(void *scanner, char *s) {
 	fprintf(stdout, "%s\n", s);
 	exit(EXIT_FAILURE);
 	return -1;
@@ -72,8 +72,8 @@ int yyerror(yyscan_t scanner, char *s) {
 	struct var_list *var_list;
 };
 
-%lex-param   { yyscan_t scanner }
-%parse-param { yyscan_t scanner }
+%lex-param   { void *scanner }
+%parse-param { void *scanner }
 
 %token <number_literal> NUMBER
 %token <var_name> VAR
@@ -201,7 +201,7 @@ void parseLine(char *line) {
 		return;
 	}
 
-	yyscan_t scanner;
+	void *scanner;
 	yylex_init(&scanner);
 	YY_BUFFER_STATE buf = NULL;
 	yy_scan_string(line, scanner);
