@@ -16,12 +16,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "config.h"
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "parser.h"
+#include "compat.h"
 
 #include "var_list.h"
 #include "var.h"
@@ -61,7 +64,11 @@ void eval_var_list(struct var_list *vl, char *line) {
 
 	for (cur = vl; cur; cur = cur->list) {
 		v = cur->var;
+#if HAVE_STRSEP
 		s = strsep(&line, ",");
+#else
+		s = tcb_strsep(&line, ",");
+#endif
 		snprintf(let, len, "LET %c = %s", v->value, (s != NULL) ? s : "0");
 		parseLine(let);
 	}

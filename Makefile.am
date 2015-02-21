@@ -26,6 +26,7 @@ tcb_SOURCES = \
 			scanner.l \
 			parser.y \
 			driver.c \
+	compat.h	compat.c \
 	runtime.h	runtime.c \
 	addop.h		addop.c \
 	command.h	command.c \

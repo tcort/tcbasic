@@ -46,11 +46,19 @@ int eval_rnd(struct rnd *r) {
 	int n;
 
 	if (r == NULL) {
+#ifdef HAVE_ARC4RANDOM
+		return arc4random();
+#else
 		return rand();
+#endif
 	}
 
 	n = eval_expression(r->expression);
+#ifdef HAVE_ARC4RANDOM_UNIFORM
+	return arc4random_uniform(n);
+#else
 	return rand() % n;
+#endif
 }
 
 void print_rnd(struct rnd *r) {
