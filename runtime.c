@@ -48,7 +48,7 @@ void runtime_rm_line(int number) {
 	struct line *list = lines;
 	struct line *head = list;
 	struct line *cur = list;
-	struct line *prev = list;
+	struct line *prev;
 
 	if (head == NULL) { /* empty list */
 		/* nothing to do */;
@@ -73,7 +73,7 @@ void runtime_set_line(struct line *item) {
 	struct line *list = lines;
 	struct line *head = list;
 	struct line *cur = list;
-	struct line *prev = list;
+	struct line *prev;
 
 	if (head == NULL) { /* empty list, make item 1st element */
 		head = item;

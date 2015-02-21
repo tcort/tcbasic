@@ -80,6 +80,9 @@ int eval_factor(struct factor *f) {
 		case VAR:
 			r = eval_var(f->u.v);
 			break;
+		default:
+			r = 0;
+			break;
 	}
 
 	return r;
