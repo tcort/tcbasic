@@ -17,7 +17,6 @@ The following components are complete:
 
 The following components are in progress:
 
-* Evaluator (`INPUT` command)
 * Unit Tests
 
 The following components remain:

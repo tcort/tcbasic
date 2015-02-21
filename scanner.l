@@ -26,6 +26,8 @@
 int yyerror(char *);
 %}
 
+%option reentrant
+
 %%
 
 "PRINT"		{ return PRINT; }
@@ -86,6 +88,6 @@ int yyerror(char *);
 
 %%
 
-int yywrap(void) {
+int yywrap(yyscan_t yyscanner) {
 	return 1;
 }

@@ -21,6 +21,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <readline/readline.h>
+
 #include "parser.h"
 
 #include "runtime.h"
@@ -86,6 +88,9 @@ struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, vo
 */
 int eval_statement(struct statement *s, int number, int next_number) {
 
+	FILE *instream;
+	FILE *outstream;
+	char *line;
 	int next = -1;
 	int e1, e2, r;
 
@@ -132,7 +137,16 @@ int eval_statement(struct statement *s, int number, int next_number) {
 			next = eval_expression(s->u.goto_stmt.expression);
 			break;
 		case INPUT:
-			/* TODO implement */
+			instream = rl_instream;
+			outstream = rl_outstream;
+			rl_instream = stdin;
+			rl_outstream = stdout;
+			line = readline("? ");
+			rl_instream = instream;
+			rl_outstream = outstream;
+			eval_var_list(s->u.input_stmt.var_list, line);
+			free(line);
+			line = NULL;
 			break;
 		case LET:
 			runtime_set_var(s->u.let_stmt.var->value, eval_expression(s->u.let_stmt.expression));

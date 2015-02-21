@@ -42,7 +42,7 @@
 #include "var.h"
 #include "var_list.h"
 
-int yyerror(char *s) {
+int yyerror(yyscan_t scanner, char *s) {
 	fprintf(stdout, "%s\n", s);
 	exit(EXIT_FAILURE);
 	return -1;
@@ -71,6 +71,9 @@ int yyerror(char *s) {
 	struct var *var;
 	struct var_list *var_list;
 };
+
+%lex-param   { yyscan_t scanner }
+%parse-param { yyscan_t scanner }
 
 %token <number_literal> NUMBER
 %token <var_name> VAR
@@ -133,7 +136,7 @@ statement	: PRINT expr_list                               { $$ = new_statement( 
 		| END                                           { $$ = new_statement(    END, NULL, NULL, NULL, NULL); }
 		;
 
-expr_list	: expr_list COMMA expr_item { $$ = new_expr_list($3,   $1); }
+expr_list	: expr_item COMMA expr_list { $$ = new_expr_list($1,   $3); }
 		| expr_item                 { $$ = new_expr_list($1, NULL); }
 		;
 
@@ -141,7 +144,7 @@ expr_item	: expression { $$ = new_expr_item($1, NULL); }
 		| str        { $$ = new_expr_item(NULL, $1); }
 		;
 
-var_list	: var_list COMMA var { $$ = new_var_list($3,   $1); }
+var_list	: var COMMA var_list { $$ = new_var_list($1,   $3); }
 		| var                { $$ = new_var_list($1, NULL); }
 		;
 
@@ -198,7 +201,11 @@ void parseLine(char *line) {
 		return;
 	}
 
-	yy_scan_string(line);
-	yyparse();
-	yylex_destroy();
+	yyscan_t scanner;
+	yylex_init(&scanner);
+	YY_BUFFER_STATE buf = NULL;
+	yy_scan_string(line, scanner);
+	yyparse(scanner);
+	yy_delete_buffer(buf, scanner);
+	yylex_destroy(scanner);
 }

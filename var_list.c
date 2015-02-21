@@ -26,6 +26,8 @@
 #include "var_list.h"
 #include "var.h"
 
+void parseLine(char *line);
+
 struct var_list *new_var_list(struct var *var, struct var_list *list) {
 
 	struct var_list *vl = NULL;
@@ -41,6 +43,31 @@ struct var_list *new_var_list(struct var *var, struct var_list *list) {
 	vl->list = list;
 
 	return vl;
+}
+
+void eval_var_list(struct var_list *vl, char *line) {
+	char *s;
+	char *let;
+	struct var *v;
+	struct var_list *cur;
+	size_t len;
+
+	if (vl == NULL || line == NULL) {
+		return;
+	}
+
+	len = strlen("LET X = ") + strlen(line) + 8;
+	let = (char *) malloc(len*sizeof(char));
+
+	for (cur = vl; cur; cur = cur->list) {
+		v = cur->var;
+		s = strsep(&line, ",");
+		snprintf(let, len, "LET %c = %s", v->value, (s != NULL) ? s : "0");
+		parseLine(let);
+	}
+
+	free(let);
+	let = NULL;
 }
 
 void print_var_list(struct var_list *vl) {

@@ -45,6 +45,12 @@ will be executed. Otherwise, the statement is skipped.
 \fBGOTO expression\fR
 Evaluates 'expression' and jumps to the corresponding line number.
 .TP
+\fBINPUT var_list\fR
+Given a comma separated list of 1 or more variables, this command
+will prompt the user to enter a comma separated list of expressions.
+The value of each expression will be assigned to each corresponding
+variable.
+.TP
 \fBGOSUB expression\fR
 Evaluates 'expression' and jumps to the corresponding line number
 after saving the current line number.
