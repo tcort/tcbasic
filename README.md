@@ -26,7 +26,6 @@ The following components remain:
 ## Requirements
 
 * [C compiler](http://www.gnu.org/software/gcc/) and standard build tools ([make](http://www.gnu.org/software/make/), [sh](http://www.gnu.org/software/bash/), ...).
-* [readline](http://www.gnu.org/software/readline/) - runtime and buildtime
 * [flex](http://www.gnu.org/software/flex/) - buildtime
 * [bison](http://www.gnu.org/software/bison/) - buildtime
 * [diff](http://www.gnu.org/software/diffutils/) - buildtime (running unit tests)

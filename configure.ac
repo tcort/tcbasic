@@ -27,11 +27,6 @@ AC_PROG_YACC
 
 AC_HEADER_STDC
 
-AC_CHECK_HEADER([readline/readline.h], , AC_MSG_ERROR([error: no readline/readline.h found]))
-AC_CHECK_HEADER([readline/history.h], , AC_MSG_ERROR([error: no readline/history.h found]))
-AC_CHECK_LIB(readline, readline, ,
-        [AC_MSG_ERROR([error: no readline library found])])
-
 AC_CHECK_HEADERS([getopt.h])
 AC_CHECK_FUNCS([arc4random arc4random_uniform getopt_long strsep])
 

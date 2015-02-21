@@ -23,9 +23,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <readline/readline.h>
-#include <readline/history.h>
-
+#include "buffer.h"
+#include "readaline.h"
 #include "runtime.h"
 
 void parseLine(char *line);
@@ -62,6 +61,8 @@ int main(int argc, char *argv[]) {
 
 	int optc;
 	char *line = NULL;
+	Buffer *buf;
+	FILE *fp;
 
 	runtime_reset();
 
@@ -94,34 +95,23 @@ int main(int argc, char *argv[]) {
 		print_help(argv[0]);
 	}
 
-
-	if (argc == 2) {
-		rl_instream = fopen(argv[optind], "r");
-		if (rl_instream == NULL) {
-			perror("fopen");
-			return EXIT_FAILURE;
-		}
-
-		rl_outstream = fopen("/dev/null", "r");
-		if (rl_outstream == NULL) {
+	if (optind + 1 == argc) {
+		fp = fopen(argv[optind], "r");
+		if (fp == NULL) {
 			perror("fopen");
 			return EXIT_FAILURE;
 		}
 	} else {
-		using_history();
+		fp = stdin;
 	}
 
+	buf = bf_alloc(32, 16);
 	do {
-		line = readline((argc == 1) ? "> " : NULL);
-		if (line == NULL) {
-			break;
-		}
-		parseLine(line);
-		if (argc == 1 && strlen(line) > 0) {
-			add_history(line);
-		}
-		free(line);
-	} while (runtime_continue());
+		readaline(fp, "> ", buf);
+		parseLine(buf->buf);
+		bf_clear(buf);
+	} while (runtime_continue() && !feof(fp));
+	bf_free(buf);
 
 	if (argc == 2) {
 		line = strdup("RUN");
@@ -129,18 +119,9 @@ int main(int argc, char *argv[]) {
 		free(line);
 	}
 
-	if (rl_instream != NULL) {
-		fclose(rl_instream);
-		rl_instream = NULL;
-	} else {
-		clear_history();
+	if (fp != stdin) {
+		fclose(fp);
 	}
-
-	if (rl_outstream != NULL) {
-		fclose(rl_outstream);
-		rl_outstream = NULL;
-	}
-
 	runtime_reset();
 
 	return EXIT_SUCCESS;
