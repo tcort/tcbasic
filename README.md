@@ -1,6 +1,6 @@
-# tcb
+# tcbasic
 
-tcb is a small [BASIC](http://en.wikipedia.org/wiki/BASIC) Interpreter
+tcbasic is a small [BASIC](http://en.wikipedia.org/wiki/BASIC) Interpreter
 written in C.
 
 ## Current Status
@@ -33,11 +33,11 @@ Standard autotools build:
 
 Start the interpreter in interactive mode:
 
-    $ tcb
+    $ tcbasic
 
 Execute a program from a file in batch mode:
 
-    $ tcb sample.bas
+    $ tcbasic sample.bas
 
 ## Example Program
 

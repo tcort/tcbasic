@@ -21,8 +21,8 @@ scanner.c
 scanner.h
 scanner.plist
 stamp-h1
-tcb
-tcb*.tar.gz
+tcbasic
+tcbasic*.tar.gz
 test-driver
 test-suite.log
 *.out

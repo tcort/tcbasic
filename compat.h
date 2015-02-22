@@ -1,5 +1,5 @@
 /*
-    tcb - a small BASIC Interpreter written in C.
+    tcbasic - a small BASIC Interpreter written in C.
     Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,6 @@
 #ifndef __COMPAT_H
 #define __COMPAT_H
 
-char *tcb_strsep(char **stringp, char *delim);
+char *tcbasic_strsep(char **stringp, char *delim);
 
 #endif

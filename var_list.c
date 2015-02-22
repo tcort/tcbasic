@@ -1,5 +1,5 @@
 /*
-    tcb - a small BASIC Interpreter written in C.
+    tcbasic - a small BASIC Interpreter written in C.
     Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
@@ -67,7 +67,7 @@ void eval_var_list(struct var_list *vl, char *line) {
 #if HAVE_STRSEP
 		s = strsep(&line, ",");
 #else
-		s = tcb_strsep(&line, ",");
+		s = tcbasic_strsep(&line, ",");
 #endif
 		snprintf(let, len, "LET %c = %s", v->value, (s != NULL) ? s : "0");
 		parseLine(let);

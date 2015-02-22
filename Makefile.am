@@ -1,4 +1,4 @@
-# tcb - a small BASIC Interpreter written in C.
+# tcbasic - a small BASIC Interpreter written in C.
 # Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,9 @@ AM_YFLAGS = -d
 scanner.h: scanner.l
 	$(LEX) --header-file=$@ -o /dev/null $(top_srcdir)/scanner.l
 
-bin_PROGRAMS = tcb
+bin_PROGRAMS = tcbasic
 
-tcb_SOURCES = \
+tcbasic_SOURCES = \
 			scanner.l \
 			parser.y \
 			driver.c \
@@ -47,9 +47,9 @@ tcb_SOURCES = \
 	var.h		var.c \
 	var_list.h	var_list.c
 
-tcb_LDADD = @LEXLIB@
+tcbasic_LDADD = @LEXLIB@
 
-man_MANS = tcb.1
+man_MANS = tcbasic.1
 
 TESTS = \
 	abs.sh \
@@ -60,7 +60,7 @@ TESTS = \
 TESTS_ENVIRONMENT = \
 	DIFF=$(DIFF)  \
 	SED=$(SED)  \
-	TCB=$(top_builddir)/tcb    \
+	TCB=$(top_builddir)/tcbasic    \
 	TOP_SRCDIR=$(top_srcdir)    \
 	TCB_IN_DIR=$(top_srcdir)   \
 	TCB_OUT_DIR=$(top_builddir) \

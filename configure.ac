@@ -1,5 +1,5 @@
 
-dnl    tcb - a small BASIC Interpreter written in C.
+dnl    tcbasic - a small BASIC Interpreter written in C.
 dnl    Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
 dnl
 dnl    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@ dnl    You should have received a copy of the GNU General Public License
 dnl    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.59)
-AC_INIT([tcb], [1.0.0], [linuxgeek@gmail.com])
+AC_INIT([tcbasic], [1.0.0], [linuxgeek@gmail.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AM_SILENT_RULES([yes])
 

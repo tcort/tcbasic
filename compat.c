@@ -1,5 +1,5 @@
 /*
-    tcb - a small BASIC Interpreter written in C.
+    tcbasic - a small BASIC Interpreter written in C.
     Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 #include <string.h>
 
-char *tcb_strsep(char **stringp, char *delim) {
+char *tcbasic_strsep(char **stringp, char *delim) {
 	char *s;
 	if (stringp == NULL || *stringp == NULL || *stringp[0] == '\0') {
 		return NULL;
