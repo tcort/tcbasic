@@ -1,7 +1,7 @@
 # tcbasic
 
 tcbasic is a small [BASIC](http://en.wikipedia.org/wiki/BASIC) Interpreter
-written in C.
+written in [C](http://en.wikipedia.org/wiki/C_%28programming_language%29).
 
 ## Current Status
 
@@ -12,13 +12,20 @@ complete dialects of BASIC.
 
 ## Requirements
 
-* [C compiler](http://www.gnu.org/software/gcc/) and standard build tools ([make](http://www.gnu.org/software/make/), [sh](http://www.gnu.org/software/bash/), ...).
-* [flex](http://www.gnu.org/software/flex/) - buildtime
-* [bison](http://www.gnu.org/software/bison/) - buildtime
-* [diff](http://www.gnu.org/software/diffutils/) - buildtime (running unit tests)
-* [sed](http://www.gnu.org/software/sed/) - buildtime (running unit tests)
-* [autoconf](http://gnu.org/software/autoconf) - development time
-* [automake](http://gnu.org/software/makeconf) - development time
+The following software is used for developing tcbasic:
+
+* [cc](http://www.gnu.org/software/gcc/)
+* [make](http://www.gnu.org/software/make/)
+* [sh](http://www.gnu.org/software/bash/)
+* [sed](http://www.gnu.org/software/sed/)
+* [diff](http://www.gnu.org/software/diffutils/)
+* [flex](http://www.gnu.org/software/flex/)
+* [bison](http://www.gnu.org/software/bison/)
+* [autoconf](http://gnu.org/software/autoconf)
+* [automake](http://gnu.org/software/makeconf)
+
+tcbasic does not depend on any external libraries other than
+[libc](http://www.gnu.org/software/libc/)
 
 ## Building
 
