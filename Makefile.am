@@ -52,30 +52,30 @@ tcb_LDADD = @LEXLIB@
 man_MANS = tcb.1
 
 TESTS = \
-	./testsuite/abs.sh \
-	./testsuite/fib.sh \
-	./testsuite/hello.sh \
-	./testsuite/remainder.sh
+	abs.sh \
+	fib.sh \
+	hello.sh \
+	remainder.sh
 
 TESTS_ENVIRONMENT = \
 	DIFF=$(DIFF)  \
 	SED=$(SED)  \
 	TCB=$(top_builddir)/tcb    \
 	TOP_SRCDIR=$(top_srcdir)    \
-	TCB_IN_DIR=$(top_srcdir)/testsuite   \
-	TCB_OUT_DIR=$(top_builddir)/testsuite \
-	TCB_EX_DIR=$(top_srcdir)/testsuite   \
+	TCB_IN_DIR=$(top_srcdir)   \
+	TCB_OUT_DIR=$(top_builddir) \
+	TCB_EX_DIR=$(top_srcdir)   \
 	TEST_RUNNER=$(top_srcdir)/test-runner.sh
 
 CLEANFILES = $(BUILT_SOURCES) \
-	$(top_builddir)/testsuite/abs.out \
-	$(top_builddir)/testsuite/fib.out \
-	$(top_builddir)/testsuite/hello.out \
-	$(top_builddir)/testsuite/remainder.out
+	abs.out \
+	fib.out \
+	hello.out \
+	remainder.out
 
 EXTRA_DIST = $(man_MANS) $(top_srcdir)/test-runner.sh \
-	$(top_srcdir)/testsuite/abs.sh		$(top_srcdir)/testsuite/abs.bas		$(top_srcdir)/testsuite/abs.ex	\
-	$(top_srcdir)/testsuite/fib.sh		$(top_srcdir)/testsuite/fib.bas		$(top_srcdir)/testsuite/fib.ex	\
-	$(top_srcdir)/testsuite/hello.sh	$(top_srcdir)/testsuite/hello.bas	$(top_srcdir)/testsuite/hello.ex \
-	$(top_srcdir)/testsuite/remainder.sh	$(top_srcdir)/testsuite/remainder.bas	$(top_srcdir)/testsuite/remainder.ex
+	abs.sh		abs.bas		abs.ex	\
+	fib.sh		fib.bas		fib.ex	\
+	hello.sh	hello.bas	hello.ex \
+	remainder.sh	remainder.bas	remainder.ex
 
