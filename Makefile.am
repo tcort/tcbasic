@@ -73,7 +73,10 @@ CLEANFILES = $(BUILT_SOURCES) \
 	hello.out \
 	remainder.out
 
-EXTRA_DIST = $(man_MANS) $(top_srcdir)/test-runner.sh \
+EXTRA_DIST = \
+	$(man_MANS) \
+	test-runner.sh \
+	README.md \
 	abs.sh		abs.bas		abs.ex	\
 	fib.sh		fib.bas		fib.ex	\
 	hello.sh	hello.bas	hello.ex \

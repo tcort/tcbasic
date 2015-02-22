@@ -1,2 +1,19 @@
-* Unit Tests
-* i18n/l10n
+Implement additional commands:
+
+* QUIT
+* SAVE filename
+* LOAD filename
+
+Implement additional statements:
+
+* FOR/NEXT
+
+Implement language fundamentals:
+
+* Strings
+* Floating point
+
+Other changes:
+
+* Better error handling / reporting.
+* Move away from flex and bison.
