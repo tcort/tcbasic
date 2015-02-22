@@ -23,7 +23,7 @@
 
 #include "parser.h"
 
-int yyerror(char *);
+int yyerror(void *, char *);
 %}
 
 %option reentrant
@@ -83,11 +83,11 @@ int yyerror(char *);
 		}
 
 .	{
-		yyerror("Unknown character");
+		yyerror(yyscanner, "Unknown character");
 	}
 
 %%
 
-int yywrap(yyscan_t yyscanner) {
+int yywrap(void *yyscanner) {
 	return 1;
 }
