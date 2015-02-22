@@ -24,7 +24,6 @@ complete dialects of BASIC.
 
 Standard autotools build:
 
-    $ autoreconf -i
     $ ./configure
     $ make
     $ make check
