@@ -21,10 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
-
 #include "expr_list.h"
 #include "expr_item.h"
+
+#include "tokenizer.h"
 
 struct expr_list *new_expr_list(struct expr_item *expr_item, struct expr_list *list) {
 
@@ -41,6 +41,24 @@ struct expr_list *new_expr_list(struct expr_item *expr_item, struct expr_list *l
 	el->list = list;
 
 	return el;
+}
+
+struct expr_list *parse_expr_list(struct tokenizer *t) {
+
+	static struct expr_item *i;
+
+	i = parse_expr_item(t);
+	if (i == NULL) {
+		return NULL;
+	}
+
+	token_get(t);
+	if (t->token.type == COMMA) {
+		return new_expr_list(i, parse_expr_list(t));
+	} else {
+		token_unget(t);
+		return new_expr_list(i, NULL);
+	}
 }
 
 void eval_expr_list(struct expr_list *el) {
@@ -69,12 +87,7 @@ void print_expr_list(struct expr_list *el) {
 void free_expr_list(struct expr_list *el) {
 	if (el != NULL) {
 		free_expr_item(el->expr_item);
-		el->expr_item = NULL;
-
 		free_expr_list(el->list);
-		el->list = NULL;
-
 		free(el);
-		el = NULL;
 	}
 }

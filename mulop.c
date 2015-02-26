@@ -21,7 +21,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
+#include "tokenizer.h"
+
 #include "mulop.h"
 
 struct mulop *new_mulop(int type) {
@@ -38,6 +39,20 @@ struct mulop *new_mulop(int type) {
 	op->type = type;
 
 	return op;
+}
+
+struct mulop *parse_mulop(struct tokenizer *t) {
+
+	token_get(t);
+	switch (t->token.type) {
+		case TIMES:
+			return new_mulop(TIMES);
+		case DIVIDE:
+			return new_mulop(DIVIDE);
+		default:
+			token_unget(t);
+			return NULL;
+	}
 }
 
 void print_mulop(struct mulop *op) {
@@ -62,6 +77,5 @@ void print_mulop(struct mulop *op) {
 void free_mulop(struct mulop *op) {
 	if (op != NULL) {
 		free(op);
-		op = NULL;
 	}
 }

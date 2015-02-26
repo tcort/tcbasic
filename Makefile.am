@@ -14,17 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-BUILT_SOURCES = scanner.c scanner.h parser.c parser.h
-AM_YFLAGS = -d
-
-scanner.h: scanner.l
-	$(LEX) --header-file=$@ -o /dev/null $(top_srcdir)/scanner.l
-
 bin_PROGRAMS = tcbasic
 
 tcbasic_SOURCES = \
-			scanner.l \
-			parser.y \
 			driver.c \
 	buffer.h	buffer.c \
 	compat.h	compat.c \
@@ -35,19 +27,20 @@ tcbasic_SOURCES = \
 	expr_item.h	expr_item.c \
 	expr_list.h	expr_list.c \
 	expression.h	expression.c \
+	eval.h		eval.c \
 	factor.h	factor.c \
 	line.h		line.c \
 	mulop.h		mulop.c \
 	number.h	number.c \
+	rem.h		rem.c \
 	relop.h		relop.c \
 	rnd.h		rnd.c \
 	statement.h	statement.c \
 	str.h		str.c \
 	term.h		term.c \
+	tokenizer.h	tokenizer.c \
 	var.h		var.c \
 	var_list.h	var_list.c
-
-tcbasic_LDADD = @LEXLIB@
 
 man_MANS = tcbasic.1
 
@@ -55,6 +48,7 @@ TESTS = \
 	abs.sh \
 	fib.sh \
 	hello.sh \
+	newton.sh \
 	remainder.sh
 
 TESTS_ENVIRONMENT = \
@@ -71,6 +65,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 	abs.out \
 	fib.out \
 	hello.out \
+	newton.out \
 	remainder.out
 
 EXTRA_DIST = \
@@ -80,5 +75,6 @@ EXTRA_DIST = \
 	abs.sh		abs.bas		abs.ex	\
 	fib.sh		fib.bas		fib.ex	\
 	hello.sh	hello.bas	hello.ex \
+	newton.sh	newton.bas	newton.ex \
 	remainder.sh	remainder.bas	remainder.ex
 

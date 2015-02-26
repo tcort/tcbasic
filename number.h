@@ -19,12 +19,31 @@
 #ifndef __NUMBER_H
 #define __NUMBER_H
 
+struct tokenizer;
+
 struct number {
-	int value;
+	enum number_type {
+		INT,
+		FLOAT
+	} type;
+	union number_value {
+		int ival;
+		float fval;
+	} value;
 };
 
-struct number *new_number(int value);
-int eval_number(struct number *n);
+#define INT_VALUE(n) (n->type == INT ? n->value.ival : (int)n->value.fval)
+#define FLOAT_VALUE(n) (n->type == FLOAT ? n->value.fval : (float) n->value.ival)
+
+struct number *new_number(char *s);
+struct number *new_number_from_int(int i);
+struct number *new_number_from_float(float f);
+struct number *parse_number(struct tokenizer *t);
+struct number *clone_number(struct number *n);
+struct number *add_number(struct number *x, struct number *y);
+struct number *subtract_number(struct number *x, struct number *y);
+struct number *multiply_number(struct number *x, struct number *y);
+struct number *divide_number(struct number *x, struct number *y);
 void print_number(struct number *n);
 void free_number(struct number *n);
 

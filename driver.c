@@ -24,10 +24,10 @@
 #include <string.h>
 
 #include "buffer.h"
+#include "eval.h"
 #include "readaline.h"
 #include "runtime.h"
-
-void parseLine(char *line);
+#include "tokenizer.h"
 
 void print_help(char *progname) {
 
@@ -60,13 +60,10 @@ static void print_version(void) {
 int main(int argc, char *argv[]) {
 
 	int optc;
-	char *line = NULL;
 	Buffer *buf;
 	FILE *fp;
-
-	runtime_reset();
-
 	const char* const short_options = "h?v";
+
 #if HAVE_GETOPT_LONG
 	static const struct option long_options[] = {
 		{"help", no_argument, NULL, 'h'},
@@ -74,6 +71,8 @@ int main(int argc, char *argv[]) {
 		{NULL, 0, NULL, 0}
 	};
 #endif
+
+	runtime_reset();
 
 #if HAVE_GETOPT_LONG
 	while ((optc = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
@@ -105,17 +104,20 @@ int main(int argc, char *argv[]) {
 		fp = stdin;
 	}
 
+	tokenizer_init();
+
 	buf = bf_alloc(32, 16);
 	do {
 		readaline(fp, "> ", buf);
-		parseLine(buf->buf);
+		eval(buf->buf);
 		bf_clear(buf);
 	} while (runtime_continue() && !feof(fp));
 	bf_free(buf);
 
 	if (argc == 2) {
+		char *line;
 		line = strdup("RUN");
-		parseLine(line);
+		eval(line);
 		free(line);
 	}
 
@@ -123,6 +125,8 @@ int main(int argc, char *argv[]) {
 		fclose(fp);
 	}
 	runtime_reset();
+
+	tokenizer_exit();
 
 	return EXIT_SUCCESS;
 }

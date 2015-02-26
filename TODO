@@ -1,19 +1,28 @@
-Implement additional commands:
+Enhancements:
 
-* QUIT
-* SAVE filename
-* LOAD filename
+* PRINT separators (';' vs ','), print zone, etc
 
 Implement additional statements:
 
 * FOR/NEXT
+* READ/DATA/RESTORE
+* ON .. GOTO
+* DEF
+* DIM
 
 Implement language fundamentals:
 
 * Strings
-* Floating point
+* more built-in functions (SIN(), COS(), etc).
+* Arrays (test with quicksort)
+
+Implement language standards / defacto standards:
+
+* Dartmouth BASIC
+* ECMA-55 Minimal BASIC
+* ECMA-116 Level 1 and 2
 
 Other changes:
 
 * Better error handling / reporting.
-* Move away from flex and bison.
+* Doxygen code comments

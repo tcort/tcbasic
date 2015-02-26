@@ -24,6 +24,7 @@ struct relop {
 };
 
 struct relop *new_relop(int type);
+struct relop *parse_relop(struct tokenizer *t);
 void print_relop(struct relop *op);
 void free_relop(struct relop *op);
 

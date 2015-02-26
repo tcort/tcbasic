@@ -21,8 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
 #include "runtime.h"
+#include "tokenizer.h"
+
+#include "number.h"
 #include "var.h"
 
 struct var *new_var(int value) {
@@ -41,12 +43,24 @@ struct var *new_var(int value) {
 	return v;
 }
 
-int eval_var(struct var *v) {
+struct var *parse_var(struct tokenizer *t) {
+
+	token_get(t);
+	switch (t->token.type) {
+		case VAR:
+			return new_var(t->token.text[0]);
+		default:
+			token_unget(t);
+			return NULL;
+	}
+}
+
+struct number *eval_var(struct var *v) {
 	if (v == NULL) {
 		return 0;
 	}
 
-	return runtime_get_var(v->value);
+	return clone_number(runtime_get_var(v->value));
 }
 
 void print_var(struct var *v) {
@@ -60,6 +74,5 @@ void print_var(struct var *v) {
 void free_var(struct var *v) {
 	if (v != NULL) {
 		free(v);
-		v = NULL;
 	}
 }

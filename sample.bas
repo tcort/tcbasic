@@ -1,3 +1,4 @@
+1 REM This is a fibonacci number calculator!
 10 PRINT "How many fibonacci numbers should I calculate?"
 20 INPUT X
 30 IF X <= 2 THEN GOTO 10

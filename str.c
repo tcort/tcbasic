@@ -21,8 +21,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
 #include "str.h"
+
+#include "tokenizer.h"
 
 struct str *new_str(char *value) {
 
@@ -38,6 +39,18 @@ struct str *new_str(char *value) {
 	s->value = value;
 
 	return s;
+}
+
+struct str *parse_str(struct tokenizer *t) {
+	token_get(t);
+	if (t->token.type == STR) {
+		char *s = strdup(t->token.text+1);
+		s[strlen(s) - 1] = '\0';
+		return new_str(s);
+	} else {
+		token_unget(t);
+		return NULL;
+	}
 }
 
 char *eval_str(struct str *s) {
@@ -60,9 +73,7 @@ void free_str(struct str *s) {
 	if (s != NULL) {
 		if (s->value != NULL) {
 			free(s->value);
-			s->value = NULL;
 		}
 		free(s);
-		s = NULL;
 	}
 }

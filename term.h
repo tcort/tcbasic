@@ -29,7 +29,8 @@ struct term {
 };
 
 struct term *new_term(struct factor *left, struct mulop *op, struct factor *right);
-int eval_term(struct term *op);
+struct term *parse_term(struct tokenizer *t);
+struct number *eval_term(struct term *op);
 void print_term(struct term *op);
 void free_term(struct term *op);
 

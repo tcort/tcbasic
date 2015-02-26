@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
+#include "tokenizer.h"
 
 #include "expression.h"
 #include "factor.h"
@@ -59,33 +59,70 @@ struct factor *new_factor(int type, void *value) {
 	return f;
 }
 
-int eval_factor(struct factor *f) {
+struct factor *parse_factor(struct tokenizer *t) {
 
-	int r;
+	static struct var *v;
+	static struct number *num;
+	static struct rnd *r;
+
+	v = parse_var(t);
+	if (v != NULL) {
+		return new_factor(VAR, v);
+	}
+
+	num = parse_number(t);
+	if (num != NULL) {
+		return new_factor(NUMBER, num);
+	}
+
+	token_get(t);
+	if (t->token.type == OPAREN) {
+		static struct expression *expr;
+		expr = parse_expression(t);
+		if (expr == NULL) {
+			return NULL;
+		}
+		token_get(t);
+		if (t->token.type == CPAREN) {
+			return new_factor(EXPRESSION, expr);
+		}
+		token_unget(t);
+		free_expression(expr);
+		return NULL;
+	}
+	token_unget(t);
+	r = parse_rnd(t);
+	if (r != NULL) {
+		return new_factor(RND, r);
+	}
+
+	return NULL;
+}
+
+struct number * eval_factor(struct factor *f) {
+
+	struct number *n = NULL;
 
 	if (f == NULL) {
-		return 1;
+		return new_number_from_int(1);
 	}
 
 	switch (f->type) {
 		case EXPRESSION:
-			r = eval_expression(f->u.e);
+			n = eval_expression(f->u.e);
 			break;
 		case NUMBER:
-			r = eval_number(f->u.n);
+			n = clone_number(f->u.n);
 			break;
 		case RND:
-			r = eval_rnd(f->u.r);
+			n = eval_rnd(f->u.r);
 			break;
 		case VAR:
-			r = eval_var(f->u.v);
-			break;
-		default:
-			r = 0;
+			n = eval_var(f->u.v);
 			break;
 	}
 
-	return r;
+	return n;
 }
 
 void print_factor(struct factor *f) {
@@ -96,7 +133,9 @@ void print_factor(struct factor *f) {
 
 	switch (f->type) {
 		case EXPRESSION:
+			printf("(");
 			print_expression(f->u.e);
+			printf(")");
 			break;
 		case NUMBER:
 			print_number(f->u.n);
@@ -131,6 +170,5 @@ void free_factor(struct factor *f) {
 				break;
 		}
 		free(f);
-		f = NULL;
 	}
 }

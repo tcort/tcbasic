@@ -21,8 +21,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
 #include "addop.h"
+#include "tokenizer.h"
 
 struct addop *new_addop(int type) {
 
@@ -38,6 +38,20 @@ struct addop *new_addop(int type) {
 	op->type = type;
 
 	return op;
+}
+
+struct addop *parse_addop(struct tokenizer *t) {
+
+	token_get(t);
+	switch (t->token.type) {
+		case PLUS:
+			return new_addop(PLUS);
+		case MINUS:
+			return new_addop(MINUS);
+		default:
+			token_unget(t);
+			return NULL;
+	}
 }
 
 int eval_addop(struct addop *op) {
@@ -71,6 +85,5 @@ void print_addop(struct addop *op) {
 void free_addop(struct addop *op) {
 	if (op != NULL) {
 		free(op);
-		op = NULL;
 	}
 }

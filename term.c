@@ -21,10 +21,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
+#include "tokenizer.h"
 
 #include "factor.h"
 #include "mulop.h"
+#include "number.h"
 #include "term.h"
 
 struct term *new_term(struct factor *left, struct mulop *op, struct factor *right) {
@@ -45,18 +46,54 @@ struct term *new_term(struct factor *left, struct mulop *op, struct factor *righ
 	return t;
 }
 
-int eval_term(struct term *t) {
+struct term *parse_term(struct tokenizer *t) {
+	struct factor *f1;
+	struct mulop *op;
+	struct factor *f2;
 
-	int l, r;
+	f1 = parse_factor(t);
+	if (f1 == NULL) {
+		return NULL;
+	}
+
+	op = parse_mulop(t);
+	if (op == NULL) {
+		return new_term(f1, NULL, NULL);
+	}
+
+	f2 = parse_factor(t);
+	if (f2 == NULL) {
+		free_factor(f1);
+		free_mulop(op);
+		return NULL;
+	}
+
+	return new_term(f1, op, f2);
+}
+
+struct number * eval_term(struct term *t) {
+
+	struct number *l;
+	struct number *r;
+	struct number *result;
 
 	if (t == NULL) {
-		return 0;
+		return new_number_from_int(0);
 	}
 
 	l = eval_factor(t->left);
 	r = eval_factor(t->right);
 
-	return (t->op != NULL && t->op->type == DIVIDE) ? l / r : l * r;
+	if (t->op != NULL && t->op->type == DIVIDE) {
+		result = divide_number(l, r);
+	} else {
+		result = multiply_number(l, r);
+	}
+
+	free_number(l);
+	free_number(r);
+
+	return result;
 }
 
 void print_term(struct term *t) {
@@ -77,15 +114,8 @@ void print_term(struct term *t) {
 void free_term(struct term *t) {
 	if (t != NULL) {
 		free_factor(t->left);
-		t->left = NULL;
-
 		free_mulop(t->op);
-		t->op = NULL;
-
 		free_factor(t->right);
-		t->right = NULL;
-
 		free(t);
-		t = NULL;
 	}
 }

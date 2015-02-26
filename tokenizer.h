@@ -16,19 +16,38 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __COMMAND_H
-#define __COMMAND_H
+#ifndef __TOKENIZER_H
+#define __TOKENIZER_H
 
-struct tokenizer;
-
-struct command {
-	int type;
+enum token_types {
+	PRINT, IF, THEN, GOTO, INPUT, LET, GOSUB, RETURN, END, REM, RANDOMIZE,
+	CLEAR, LIST, RUN, STOP,
+	RND,
+	LTEQ, LTGT, LT, GTEQ, GTLT, GT, EQ,
+	PLUS, MINUS, TIMES, DIVIDE,
+	COMMA, OPAREN, CPAREN,
+	STR, VAR, NUMBER,
+	SPACE, INVALID, EOS
 };
 
-struct command *new_command(int type);
-struct command *parse_command(struct tokenizer *t);
-void exec_command(struct command *cmd);
-void print_command(struct command *cmd);
-void free_command(struct command *cmd);
+enum lhs {
+	EXPRESSION
+};
+
+struct token {
+	enum token_types type;
+	char *text;
+};
+
+struct tokenizer {
+	char **s;
+	struct token token;
+};
+
+void token_get(struct tokenizer *t);
+void token_unget(struct tokenizer *t);
+
+void tokenizer_init(void);
+void tokenizer_exit(void);
 
 #endif

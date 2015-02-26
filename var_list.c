@@ -23,13 +23,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
 #include "compat.h"
+#include "eval.h"
+#include "tokenizer.h"
 
 #include "var_list.h"
 #include "var.h"
-
-void parseLine(char *line);
 
 struct var_list *new_var_list(struct var *var, struct var_list *list) {
 
@@ -48,10 +47,26 @@ struct var_list *new_var_list(struct var *var, struct var_list *list) {
 	return vl;
 }
 
+struct var_list *parse_var_list(struct tokenizer *t) {
+
+	static struct var *v;
+
+	v = parse_var(t);
+	if (v == NULL) {
+		return NULL;
+	}
+
+	token_get(t);
+	if (t->token.type == COMMA) {
+		return new_var_list(v, parse_var_list(t));
+	} else {
+		token_unget(t);
+		return new_var_list(v, NULL);
+	}
+}
+
 void eval_var_list(struct var_list *vl, char *line) {
-	char *s;
 	char *let;
-	struct var *v;
 	struct var_list *cur;
 	size_t len;
 
@@ -63,6 +78,8 @@ void eval_var_list(struct var_list *vl, char *line) {
 	let = (char *) malloc(len*sizeof(char));
 
 	for (cur = vl; cur; cur = cur->list) {
+		char *s;
+		struct var *v;
 		v = cur->var;
 #if HAVE_STRSEP
 		s = strsep(&line, ",");
@@ -70,7 +87,7 @@ void eval_var_list(struct var_list *vl, char *line) {
 		s = tcbasic_strsep(&line, ",");
 #endif
 		snprintf(let, len, "LET %c = %s", v->value, (s != NULL) ? s : "0");
-		parseLine(let);
+		eval(let);
 	}
 
 	free(let);
@@ -85,7 +102,7 @@ void print_var_list(struct var_list *vl) {
 
 	print_var(vl->var);
 	if (vl->list != NULL) {
-		printf(",");
+		printf(", ");
 		print_var_list(vl->list);
 	}
 }
@@ -93,12 +110,7 @@ void print_var_list(struct var_list *vl) {
 void free_var_list(struct var_list *vl) {
 	if (vl != NULL) {
 		free_var(vl->var);
-		vl->var = NULL;
-
 		free_var_list(vl->list);
-		vl->list = NULL;
-
 		free(vl);
-		vl = NULL;
 	}
 }

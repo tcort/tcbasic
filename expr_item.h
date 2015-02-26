@@ -21,6 +21,7 @@
 
 struct expression;
 struct str;
+struct tokenizer;
 
 struct expr_item {
 	struct expression *e;
@@ -28,6 +29,7 @@ struct expr_item {
 };
 
 struct expr_item *new_expr_item(struct expression *e, struct str *str);
+struct expr_item *parse_expr_item(struct tokenizer *t);
 void eval_expr_item(struct expr_item *ei);
 void print_expr_item(struct expr_item *ei);
 void free_expr_item(struct expr_item *ei);

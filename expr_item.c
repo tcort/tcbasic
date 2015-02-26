@@ -21,10 +21,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
-
 #include "expr_item.h"
 #include "expression.h"
+#include "number.h"
 #include "str.h"
 
 struct expr_item *new_expr_item(struct expression *e, struct str *str) {
@@ -44,6 +43,24 @@ struct expr_item *new_expr_item(struct expression *e, struct str *str) {
 	return ei;
 }
 
+struct expr_item *parse_expr_item(struct tokenizer *t) {
+
+	struct expression *expr;
+	struct str *s;
+
+	expr = parse_expression(t);
+	if (expr != NULL) {
+		return new_expr_item(expr, NULL);
+	}
+
+	s = parse_str(t);
+	if (s != NULL) {
+		return new_expr_item(NULL, s);
+	}
+
+	return NULL;
+}
+
 void eval_expr_item(struct expr_item *ei) {
 
 	if (ei == NULL) {
@@ -53,7 +70,9 @@ void eval_expr_item(struct expr_item *ei) {
 	if (ei->str != NULL) {
 		printf("%s", eval_str(ei->str));
 	} else {
-		printf("%d", eval_expression(ei->e));
+		struct number *n = eval_expression(ei->e);
+		print_number(n);
+		free_number(n);
 	}
 }
 
@@ -69,14 +88,8 @@ void print_expr_item(struct expr_item *ei) {
 
 void free_expr_item(struct expr_item *ei) {
 	if (ei != NULL) {
-
 		free_str(ei->str);
-		ei->str = NULL;
-
 		free_expression(ei->e);
-		ei->e = NULL;
-
 		free(ei);
-		ei = NULL;
 	}
 }

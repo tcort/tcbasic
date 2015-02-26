@@ -16,19 +16,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __COMMAND_H
-#define __COMMAND_H
+#ifndef __REM_H
+#define __REM_H
 
 struct tokenizer;
 
-struct command {
-	int type;
+struct rem {
+	char *value;
 };
 
-struct command *new_command(int type);
-struct command *parse_command(struct tokenizer *t);
-void exec_command(struct command *cmd);
-void print_command(struct command *cmd);
-void free_command(struct command *cmd);
+struct rem *new_rem(char *value);
+struct rem *parse_rem(struct tokenizer *t);
+void print_rem(struct rem *r);
+void free_rem(struct rem *r);
 
 #endif

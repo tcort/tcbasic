@@ -20,7 +20,9 @@
 #define __EXPRESSION_H
 
 struct addop;
+struct number;
 struct term;
+struct tokenizer;
 
 struct expression {
 	struct addop *term1_op;
@@ -30,7 +32,8 @@ struct expression {
 };
 
 struct expression *new_expression(struct addop *term1_op, struct term *term1, struct addop *term2_op, struct term *term2);
-int eval_expression(struct expression *e);
+struct expression *parse_expression(struct tokenizer *t);
+struct number *eval_expression(struct expression *e);
 void print_expression(struct expression *e);
 void free_expression(struct expression *e);
 

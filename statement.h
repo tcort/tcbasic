@@ -23,6 +23,7 @@ struct expr_list;
 struct expression;
 struct statement;
 struct relop;
+struct rem;
 
 struct statement {
 	int type;
@@ -50,10 +51,14 @@ struct statement {
 		struct gosub_statement {
 			struct expression *expression;
 		} gosub_stmt;
+		struct rem_statement {
+			struct rem *rem;
+		} rem_stmt;
 	} u;
 };
 
 struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, void *arg4);
+struct statement *parse_statement(struct tokenizer *t);
 void print_statement(struct statement *s);
 int eval_statement(struct statement *s, int number, int next_number);
 void free_statement(struct statement *s);

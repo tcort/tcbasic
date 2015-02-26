@@ -19,11 +19,14 @@
 #ifndef __ADDOP_H
 #define __ADDOP_H
 
+struct tokenizer;
+
 struct addop {
 	int type;
 };
 
 struct addop *new_addop(int type);
+struct addop *parse_addop(struct tokenizer *t);
 int eval_addop(struct addop *op);
 void print_addop(struct addop *op);
 void free_addop(struct addop *op);

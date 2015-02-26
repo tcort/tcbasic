@@ -19,12 +19,16 @@
 #ifndef __VAR_H
 #define __VAR_H
 
+struct number;
+struct tokenizer;
+
 struct var {
 	char value;
 };
 
 struct var *new_var(int value);
-int eval_var(struct var *v);
+struct var *parse_var(struct tokenizer *t);
+struct number *eval_var(struct var *v);
 void print_var(struct var *v);
 void free_var(struct var *v);
 

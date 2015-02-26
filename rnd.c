@@ -21,12 +21,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
+#include "tokenizer.h"
 
-#include "expression.h"
+#include "number.h"
 #include "rnd.h"
 
-struct rnd *new_rnd(struct expression *expression) {
+struct rnd *new_rnd() {
 
 	struct rnd *r = NULL;
 
@@ -37,28 +37,25 @@ struct rnd *new_rnd(struct expression *expression) {
 	}
 	memset(r, '\0', sizeof(struct rnd));
 
-	r->expression = expression;
-
 	return r;
 }
 
-int eval_rnd(struct rnd *r) {
-	int n;
+struct rnd *parse_rnd(struct tokenizer *t) {
 
-	if (r == NULL) {
-#ifdef HAVE_ARC4RANDOM
-		return arc4random();
-#else
-		return rand();
-#endif
+	token_get(t);
+	if (t->token.type != RND) {
+		token_unget(t);
+		return NULL;
 	}
 
-	n = eval_expression(r->expression);
-#ifdef HAVE_ARC4RANDOM_UNIFORM
-	return arc4random_uniform(n);
-#else
-	return rand() % n;
-#endif
+	return new_rnd();
+}
+
+struct number *eval_rnd(struct rnd *r) {
+
+	/* IEEE 754 floating point -- exponent is 2^-1, mantissa is "random" */
+        int x = 0x3f000000 | (rand() & 0x7FFFFF);
+	return new_number_from_float(*((float*)&x));
 }
 
 void print_rnd(struct rnd *r) {
@@ -66,18 +63,11 @@ void print_rnd(struct rnd *r) {
 		return;
 	}
 
-	printf("RND(");
-	print_expression(r->expression);
-	printf(")");
+	printf("RND");
 }
 
 void free_rnd(struct rnd *r) {
 	if (r != NULL) {
-		if (r->expression != NULL) {
-			free_expression(r->expression);
-			r->expression = NULL;
-		}
 		free(r);
-		r = NULL;
 	}
 }

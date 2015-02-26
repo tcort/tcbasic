@@ -23,6 +23,7 @@
 #include <time.h>
 
 #include "line.h"
+#include "number.h"
 
 #include "runtime.h"
 
@@ -34,6 +35,10 @@ struct line *runtime_get_first_line(void) {
 
 struct line *runtime_get_line(int number) {
 	struct line *cur;
+
+	if (number <= 0) {
+		return NULL;
+	}
 
 	for (cur = lines; cur != NULL; cur = cur->next) {
 		if (number == cur->number) {
@@ -49,6 +54,10 @@ void runtime_rm_line(int number) {
 	struct line *head = list;
 	struct line *cur = list;
 	struct line *prev;
+
+	if (number <= 0) {
+		return;
+	}
 
 	if (head == NULL) { /* empty list */
 		/* nothing to do */;
@@ -74,6 +83,10 @@ void runtime_set_line(struct line *item) {
 	struct line *head = list;
 	struct line *cur = list;
 	struct line *prev;
+
+	if (item == NULL || item->number <= 0) {
+		return;
+	}
 
 	if (head == NULL) { /* empty list, make item 1st element */
 		head = item;
@@ -111,19 +124,27 @@ void runtime_set_line(struct line *item) {
 /* *** *** *** */
 
 #define NVARS 26
-int vars[NVARS];
+struct number *vars[NVARS];
 
-void runtime_set_var(char var, int value) {
-	vars[(var - 'A') % NVARS] = value;
+void runtime_set_var(char var, struct number *value) {
+	int i = (var - 'A') % NVARS;
+	if (vars[i] != NULL) {
+		free_number(vars[i]);
+	}
+	vars[(var - 'A') % NVARS] = clone_number(value);
 }
 
-int runtime_get_var(char var) {
+struct number *runtime_get_var(char var) {
 	return vars[(var - 'A') % NVARS];
 }
 
 /* *** *** *** */
 
 int done = 0;
+
+void runtime_stop(void) {
+	done = 1;
+}
 
 int runtime_continue(void) {
 	return !done;
@@ -173,7 +194,7 @@ int runtime_callstack_pop() {
 /* *** *** *** */
 
 void runtime_reset(void) {
-	memset(vars, '\0', sizeof(char) * NVARS);
+	memset(vars, '\0', sizeof(struct number *) * NVARS);
 	if (lines != NULL) {
 		free_line(lines);
 		lines = NULL;

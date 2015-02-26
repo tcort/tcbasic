@@ -20,6 +20,7 @@
 #define __EXPR_LIST_H
 
 struct expr_item;
+struct tokenizer;
 
 struct expr_list {
 	struct expr_item *expr_item;
@@ -27,6 +28,7 @@ struct expr_list {
 };
 
 struct expr_list *new_expr_list(struct expr_item *expr_item, struct expr_list *list);
+struct expr_list *parse_expr_list(struct tokenizer *t);
 void eval_expr_list(struct expr_list *el);
 void print_expr_list(struct expr_list *el);
 void free_expr_list(struct expr_list *el);

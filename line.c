@@ -21,8 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
+#include "runtime.h"
+#include "tokenizer.h"
 
+#include "command.h"
 #include "line.h"
 #include "number.h"
 #include "statement.h"
@@ -39,16 +41,55 @@ struct line *new_line(struct statement *statement, struct number *number) {
 	memset(l, '\0', sizeof(struct line));
 
 	l->statement = statement;
-	l->number = eval_number(number);
+	l->number = INT_VALUE(number);
 
 	free_number(number);
 
 	return l;
 }
 
-int eval_line(struct line *l) {
+void parse_line(struct tokenizer *t) {
 
-	int r;
+	struct command *cmd;
+	struct statement *stmt;
+	struct number *num;
+
+	cmd = parse_command(t);
+	if (cmd != NULL) {
+		exec_command(cmd);
+		free_command(cmd);
+		cmd = NULL;
+		token_get(t);
+		return;
+	}
+
+	stmt = parse_statement(t);
+	if (stmt != NULL) {
+		eval_statement(stmt, -1, -1);
+		free_statement(stmt);
+		stmt = NULL;
+		token_get(t);
+		return;
+	}
+
+	num = parse_number(t);
+	if (num != NULL) {
+		stmt = parse_statement(t);
+		if (stmt != NULL) {
+			runtime_set_line(new_line(stmt, num));
+			token_get(t);
+			return;
+		} else {
+			runtime_rm_line(INT_VALUE(num));
+			free_number(num);
+			num = NULL;
+			token_get(t);
+			return;
+		}
+	}
+}
+
+int eval_line(struct line *l) {
 
 	if (l == NULL) {
 		return -1;
@@ -72,14 +113,8 @@ void print_line(struct line *l) {
 
 void free_line(struct line *l) {
 	if (l != NULL) {
-
 		free_statement(l->statement);
-		l->statement = NULL;
-
 		free_line(l->next);
-		l->next = NULL;
-
 		free(l);
-		l = NULL;
 	}
 }

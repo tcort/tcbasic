@@ -19,14 +19,16 @@
 #ifndef __RND_H
 #define __RND_H
 
-struct expression;
+struct number;
+struct tokenizer;
 
 struct rnd {
-	struct expression *expression;
+	float f;
 };
 
-struct rnd *new_rnd(struct expression *expression);
-int eval_rnd(struct rnd *r);
+struct rnd *new_rnd();
+struct rnd *parse_rnd(struct tokenizer *t);
+struct number *eval_rnd(struct rnd *r);
 void print_rnd(struct rnd *r);
 void free_rnd(struct rnd *r);
 

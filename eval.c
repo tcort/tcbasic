@@ -16,19 +16,25 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __COMMAND_H
-#define __COMMAND_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-struct tokenizer;
+#include "eval.h"
+#include "tokenizer.h"
 
-struct command {
-	int type;
-};
+#include "line.h"
 
-struct command *new_command(int type);
-struct command *parse_command(struct tokenizer *t);
-void exec_command(struct command *cmd);
-void print_command(struct command *cmd);
-void free_command(struct command *cmd);
+void eval(char *s) {
+	struct tokenizer t;
 
-#endif
+	if (s == NULL || s[0] == '\0') {
+		return;
+	}
+
+	memset(&t, '\0', sizeof(struct tokenizer));
+	t.s = &s;
+
+	parse_line(&t);
+}
+

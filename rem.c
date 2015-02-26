@@ -16,19 +16,55 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __COMMAND_H
-#define __COMMAND_H
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-struct tokenizer;
+#include "rem.h"
 
-struct command {
-	int type;
-};
+#include "tokenizer.h"
 
-struct command *new_command(int type);
-struct command *parse_command(struct tokenizer *t);
-void exec_command(struct command *cmd);
-void print_command(struct command *cmd);
-void free_command(struct command *cmd);
+struct rem *new_rem(char *value) {
 
-#endif
+	struct rem *r = NULL;
+
+	r = (struct rem *) malloc(sizeof(struct rem));
+	if (r == NULL) {
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	memset(r, '\0', sizeof(struct rem));
+
+	r->value = value;
+
+	return r;
+}
+
+struct rem *parse_rem(struct tokenizer *t) {
+	token_get(t);
+	if (t->token.type == REM) {
+		char *s = strdup(t->token.text);
+		return new_rem(s);
+	} else {
+		token_unget(t);
+		return NULL;
+	}
+}
+
+void print_rem(struct rem *r) {
+	if (r == NULL) {
+		return;
+	}
+
+	printf("%s", r->value);
+}
+
+void free_rem(struct rem *r) {
+	if (r != NULL) {
+		if (r->value != NULL) {
+			free(r->value);
+		}
+		free(r);
+	}
+}

@@ -19,11 +19,14 @@
 #ifndef __STR_H
 #define __STR_H
 
+struct tokenizer;
+
 struct str {
 	char *value;
 };
 
 struct str *new_str(char *value);
+struct str *parse_str(struct tokenizer *t);
 char *eval_str(struct str *s);
 void print_str(struct str *s);
 void free_str(struct str *s);

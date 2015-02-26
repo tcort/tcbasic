@@ -35,7 +35,8 @@ struct factor {
 };
 
 struct factor *new_factor(int type, void *value);
-int eval_factor(struct factor *f);
+struct factor *parse_factor(struct tokenizer *t);
+struct number *eval_factor(struct factor *f);
 void print_factor(struct factor *f);
 void free_factor(struct factor *f);
 

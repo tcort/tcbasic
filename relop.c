@@ -21,7 +21,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
+#include "tokenizer.h"
+
 #include "relop.h"
 
 struct relop *new_relop(int type) {
@@ -38,6 +39,30 @@ struct relop *new_relop(int type) {
 	op->type = type;
 
 	return op;
+}
+
+struct relop *parse_relop(struct tokenizer *t) {
+
+	token_get(t);
+	switch (t->token.type) {
+		case LTEQ:
+			return new_relop(LTEQ);
+		case LTGT:
+			return new_relop(LTGT);
+		case LT:
+			return new_relop(LT);
+		case GTEQ:
+			return new_relop(GTEQ);
+		case GTLT:
+			return new_relop(GTLT);
+		case GT:
+			return new_relop(GT);
+		case EQ:
+			return new_relop(EQ);
+		default:
+			token_unget(t);
+			return NULL;
+	}
 }
 
 void print_relop(struct relop *op) {
@@ -77,6 +102,5 @@ void print_relop(struct relop *op) {
 void free_relop(struct relop *op) {
 	if (op != NULL) {
 		free(op);
-		op = NULL;
 	}
 }

@@ -17,15 +17,20 @@
 */
 
 #include <errno.h>
+#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
 #include "number.h"
 
-struct number *new_number(int value) {
+#include "tokenizer.h"
 
+struct number *new_number(char *s) {
+
+	int is_int = 0;
+	regex_t ireg;
+	regmatch_t matches[1];
 	struct number *n = NULL;
 
 	n = (struct number *) malloc(sizeof(struct number));
@@ -35,17 +40,183 @@ struct number *new_number(int value) {
 	}
 	memset(n, '\0', sizeof(struct number));
 
-	n->value = value;
+	regcomp(&ireg, "^[0-9]+$", REG_EXTENDED);
+	is_int = !regexec(&ireg, s, 1, matches,  0);
+	regfree(&ireg);
+
+	if (is_int) {
+		n->type = INT;
+		n->value.ival = atoi(s);
+	} else {
+		n->type = FLOAT;
+		n->value.fval = atof(s);
+	}
 
 	return n;
 }
 
-int eval_number(struct number *n) {
+struct number *new_number_from_int(int i) {
+
+	struct number r;
+
+	r.type = INT;
+	r.value.ival = i;
+
+	return clone_number(&r);
+}
+
+struct number *new_number_from_float(float f) {
+
+	struct number r;
+
+	r.type = FLOAT;
+	r.value.fval = f;
+
+	return clone_number(&r);
+}
+
+struct number *parse_number(struct tokenizer *t) {
+
+	token_get(t);
+	if (t->token.type == NUMBER) {
+		return new_number(t->token.text);
+	} else {
+		token_unget(t);
+		return NULL;
+	}
+}
+
+struct number *clone_number(struct number *n) {
+	struct number *clone;
+
 	if (n == NULL) {
-		return 0;
+		return NULL;
 	}
 
-	return n->value;
+	clone = (struct number *) malloc(sizeof(struct number));
+	if (clone == NULL) {
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+
+	memcpy(clone, n, sizeof(struct number));
+	return clone;
+}
+
+struct number *add_number(struct number *x, struct number *y) {
+	struct number r;
+
+	if (x == NULL || y == NULL) {
+		return NULL;
+	}
+
+
+	if (x->type == INT) {
+		if (y->type == INT) {
+			r.type = INT;
+			r.value.ival = x->value.ival + y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = x->value.ival + y->value.fval;
+		}
+	} else {
+		if (y->type == INT) {
+			r.type = FLOAT;
+			r.value.fval = x->value.fval + y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = x->value.fval + y->value.fval;
+		}
+	}
+
+	return clone_number(&r);
+}
+
+struct number *subtract_number(struct number *x, struct number *y) {
+	struct number r;
+
+	if (x == NULL || y == NULL) {
+		return NULL;
+	}
+
+
+	if (x->type == INT) {
+		if (y->type == INT) {
+			r.type = INT;
+			r.value.ival = x->value.ival - y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = x->value.ival - y->value.fval;
+		}
+	} else {
+		if (y->type == INT) {
+			r.type = FLOAT;
+			r.value.fval = x->value.fval - y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = x->value.fval - y->value.fval;
+		}
+	}
+
+	return clone_number(&r);
+}
+
+struct number *multiply_number(struct number *x, struct number *y) {
+	struct number r;
+
+	if (x == NULL || y == NULL) {
+		return NULL;
+	}
+
+
+	if (x->type == INT) {
+		if (y->type == INT) {
+			r.type = INT;
+			r.value.ival = x->value.ival * y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = x->value.ival * y->value.fval;
+		}
+	} else {
+		if (y->type == INT) {
+			r.type = FLOAT;
+			r.value.fval = x->value.fval * y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = x->value.fval * y->value.fval;
+		}
+	}
+
+	return clone_number(&r);
+}
+
+struct number *divide_number(struct number *x, struct number *y) {
+	struct number r;
+
+	if (x == NULL || y == NULL) {
+		return NULL;
+	}
+
+
+	if (x->type == INT) {
+		if (y->type == INT) {
+			r.type = INT;
+			r.value.ival = x->value.ival / y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = x->value.ival / y->value.fval;
+		}
+	} else {
+		if (y->type == INT) {
+			r.type = FLOAT;
+			r.value.fval = x->value.fval / y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = x->value.fval / y->value.fval;
+		}
+	}
+
+	return clone_number(&r);
 }
 
 void print_number(struct number *n) {
@@ -53,12 +224,16 @@ void print_number(struct number *n) {
 		return;
 	}
 
-	printf("%d", n->value);
+	if (n->type == INT) {
+		printf("%d", n->value.ival);
+	} else {
+		printf("%f", n->value.fval);
+	}
 }
 
 void free_number(struct number *n) {
 	if (n != NULL) {
 		free(n);
-		n = NULL;
 	}
 }
+

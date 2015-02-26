@@ -20,16 +20,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "parser.h"
+#include <time.h>
 
 #include "buffer.h"
 #include "readaline.h"
 #include "runtime.h"
+#include "tokenizer.h"
 
 #include "expr_list.h"
 #include "expression.h"
+#include "number.h"
 #include "relop.h"
+#include "rem.h"
 #include "var_list.h"
 #include "var.h"
 
@@ -70,13 +72,138 @@ struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, vo
 		case GOSUB:
 			s->u.gosub_stmt.expression = (struct expression *) arg1;
 			break;
-		case _RETURN:
+		case RETURN:
 			break;
 		case END:
+			break;
+		case STOP:
+			break;
+		case REM:
+			s->u.rem_stmt.rem = (struct rem *) arg1;
+			break;
+		case RANDOMIZE:
 			break;
 	}
 
 	return s;
+}
+
+struct statement *parse_statement(struct tokenizer *t) {
+
+	struct expr_list *el;
+	struct expression *expr;
+	struct expression *expr2;
+	struct relop *op;
+	struct rem *r;
+	struct statement *stmt;
+	struct var *v;
+	struct var_list *vl;
+
+	token_get(t);
+	switch (t->token.type) {
+		case PRINT:
+			el = parse_expr_list(t);
+			if (el == NULL) {
+				return NULL;
+			}
+			return new_statement(PRINT, el, NULL, NULL, NULL);
+		case IF:
+			expr = parse_expression(t);
+			if (expr == NULL) {
+				return NULL;
+			}
+			op = parse_relop(t);
+			if (op == NULL) {
+				free_expression(expr);
+				expr = NULL;
+				return NULL;
+			}
+			expr2 = parse_expression(t);
+			if (expr2 == NULL) {
+				free_expression(expr);
+				expr = NULL;
+				free_relop(op);
+				op = NULL;
+				return NULL;
+			}
+			token_get(t);
+			if (t->token.type != THEN) {
+				token_unget(t);
+				free_expression(expr);
+				expr = NULL;
+				free_relop(op);
+				op = NULL;
+				free_expression(expr2);
+				expr2 = NULL;
+				return NULL;
+			}
+			stmt = parse_statement(t);
+			if (stmt == NULL) {
+				free_expression(expr);
+				expr = NULL;
+				free_relop(op);
+				op = NULL;
+				free_expression(expr2);
+				expr2 = NULL;
+				return NULL;
+			}
+			return new_statement(IF, expr, op, expr2, stmt);
+		case GOTO:
+			expr = parse_expression(t);
+			if (expr == NULL) {
+				return NULL;
+			}
+			return new_statement(GOTO, expr, NULL, NULL, NULL);
+		case INPUT:
+			vl = parse_var_list(t);
+			if (vl == NULL) {
+				return NULL;
+			}
+			return new_statement(INPUT, vl, NULL, NULL, NULL);
+		case LET:
+			v = parse_var(t);
+			if (v == NULL) {
+				return NULL;
+			}
+			token_get(t);
+			if (t->token.type != EQ) {
+				token_unget(t);
+				free_var(v);
+				v = NULL;
+				return NULL;
+			}
+			expr = parse_expression(t);
+			if (expr == NULL) {
+				free_var(v);
+				v = NULL;
+				return NULL;
+			}
+			return new_statement(LET, v, expr, NULL, NULL);
+		case GOSUB:
+			expr = parse_expression(t);
+			if (expr == NULL) {
+				return NULL;
+			}
+			return new_statement(GOSUB, expr, NULL, NULL, NULL);
+		case RETURN:
+			return new_statement(RETURN, NULL, NULL, NULL, NULL);
+		case END:
+			return new_statement(END, NULL, NULL, NULL, NULL);
+		case STOP:
+			return new_statement(STOP, NULL, NULL, NULL, NULL);
+		case REM:
+			token_unget(t);
+			r = parse_rem(t);
+			if (r == NULL) {
+				return NULL;
+			}
+			return new_statement(REM, r, NULL, NULL, NULL);
+		case RANDOMIZE:
+			return new_statement(RANDOMIZE, NULL, NULL, NULL, NULL);
+		default:
+			token_unget(t);
+			return NULL;
+	}
 }
 
 /*
@@ -89,9 +216,12 @@ struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, vo
 int eval_statement(struct statement *s, int number, int next_number) {
 
 	Buffer *buf;
-	char *line;
 	int next = -1;
-	int e1, e2, r;
+	int r;
+	float f1, f2;
+	struct number *e1;
+	struct number *e2;
+	struct number *n;
 
 	if (s == NULL) {
 		return -1;
@@ -105,35 +235,41 @@ int eval_statement(struct statement *s, int number, int next_number) {
 		case IF:
 			e1 = eval_expression(s->u.if_stmt.left);
 			e2 = eval_expression(s->u.if_stmt.right);
+			f1 = FLOAT_VALUE(e1);
+			f2 = FLOAT_VALUE(e2);
 			switch (s->u.if_stmt.relop->type) {
 				case LT:
-					r = e1 < e2;
+					r = f1 < f2;
 					break;
 				case LTEQ:
-					r = e1 <= e2;
+					r = f1 <= f2;
 					break;
 				case LTGT:
-					r = e1 != e2;
+					r = f1 != f2;
 					break;
 				case GT:
-					r = e1 > e2;
+					r = f1 > f2;
 					break;
 				case GTEQ:
-					r = e1 >= e2;
+					r = f1 >= f2;
 					break;
 				case GTLT:
-					r = e1 != e2;
+					r = f1 != f2;
 					break;
 				case EQ:
-					r = e1 == e2;
+					r = f1 == f2;
 					break;
 			}
+			free_number(e1);
+			free_number(e2);
 			if (r) {
 				next = eval_statement(s->u.if_stmt.statement, number, next_number);
 			}
 			break;
 		case GOTO:
-			next = eval_expression(s->u.goto_stmt.expression);
+			n = eval_expression(s->u.goto_stmt.expression);
+			next = INT_VALUE(n);
+			free_number(n);
 			break;
 		case INPUT:
 			buf = bf_alloc(32, 16);
@@ -149,9 +285,11 @@ int eval_statement(struct statement *s, int number, int next_number) {
 			if (next_number > 0) {
 				runtime_callstack_push(next_number);
 			}
-			next = eval_expression(s->u.goto_stmt.expression);
+			n = eval_expression(s->u.goto_stmt.expression);
+			next = INT_VALUE(n);
+			free_number(n);
 			break;
-		case _RETURN:
+		case RETURN:
 			next = runtime_callstack_pop();
 			if (next < 0) {
 				next = -1;
@@ -159,6 +297,14 @@ int eval_statement(struct statement *s, int number, int next_number) {
 			break;
 		case END:
 			next = -2;
+			break;
+		case STOP:
+			runtime_stop();
+			break;
+		case REM:
+			break;
+		case RANDOMIZE:
+			srand(time(NULL));
 			break;
 	}
 
@@ -202,11 +348,19 @@ void print_statement(struct statement *s) {
 			printf("GOSUB ");
 			print_expression(s->u.gosub_stmt.expression);
 			break;
-		case _RETURN:
+		case RETURN:
 			printf("RETURN");
 			break;
 		case END:
 			printf("END");
+			break;
+		case STOP:
+			printf("STOP");
+		case REM:
+			print_rem(s->u.rem_stmt.rem);
+			break;
+		case RANDOMIZE:
+			printf("RANDOMIZE");
 			break;
 	}
 
@@ -250,12 +404,19 @@ void free_statement(struct statement *s) {
 				free_expression(s->u.gosub_stmt.expression);
 				s->u.gosub_stmt.expression = NULL;
 				break;
-			case _RETURN:
+			case RETURN:
 				break;
 			case END:
 				break;
+			case STOP:
+				break;
+			case REM:
+				free_rem(s->u.rem_stmt.rem);
+				s->u.rem_stmt.rem = NULL;
+				break;
+			case RANDOMIZE:
+				break;
 		}
 		free(s);
-		s = NULL;
 	}
 }

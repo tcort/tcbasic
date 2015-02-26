@@ -27,6 +27,7 @@ struct var_list {
 };
 
 struct var_list *new_var_list(struct var *var, struct var_list *list);
+struct var_list *parse_var_list(struct tokenizer *t);
 void eval_var_list(struct var_list *vl, char *line);
 void print_var_list(struct var_list *vl);
 void free_var_list(struct var_list *vl);

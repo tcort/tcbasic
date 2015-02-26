@@ -38,7 +38,6 @@
  */
 Buffer *readaline(FILE *f, char *prompt, Buffer *lbuf) {
 
-	char ch;
 	int fd, rc;
 
 	bf_valid(lbuf); /* check for valid Buffer */
@@ -60,7 +59,7 @@ Buffer *readaline(FILE *f, char *prompt, Buffer *lbuf) {
 	}
 
 	do {
-
+		char ch;
 		ch = (char) fgetc(f);
 		if (ch == '\n' || feof(f)) {
 

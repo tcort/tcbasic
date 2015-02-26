@@ -16,19 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __COMMAND_H
-#define __COMMAND_H
+#ifndef __EVAL_H
+#define __EVAL_H
 
-struct tokenizer;
-
-struct command {
-	int type;
-};
-
-struct command *new_command(int type);
-struct command *parse_command(struct tokenizer *t);
-void exec_command(struct command *cmd);
-void print_command(struct command *cmd);
-void free_command(struct command *cmd);
+void eval(char *s);
 
 #endif

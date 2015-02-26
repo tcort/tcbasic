@@ -24,6 +24,7 @@ struct mulop {
 };
 
 struct mulop *new_mulop(int type);
+struct mulop *parse_mulop(struct tokenizer *t);
 void print_mulop(struct mulop *op);
 void free_mulop(struct mulop *op);
 

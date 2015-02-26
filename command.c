@@ -21,12 +21,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
-
 #include "runtime.h"
 
 #include "command.h"
 #include "line.h"
+#include "tokenizer.h"
 
 struct command *new_command(int type) {
 
@@ -44,9 +43,24 @@ struct command *new_command(int type) {
 	return cmd;
 }
 
+struct command *parse_command(struct tokenizer *t) {
+
+	token_get(t);
+	switch (t->token.type) {
+		case RUN:
+			return new_command(RUN);
+		case LIST:
+			return new_command(LIST);
+		case CLEAR:
+			return new_command(CLEAR);
+		default:
+			token_unget(t);
+			return NULL;
+	}
+}
+
 void exec_command(struct command *cmd) {
 
-	int r;
 	struct line *cur;
 
 	if (cmd == NULL) {
@@ -63,6 +77,7 @@ void exec_command(struct command *cmd) {
 		case RUN:
 			cur = runtime_get_first_line();
 			while (cur != NULL) {
+				int r;
 				r = eval_line(cur);
 				if (r == -1) {
 					cur = cur->next;
@@ -101,6 +116,5 @@ void print_command(struct command *cmd) {
 void free_command(struct command *cmd) {
 	if (cmd != NULL) {
 		free(cmd);
-		cmd = NULL;
 	}
 }
