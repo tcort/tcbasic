@@ -279,7 +279,9 @@ int eval_statement(struct statement *s, int number, int next_number) {
 			buf = NULL;
 			break;
 		case LET:
-			runtime_set_var(s->u.let_stmt.var->value, eval_expression(s->u.let_stmt.expression));
+			n = eval_expression(s->u.let_stmt.expression);
+			runtime_set_var(s->u.let_stmt.var->value, n);
+			free_number(n);
 			break;
 		case GOSUB:
 			if (next_number > 0) {

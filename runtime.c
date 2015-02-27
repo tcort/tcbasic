@@ -124,7 +124,12 @@ void runtime_set_line(struct line *item) {
 /* *** *** *** */
 
 #define NVARS 26
-struct number *vars[NVARS];
+struct number *vars[NVARS] = {
+	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	NULL, NULL
+};
 
 void runtime_set_var(char var, struct number *value) {
 	int i = (var - 'A') % NVARS;
@@ -194,7 +199,12 @@ int runtime_callstack_pop() {
 /* *** *** *** */
 
 void runtime_reset(void) {
-	memset(vars, '\0', sizeof(struct number *) * NVARS);
+	int i;
+	for (i = 0; i < NVARS; i++) {
+		free_number(vars[i]);
+		vars[i] = NULL;
+	}
+
 	if (lines != NULL) {
 		free_line(lines);
 		lines = NULL;

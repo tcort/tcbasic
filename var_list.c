@@ -49,7 +49,7 @@ struct var_list *new_var_list(struct var *var, struct var_list *list) {
 
 struct var_list *parse_var_list(struct tokenizer *t) {
 
-	static struct var *v;
+	struct var *v;
 
 	v = parse_var(t);
 	if (v == NULL) {

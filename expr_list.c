@@ -45,7 +45,7 @@ struct expr_list *new_expr_list(struct expr_item *expr_item, struct expr_list *l
 
 struct expr_list *parse_expr_list(struct tokenizer *t) {
 
-	static struct expr_item *i;
+	struct expr_item *i;
 
 	i = parse_expr_item(t);
 	if (i == NULL) {

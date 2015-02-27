@@ -61,9 +61,9 @@ struct factor *new_factor(int type, void *value) {
 
 struct factor *parse_factor(struct tokenizer *t) {
 
-	static struct var *v;
-	static struct number *num;
-	static struct rnd *r;
+	struct var *v;
+	struct number *num;
+	struct rnd *r;
 
 	v = parse_var(t);
 	if (v != NULL) {
@@ -77,7 +77,7 @@ struct factor *parse_factor(struct tokenizer *t) {
 
 	token_get(t);
 	if (t->token.type == OPAREN) {
-		static struct expression *expr;
+		struct expression *expr;
 		expr = parse_expression(t);
 		if (expr == NULL) {
 			return NULL;
