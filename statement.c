@@ -23,6 +23,7 @@
 #include <time.h>
 
 #include "buffer.h"
+#include "prng.h"
 #include "readaline.h"
 #include "runtime.h"
 #include "tokenizer.h"
@@ -306,7 +307,7 @@ int eval_statement(struct statement *s, int number, int next_number) {
 		case REM:
 			break;
 		case RANDOMIZE:
-			srand(time(NULL));
+			tcb_srand(time(NULL));
 			break;
 	}
 

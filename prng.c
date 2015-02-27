@@ -16,56 +16,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-#include "prng.h"
-#include "tokenizer.h"
+static unsigned long tcb_seed = 1;
 
-#include "number.h"
-#include "rnd.h"
+#define A 16807
+#define M 2147483647
 
-struct rnd *new_rnd() {
-
-	struct rnd *r = NULL;
-
-	r = (struct rnd *) malloc(sizeof(struct rnd));
-	if (r == NULL) {
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
-	memset(r, '\0', sizeof(struct rnd));
-
-	return r;
+void tcb_srand(unsigned long seed) {
+	tcb_seed = (seed == 0) ? 1 : seed;
 }
 
-struct rnd *parse_rnd(struct tokenizer *t) {
-
-	token_get(t);
-	if (t->token.type != RND) {
-		token_unget(t);
-		return NULL;
-	}
-
-	return new_rnd();
-}
-
-struct number *eval_rnd(struct rnd *r) {
-	return new_number_from_float(tcb_rand());
-}
-
-void print_rnd(struct rnd *r) {
-	if (r == NULL) {
-		return;
-	}
-
-	printf("RND");
-}
-
-void free_rnd(struct rnd *r) {
-	if (r != NULL) {
-		free(r);
-	}
+float tcb_rand(void) {
+	tcb_seed = (A * tcb_seed) % M;
+	return tcb_seed / (float) M;
 }

@@ -16,56 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ifndef __PRNG_H
+#define __PRNG_H
 
-#include "prng.h"
-#include "tokenizer.h"
+void tcb_srand(unsigned long seed);
+float tcb_rand(void);
 
-#include "number.h"
-#include "rnd.h"
-
-struct rnd *new_rnd() {
-
-	struct rnd *r = NULL;
-
-	r = (struct rnd *) malloc(sizeof(struct rnd));
-	if (r == NULL) {
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
-	memset(r, '\0', sizeof(struct rnd));
-
-	return r;
-}
-
-struct rnd *parse_rnd(struct tokenizer *t) {
-
-	token_get(t);
-	if (t->token.type != RND) {
-		token_unget(t);
-		return NULL;
-	}
-
-	return new_rnd();
-}
-
-struct number *eval_rnd(struct rnd *r) {
-	return new_number_from_float(tcb_rand());
-}
-
-void print_rnd(struct rnd *r) {
-	if (r == NULL) {
-		return;
-	}
-
-	printf("RND");
-}
-
-void free_rnd(struct rnd *r) {
-	if (r != NULL) {
-		free(r);
-	}
-}
+#endif

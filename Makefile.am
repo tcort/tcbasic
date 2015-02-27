@@ -32,6 +32,7 @@ tcbasic_SOURCES = \
 	line.h		line.c \
 	mulop.h		mulop.c \
 	number.h	number.c \
+	prng.h		prng.c \
 	rem.h		rem.c \
 	relop.h		relop.c \
 	rnd.h		rnd.c \

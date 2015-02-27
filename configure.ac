@@ -26,7 +26,7 @@ AC_PROG_CC
 AC_HEADER_STDC
 
 AC_CHECK_HEADERS([getopt.h])
-AC_CHECK_FUNCS([arc4random arc4random_uniform getopt_long strsep])
+AC_CHECK_FUNCS([getopt_long strsep])
 
 AC_CONFIG_HEADERS([config.h:config.in])
 
