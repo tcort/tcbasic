@@ -19,15 +19,17 @@
 #ifndef __BUFFER_H
 #define __BUFFER_H
 
+#include <stddef.h>
+
 typedef struct Buffer {
 	char *buf;      /* pointer returned by malloc */
-	int maxsize;    /* size of space allocated by malloc */
-	int cursize;    /* amount of space currently used */
-	int incr;       /* increment to add when growing maxsize */
+	size_t maxsize;    /* size of space allocated by malloc */
+	size_t cursize;    /* amount of space currently used */
+	size_t incr;       /* increment to add when growing maxsize */
 } Buffer;
 
 /* allocates a new Buffer structure */
-Buffer *bf_alloc(int size, int incr);
+Buffer *bf_alloc(size_t size, size_t incr);
 
 /* adds the character ch to the end of the given Buffer */
 void bf_addch(Buffer *buf, char ch);

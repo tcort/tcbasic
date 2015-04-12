@@ -17,6 +17,7 @@
 */
 
 #include <errno.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,7 +30,7 @@
  * size is the total size of the space allocated by malloc/realloc.
  * incr is the amount to add to size when the buffer needs to grow.
  */
-Buffer *bf_alloc(int size, int incr) {
+Buffer *bf_alloc(size_t size, size_t incr) {
 
 	Buffer *buffer;
 
@@ -93,7 +94,7 @@ void bf_addch(Buffer *buf, char ch) {
 /* adds the string str to the end of the given Buffer */
 void bf_addstr(Buffer *buf, char *str) {
 
-	int i;
+	size_t i;
 
 	bf_valid(buf); /* check for valid Buffer */
 
