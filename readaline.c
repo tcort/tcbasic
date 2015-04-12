@@ -52,7 +52,7 @@ Buffer *readaline(FILE *f, char *prompt, Buffer *lbuf) {
 	/* print the prompt on the terminal only if standard input
            is a terminal */
 	rc = isatty(fd);
-	if (rc == 1) {
+	if (rc == 1 && prompt != NULL) {
 
 		fprintf(stderr, "%s", prompt);
 		fflush(stderr);
