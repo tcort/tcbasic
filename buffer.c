@@ -124,7 +124,7 @@ void bf_valid(Buffer *buf) {
 
 	/* are all Buffer values consistent with each other? */
 	if (buf == NULL || buf->buf == NULL || buf->cursize > buf->maxsize ||
-		buf->cursize < 0 || buf->maxsize < 1 || buf->incr < 1) {
+		buf->maxsize < 1 || buf->incr < 1) {
 		/* invalid buffer */
 		exit(1);
 	}
