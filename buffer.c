@@ -74,15 +74,24 @@ void bf_addch(Buffer *buf, char ch) {
 	/* if the buffer is full */
 	if (buf->cursize ==  buf->maxsize) {
 
+		size_t newmaxsize = buf->maxsize + buf->incr;
+
+		/* check if increasing maxsize by incr would cause an overflow */
+		if (newmaxsize < buf->maxsize) {
+			errno = EOVERFLOW;
+			perror("bf_addch");
+			exit(1);
+		}
+
                 /* add incr bytes to maxsize and use realloc() to make
 		   the buffer larger before adding the character */
-		buf->buf = (char *) realloc(buf->buf, buf->maxsize + buf->incr);
+		buf->buf = (char *) realloc(buf->buf, newmaxsize);
 		if (buf->buf == NULL) {
 			perror("realloc");
 			exit(1);
 		}
 
-		buf->maxsize = buf->maxsize + buf->incr;
+		buf->maxsize = newmaxsize;
 	}
 
 	buf->buf[buf->cursize] = ch;
