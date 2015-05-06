@@ -80,7 +80,7 @@ void bf_addch(Buffer *buf, char ch) {
 		if (newmaxsize < buf->maxsize) {
 			errno = EOVERFLOW;
 			perror("bf_addch");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 
                 /* add incr bytes to maxsize and use realloc() to make
@@ -88,7 +88,7 @@ void bf_addch(Buffer *buf, char ch) {
 		buf->buf = (char *) realloc(buf->buf, newmaxsize);
 		if (buf->buf == NULL) {
 			perror("realloc");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 
 		buf->maxsize = newmaxsize;
@@ -135,7 +135,7 @@ void bf_valid(Buffer *buf) {
 	if (buf == NULL || buf->buf == NULL || buf->cursize > buf->maxsize ||
 		buf->maxsize < 1 || buf->incr < 1) {
 		/* invalid buffer */
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 }
 
