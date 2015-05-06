@@ -260,6 +260,9 @@ int eval_statement(struct statement *s, int number, int next_number) {
 				case EQ:
 					r = f1 == f2;
 					break;
+				default:
+					fprintf(stdout, "Runtime error: Unknown relational operator type: %d", s->u.if_stmt.relop->type);
+					exit(EXIT_FAILURE);
 			}
 			free_number(e1);
 			free_number(e2);
