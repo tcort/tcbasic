@@ -362,6 +362,7 @@ void print_statement(struct statement *s) {
 			break;
 		case STOP:
 			printf("STOP");
+			break;
 		case REM:
 			print_rem(s->u.rem_stmt.rem);
 			break;
