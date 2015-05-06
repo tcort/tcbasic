@@ -17,7 +17,6 @@
 */
 
 #include <errno.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,21 +35,24 @@ Buffer *bf_alloc(size_t size, size_t incr) {
 
 	/* sanity check */
 	if (size < 1 || incr < 1) {
-		return NULL; /* return NULL on error */
+		fprintf(stderr, "bf_alloc: Invalid Arguments");
+		exit(EXIT_FAILURE);
 	}
 
 	/* allocate a new Buffer structure */
 	buffer = (Buffer *) malloc(sizeof(Buffer));
 	if (buffer == NULL) {
-		return NULL; /* return NULL on error */
+		perror("bf_alloc");
+		exit(EXIT_FAILURE);
 	}
 
 	/* give the internal buffer the given initial "size" using
 	   malloc() */
 	buffer->buf = (char *) malloc(size);
 	if (buffer->buf == NULL) {
+		perror("bf_alloc");
 		free(buffer);
-		return NULL; /* return NULL on error */
+		exit(EXIT_FAILURE);
 	}
 
 	/* copy the given "size" into maxsize */

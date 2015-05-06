@@ -19,8 +19,6 @@
 #ifndef __BUFFER_H
 #define __BUFFER_H
 
-#include <stddef.h>
-
 typedef struct Buffer {
 	char *buf;      /* pointer returned by malloc */
 	size_t maxsize;    /* size of space allocated by malloc */

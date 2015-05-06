@@ -107,10 +107,6 @@ int main(int argc, char *argv[]) {
 	tokenizer_init();
 
 	buf = bf_alloc(32, 16);
-	if (buf == NULL) {
-		tokenizer_exit();
-		exit(EXIT_FAILURE);
-	}
 	do {
 		readaline(fp, "> ", buf);
 		eval(buf->buf);
