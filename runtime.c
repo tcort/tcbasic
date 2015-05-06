@@ -71,6 +71,7 @@ void runtime_rm_line(int number) {
 				prev->next = cur->next;
 				cur->next = NULL;
 				free_line(cur);
+				cur = prev;
 			}
 		}
 	}
