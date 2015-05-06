@@ -96,6 +96,10 @@ static struct token nextToken(char **s) {
 				len = matches[0].rm_eo - matches[0].rm_so;
 				t.type = token_defs[i].type;
 				t.text = (char *) malloc(len + 1);
+				if (t.text == NULL) {
+					perror("malloc");
+					exit(EXIT_FAILURE);
+				}
 				strncpy(t.text, *s, len);
 				t.text[len] = '\0';
 				*s += len;
