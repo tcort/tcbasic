@@ -47,6 +47,7 @@ man_MANS = tcbasic.1
 
 TESTS = \
 	abs.sh \
+	coinflip.sh \
 	fib.sh \
 	hello.sh \
 	newton.sh \
@@ -64,6 +65,7 @@ TESTS_ENVIRONMENT = \
 
 CLEANFILES = $(BUILT_SOURCES) \
 	abs.out \
+	coinflip.out \
 	fib.out \
 	hello.out \
 	newton.out \
@@ -74,6 +76,7 @@ EXTRA_DIST = \
 	test-runner.sh \
 	README.md \
 	abs.sh		abs.bas		abs.ex	\
+	coinflip.sh	coinflip.bas	coinflip.ex \
 	fib.sh		fib.bas		fib.ex	\
 	hello.sh	hello.bas	hello.ex \
 	newton.sh	newton.bas	newton.ex \
