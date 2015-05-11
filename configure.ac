@@ -46,5 +46,5 @@ if test "x$SED" = "x"; then
 	AC_MSG_NOTICE([sed is mandatory to run the tests])
 fi
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile tcbasic.1])
 AC_OUTPUT
