@@ -26,7 +26,7 @@ struct var {
 	char value;
 };
 
-struct var *new_var(int value);
+struct var *new_var(char value);
 struct var *parse_var(struct tokenizer *t);
 struct number *eval_var(struct var *v);
 void print_var(struct var *v);

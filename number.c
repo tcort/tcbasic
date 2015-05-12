@@ -49,7 +49,7 @@ struct number *new_number(char *s) {
 		n->value.ival = atoi(s);
 	} else {
 		n->type = FLOAT;
-		n->value.fval = atof(s);
+		n->value.fval = (float) atof(s);
 	}
 
 	return n;

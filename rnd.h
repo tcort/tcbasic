@@ -23,12 +23,12 @@ struct number;
 struct tokenizer;
 
 struct rnd {
-	float f;
+	char xxx;
 };
 
-struct rnd *new_rnd();
+struct rnd *new_rnd(void);
 struct rnd *parse_rnd(struct tokenizer *t);
-struct number *eval_rnd(struct rnd *r);
+struct number *eval_rnd(void);
 void print_rnd(struct rnd *r);
 void free_rnd(struct rnd *r);
 

@@ -24,6 +24,6 @@
 #include "buffer.h"
 
 /* prints the prompt on the terminal only if standard input is a terminal */
-Buffer *readaline(FILE *fd, char *prompt, Buffer *buf);
+Buffer *readaline(FILE *fd, const char *prompt, Buffer *buf);
 
 #endif

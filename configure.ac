@@ -24,7 +24,7 @@ AC_LANG([C])
 AC_PROG_CC
 
 AC_HEADER_STDC
-
+AC_CHECK_LIB(m, cos, LIBM="-lm")
 AC_CHECK_HEADERS([getopt.h])
 AC_CHECK_FUNCS([getopt_long strsep])
 

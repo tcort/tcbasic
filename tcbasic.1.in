@@ -31,7 +31,7 @@ Print a helpful message and exit
 .TP
 \fB\-v\fR                 \fB\-\-version\fR
 Print version information and exit
-.SH LANGUAGE REFERENCE
+.SH STATEMENTS
 .TP
 \fBREM remark\fR
 Remark has no effect on the execution of the program
@@ -83,6 +83,33 @@ sequence of random numbers.
 Returns a random number in the range [0,1). The same sequence of numbers is
 returned in each program run. Use the RANDOMIZE statement to generate
 different sequences in each program run.
+.TP
+\fBSIN (expression)\fR
+Returns the sine of the given expression (measured in radians).
+.TP
+\fBCOS (expression)\fR
+Returns the cosine of the given expression (measured in radians).
+.TP
+\fBTAN (expression)\fR
+Returns the tangent of the given expression (measured in radians).
+.TP
+\fBCOT (expression)\fR
+Returns the cotangent of the given expression (measured in radians).
+.TP
+\fBATN (expression)\fR
+Returns the arctangent of the given expression (measured in radians).
+.TP
+\fBEXP (expression)\fR
+Returns e to the power of the given expression.
+.TP
+\fBLOG (expression)\fR
+Returns the natural logarithm of of the given expression.
+.TP
+\fBABS (expression)\fR
+Returns the absolute value of the given expression.
+.TP
+\fBSQR (expression)\fR
+Returns the square root of the given expression.
 .SH COMMANDS
 .TP
 \fBCLEAR\fR

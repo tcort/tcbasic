@@ -52,7 +52,7 @@ struct rnd *parse_rnd(struct tokenizer *t) {
 	return new_rnd();
 }
 
-struct number *eval_rnd(struct rnd *r) {
+struct number *eval_rnd(void) {
 	return new_number_from_float(tcb_rand());
 }
 

@@ -7,23 +7,15 @@ written in [C](http://en.wikipedia.org/wiki/C_%28programming_language%29).
 
 The "basics" are done and working. The interpreter implements the
 [Tiny BASIC](http://en.wikipedia.org/wiki/Tiny_BASIC) dialect of BASIC
-with added support for floating point numbers. Development will continue
-with the goal of implementing successively more complete dialects of BASIC.
+with added support for floating point numbers and many of the built-in mathematical
+functions in [Dartmouth BASIC](http://en.wikipedia.org/wiki/Dartmouth_BASIC).
+Development will continue with the goal of implementing successively more
+complete dialects of BASIC.
 
 ## Requirements
 
-The following software is used for developing tcbasic:
-
-* [cc](http://www.gnu.org/software/gcc/)
-* [make](http://www.gnu.org/software/make/)
-* [sh](http://www.gnu.org/software/bash/)
-* [sed](http://www.gnu.org/software/sed/)
-* [diff](http://www.gnu.org/software/diffutils/)
-* [autoconf](http://gnu.org/software/autoconf)
-* [automake](http://gnu.org/software/makeconf)
-
-tcbasic does not depend on any external libraries other than
-[libc](http://www.gnu.org/software/libc/)
+`tcbasic` doesn't have any external dependencies. To compile it,
+one simply needs a standard C toolchain.
 
 ## Building
 
@@ -230,6 +222,78 @@ Example:
     20 LET C = RND
     30 IF C < 0.5 THEN PRINT "HEADS"
     40 IF C >= 0.5 THEN PRINT "TAILS"
+
+#### SIN (expression)
+
+Returns the sine of the given expression (measured in radians).
+
+Example:
+
+    110 LET A = SIN((0*3.1415926)/2)
+
+#### COS (expression)
+
+Returns the cosine of the given expression (measured in radians).
+
+Example:
+
+    210 LET A = COS((0*3.1415926)/2)
+
+#### TAN (expression)
+
+Returns the tangent of the given expression (measured in radians).
+
+Example:
+
+    320 LET B = TAN(-3)
+
+#### COT (expression)
+
+Returns the cotangent of the given expression (measured in radians).
+
+Example:
+
+    420 LET B = COT(-0.01)
+
+#### ATN (expression)
+
+Returns the arctangent of the given expression (measured in radians).
+
+Example:
+
+    530 LET C = ATN(1.0)
+
+#### EXP (expression)
+
+Returns `e` to the power of the given expression.
+
+Example:
+
+    610 LET A = EXP(2.0)
+
+#### LOG (expression)
+
+Returns the natural logarithm of of the given expression.
+
+Example:
+
+    720 LET B = LOG(2)
+
+#### ABS (expression)
+
+Returns the absolute value of the given expression.
+
+Example:
+
+    840 LET D = ABS(-2.0)
+
+#### SQR (expression)
+
+Returns the square root of the given expression.
+
+Example:
+
+    920 LET B = SQR(2)
 
 ## License
 

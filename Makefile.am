@@ -16,28 +16,39 @@
 
 bin_PROGRAMS = tcbasic
 
+tcbasic_LDFLAGS = $(LIBM)
+
 tcbasic_SOURCES = \
-			driver.c \
-	buffer.h	buffer.c \
-	compat.h	compat.c \
-	readaline.h	readaline.c \
-	runtime.h	runtime.c \
+	abs.h		abs.c \
 	addop.h		addop.c \
+	atn.h		atn.c \
+	buffer.h	buffer.c \
 	command.h	command.c \
+	compat.h	compat.c \
+	cos.h		cos.c \
+	cot.h		cot.c \
+			driver.c \
+	exp.h		exp.c \
 	expr_item.h	expr_item.c \
 	expr_list.h	expr_list.c \
 	expression.h	expression.c \
 	eval.h		eval.c \
 	factor.h	factor.c \
 	line.h		line.c \
+	log.h		log.c \
 	mulop.h		mulop.c \
 	number.h	number.c \
 	prng.h		prng.c \
+	readaline.h	readaline.c \
 	rem.h		rem.c \
 	relop.h		relop.c \
 	rnd.h		rnd.c \
+	runtime.h	runtime.c \
+	sin.h		sin.c \
 	statement.h	statement.c \
 	str.h		str.c \
+	sqr.h		sqr.c \
+	tan.h		tan.c \
 	term.h		term.c \
 	tokenizer.h	tokenizer.c \
 	var.h		var.c \
@@ -49,6 +60,7 @@ TESTS = \
 	abs.sh \
 	coinflip.sh \
 	fib.sh \
+	functions.sh \
 	hello.sh \
 	newton.sh \
 	remainder.sh
@@ -67,6 +79,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 	abs.out \
 	coinflip.out \
 	fib.out \
+	functions.out \
 	hello.out \
 	newton.out \
 	remainder.out
@@ -74,10 +87,11 @@ CLEANFILES = $(BUILT_SOURCES) \
 EXTRA_DIST = \
 	$(man_MANS) \
 	test-runner.sh \
-	README.md \
+	README.md 	HACKING.md \
 	abs.sh		abs.bas		abs.ex	\
 	coinflip.sh	coinflip.bas	coinflip.ex \
 	fib.sh		fib.bas		fib.ex	\
+	functions.sh	functions.bas	functions.ex \
 	hello.sh	hello.bas	hello.ex \
 	newton.sh	newton.bas	newton.ex \
 	remainder.sh	remainder.bas	remainder.ex

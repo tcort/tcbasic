@@ -27,7 +27,7 @@
 #include "number.h"
 #include "var.h"
 
-struct var *new_var(int value) {
+struct var *new_var(char value) {
 
 	struct var *v = NULL;
 

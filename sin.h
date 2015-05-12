@@ -16,25 +16,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RUNTIME_H
-#define __RUNTIME_H
+#ifndef __SIN_H
+#define __SIN_H
 
 struct number;
-struct line;
+struct tokenizer;
 
-struct line *runtime_get_first_line(void);
-struct line *runtime_get_line(int number);
-void runtime_set_line(struct line *item);
-void runtime_rm_line(int number);
+struct sin {
+	struct expression *e;
+};
 
-void runtime_reset(void);
-int runtime_continue(void);
-void runtime_stop(void);
-
-void runtime_callstack_push(int number);
-int runtime_callstack_pop(void);
-
-void runtime_set_var(char var, struct number *value);
-struct number *runtime_get_var(char var);
+struct sin *new_sin(struct expression *e);
+struct sin *parse_sin(struct tokenizer *t);
+struct number *eval_sin(struct sin *a);
+void print_sin(struct sin *a);
+void free_sin(struct sin *a);
 
 #endif

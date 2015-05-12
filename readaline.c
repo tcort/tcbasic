@@ -36,7 +36,7 @@
  * returns a pointer to the buffer
  * no error return value; any errors cause the program to exit
  */
-Buffer *readaline(FILE *f, char *prompt, Buffer *lbuf) {
+Buffer *readaline(FILE *f, const char *prompt, Buffer *lbuf) {
 
 	int fd, rc;
 

@@ -24,7 +24,7 @@
 #include "tokenizer.h"
 
 struct token_info {
-	char *regex_text;
+	const char *regex_text;
 	enum token_types type;
 };
 
@@ -45,6 +45,15 @@ struct token_info token_defs[] = {
 	{ "^RUN",                                            RUN        },
 	{ "^STOP",                                           STOP       },
 	{ "^RND",                                            RND        },
+	{ "^SIN",                                            SIN        },
+	{ "^COS",                                            COS        },
+	{ "^TAN",                                            TAN        },
+	{ "^COT",                                            COT        },
+	{ "^ATN",                                            ATN        },
+	{ "^EXP",                                            EXP        },
+	{ "^LOG",                                            LOG        },
+	{ "^ABS",                                            ABS        },
+	{ "^SQR",                                            SQR        },
 	{ "^<=",                                             LTEQ       },
 	{ "^<>",                                             LTGT       },
 	{ "^<",                                              LT         },
@@ -69,7 +78,7 @@ struct token_info token_defs[] = {
 regex_t regexes[NTOKEN_TYPES];
 
 static struct token nextToken(char **s) {
-	int i;
+	size_t i;
 	size_t len;
 	struct token t;
 	int rc;
@@ -93,7 +102,7 @@ static struct token nextToken(char **s) {
 		for (i = 0; i < NTOKEN_TYPES; i++) {
 			rc = regexec(&regexes[i], *s, 1, matches,  0);
 			if (rc == 0) {
-				len = matches[0].rm_eo - matches[0].rm_so;
+				len = (size_t) (matches[0].rm_eo - matches[0].rm_so);
 				t.type = token_defs[i].type;
 				t.text = (char *) malloc(len + 1);
 				if (t.text == NULL) {
@@ -135,14 +144,14 @@ void token_unget(struct tokenizer *t) {
 
 
 void tokenizer_init() {
-	int i;
+	size_t i;
 	for (i = 0; i < NTOKEN_TYPES; i++) {
 		regcomp(&regexes[i], token_defs[i].regex_text, REG_EXTENDED);
 	}
 }
 
 void tokenizer_exit() {
-	int i;
+	size_t i;
 	for (i = 0; i < NTOKEN_TYPES; i++) {
 		regfree(&regexes[i]);
 	}	

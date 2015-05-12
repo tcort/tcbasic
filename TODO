@@ -10,10 +10,14 @@ Implement additional statements:
 * DEF
 * DIM
 
+Implement additional operators:
+
+* ^ operator (x^y means x to the power of y)
+remember to get order of operations right.
+
 Implement language fundamentals:
 
 * Strings
-* more built-in functions (SIN(), COS(), etc).
 * Arrays (test with quicksort)
 
 Implement language standards / defacto standards:
@@ -22,7 +26,20 @@ Implement language standards / defacto standards:
 * ECMA-55 Minimal BASIC
 * ECMA-116 Level 1 and 2
 
+Internals:
+
+* Better representation of lines.
+
+Testing:
+
+* write more tests
+* add a preflight test to run cppcheck, valgrind, etc.
+
 Other changes:
 
 * Better error handling / reporting.
 * Doxygen code comments
+
+Report and Fix Issues:
+
+* https://github.com/tcort/tcbasic/issues

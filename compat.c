@@ -18,6 +18,8 @@
 
 #include <string.h>
 
+#include "compat.h"
+
 char *tcbasic_strsep(char **stringp, char *delim) {
 	char *s;
 	if (stringp == NULL || *stringp == NULL || *stringp[0] == '\0') {

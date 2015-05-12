@@ -29,7 +29,7 @@
 #include "runtime.h"
 #include "tokenizer.h"
 
-void print_help(char *progname) {
+static void print_help(char *progname) {
 
 	fprintf(stdout, "%s - a small BASIC Interpreter written in C\n", PACKAGE_NAME);
 	fprintf(stdout, "\n");

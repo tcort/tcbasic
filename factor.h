@@ -23,6 +23,15 @@ struct expression;
 struct number;
 struct rnd;
 struct var;
+struct sin;
+struct cos;
+struct tan;
+struct cot;
+struct atn;
+struct exp;
+struct log;
+struct abs;
+struct sqr;
 
 struct factor {
 	int type;
@@ -30,6 +39,15 @@ struct factor {
 		struct expression *e;
 		struct number *n;
 		struct rnd *r;
+		struct sin *sin;
+		struct cos *cos;
+		struct tan *tan;
+		struct cot *cot;
+		struct atn *atn;
+		struct exp *exp;
+		struct log *log;
+		struct abs *abs;
+		struct sqr *sqr;
 		struct var *v;
 	} u;
 };
