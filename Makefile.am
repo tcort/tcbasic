@@ -16,8 +16,6 @@
 
 bin_PROGRAMS = tcbasic
 
-tcbasic_LDFLAGS = $(LIBM)
-
 tcbasic_SOURCES = \
 	abs.h		abs.c \
 	addop.h		addop.c \
