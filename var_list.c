@@ -76,8 +76,12 @@ void eval_var_list(struct var_list *vl, char *line) {
 
 	len = strlen("LET X = ") + strlen(line) + 8;
 	let = (char *) malloc(len*sizeof(char));
+	if (let == NULL) {
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
 
-	for (cur = vl; cur; cur = cur->list) {
+	for (cur = vl; cur != NULL; cur = cur->list) {
 		char *s;
 		struct var *v;
 		v = cur->var;
