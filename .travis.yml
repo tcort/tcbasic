@@ -7,3 +7,5 @@ script:
   - ./configure
   - make
   - make check
+
+sudo: false
