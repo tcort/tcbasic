@@ -85,7 +85,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 EXTRA_DIST = \
 	$(man_MANS) \
 	test-runner.sh \
-	README.md 	HACKING.md \
+	README.md 	CONTRIBUTING.md	HACKING.md \
 	abs.sh		abs.bas		abs.ex	\
 	coinflip.sh	coinflip.bas	coinflip.ex \
 	fib.sh		fib.bas		fib.ex	\
