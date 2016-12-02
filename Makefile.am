@@ -1,5 +1,5 @@
 # tcbasic - a small BASIC Interpreter written in C.
-# Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
+# Copyright (C) 2015, 2016  Thomas Cort <linuxgeek@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -60,6 +60,7 @@ TESTS = \
 	fib.sh \
 	functions.sh \
 	hello.sh \
+	mod.sh \
 	newton.sh \
 	remainder.sh
 
@@ -79,6 +80,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 	fib.out \
 	functions.out \
 	hello.out \
+	mod.out \
 	newton.out \
 	remainder.out
 
@@ -91,6 +93,7 @@ EXTRA_DIST = \
 	fib.sh		fib.bas		fib.ex	\
 	functions.sh	functions.bas	functions.ex \
 	hello.sh	hello.bas	hello.ex \
+	mod.sh		mod.bash	mod.ex \
 	newton.sh	newton.bas	newton.ex \
 	remainder.sh	remainder.bas	remainder.ex
 

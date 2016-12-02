@@ -1,6 +1,6 @@
 /*
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ enum token_types {
 	RND,
 	SIN, COS, TAN, COT, ATN, EXP, LOG, ABS, SQR,
 	LTEQ, LTGT, LT, GTEQ, GTLT, GT, EQ,
-	PLUS, MINUS, TIMES, DIVIDE,
+	PLUS, MINUS, TIMES, DIVIDE, MOD,
 	COMMA, OPAREN, CPAREN,
 	STR, VAR, NUMBER,
 	SPACE, INVALID, EOS

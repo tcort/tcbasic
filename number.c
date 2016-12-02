@@ -1,6 +1,6 @@
 /*
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 #include <errno.h>
 #include <regex.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -213,6 +214,35 @@ struct number *divide_number(struct number *x, struct number *y) {
 		} else {
 			r.type = FLOAT;
 			r.value.fval = x->value.fval / y->value.fval;
+		}
+	}
+
+	return clone_number(&r);
+}
+
+struct number *modulus_number(struct number *x, struct number *y) {
+	struct number r;
+
+	if (x == NULL || y == NULL) {
+		return NULL;
+	}
+
+
+	if (x->type == INT) {
+		if (y->type == INT) {
+			r.type = INT;
+			r.value.ival = x->value.ival % y->value.ival;
+		} else {
+			r.type = FLOAT;
+			r.value.fval = fmod(x->value.ival, y->value.fval);
+		}
+	} else {
+		if (y->type == INT) {
+			r.type = FLOAT;
+			r.value.fval = fmod(x->value.fval, y->value.ival);
+		} else {
+			r.type = FLOAT;
+			r.value.fval = fmod(x->value.fval, y->value.fval);
 		}
 	}
 

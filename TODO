@@ -12,8 +12,8 @@ Implement additional statements:
 
 Implement additional operators:
 
-* ^ operator (x^y means x to the power of y)
-remember to get order of operations right.
+* ^ operator (x^y means x to the power of y) -- remember to get order of operations right.
+* Document all operators (+,-,*,/,MOD,etc)
 
 Implement language fundamentals:
 

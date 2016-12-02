@@ -1,5 +1,5 @@
 .\" tcbasic - a small BASIC Interpreter written in C.
-.\" Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
+.\" Copyright (C) 2015, 2016  Thomas Cort <linuxgeek@gmail.com>
 .\"
 .\" This program is free software: you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 .\"
 .\" You should have received a copy of the GNU General Public License
 .\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
-.TH TCBASIC "1" "May 2015" "@PACKAGE_STRING@" "User Commands"
+.TH TCBASIC "1" "December 2016" "@PACKAGE_STRING@" "User Commands"
 .SH NAME
 tcbasic \- a small BASIC Interpreter written in C
 .SH SYNOPSIS

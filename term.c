@@ -1,6 +1,6 @@
 /*
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -86,6 +86,8 @@ struct number * eval_term(struct term *t) {
 
 	if (t->op != NULL && t->op->type == DIVIDE) {
 		result = divide_number(l, r);
+	} else if (t->op != NULL && t->op->type == MOD) {
+		result = modulus_number(l, r);
 	} else {
 		result = multiply_number(l, r);
 	}

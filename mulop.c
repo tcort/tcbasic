@@ -1,6 +1,6 @@
 /*
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,6 +49,8 @@ struct mulop *parse_mulop(struct tokenizer *t) {
 			return new_mulop(TIMES);
 		case DIVIDE:
 			return new_mulop(DIVIDE);
+		case MOD:
+			return new_mulop(MOD);
 		default:
 			token_unget(t);
 			return NULL;
@@ -67,6 +69,9 @@ void print_mulop(struct mulop *op) {
 			break;
 		case DIVIDE:
 			printf("/");
+			break;
+		case MOD:
+			printf("MOD");
 			break;
 		default:
 			printf("?");
