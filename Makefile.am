@@ -93,7 +93,7 @@ EXTRA_DIST = \
 	fib.sh		fib.bas		fib.ex	\
 	functions.sh	functions.bas	functions.ex \
 	hello.sh	hello.bas	hello.ex \
-	mod.sh		mod.bash	mod.ex \
+	mod.sh		mod.bas		mod.ex \
 	newton.sh	newton.bas	newton.ex \
 	remainder.sh	remainder.bas	remainder.ex
 
