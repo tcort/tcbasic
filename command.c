@@ -47,6 +47,8 @@ struct command *parse_command(struct tokenizer *t) {
 
 	token_get(t);
 	switch (t->token.type) {
+		case RENUM:
+			return new_command(RENUM);
 		case RUN:
 			return new_command(RUN);
 		case LIST:
@@ -62,12 +64,18 @@ struct command *parse_command(struct tokenizer *t) {
 void exec_command(struct command *cmd) {
 
 	struct line *cur;
+	int n;
 
 	if (cmd == NULL) {
 		return;
 	}
 
 	switch (cmd->type) {
+		case RENUM:
+			for (cur = runtime_get_first_line(), n = 10; cur != NULL; cur = cur->next, n += 10) {
+				cur->number = n;
+			}
+			break;
 		case CLEAR:
 			runtime_reset();
 			break;

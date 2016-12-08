@@ -202,6 +202,21 @@ Example:
 
     LIST
 
+#### RENUM
+
+Renumber lines in memory.
+
+Example:
+
+    1 REM FOO
+    2 REM BAR
+    5 REM BAZ
+    RENUM
+    LIST
+    10 REM FOO
+    20 REM BAR
+    30 REM BAZ
+
 #### RUN
 
 Executes the current program.

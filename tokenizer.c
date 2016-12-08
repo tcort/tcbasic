@@ -42,6 +42,7 @@ struct token_info token_defs[] = {
 	{ "^RANDOMIZE",                                      RANDOMIZE  },
 	{ "^CLEAR",                                          CLEAR      },
 	{ "^LIST",                                           LIST       },
+	{ "^RENUM",                                          RENUM      },
 	{ "^RUN",                                            RUN        },
 	{ "^STOP",                                           STOP       },
 	{ "^RND",                                            RND        },
