@@ -16,48 +16,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __FACTOR_H
-#define __FACTOR_H
+#ifndef __TIME_H
+#define __TIME_H
 
-struct expression;
 struct number;
-struct rnd;
-struct time;
-struct var;
-struct sin;
-struct cos;
-struct tan;
-struct cot;
-struct atn;
-struct exp;
-struct log;
-struct abs;
-struct sqr;
+struct tokenizer;
 
-struct factor {
-	int type;
-	union factor_union {
-		struct expression *e;
-		struct number *n;
-		struct rnd *r;
-		struct time *time;
-		struct sin *sin;
-		struct cos *cos;
-		struct tan *tan;
-		struct cot *cot;
-		struct atn *atn;
-		struct exp *exp;
-		struct log *log;
-		struct abs *abs;
-		struct sqr *sqr;
-		struct var *v;
-	} u;
+struct time {
+	char xxx;
 };
 
-struct factor *new_factor(int type, void *value);
-struct factor *parse_factor(struct tokenizer *t);
-struct number *eval_factor(struct factor *f);
-void print_factor(struct factor *f);
-void free_factor(struct factor *f);
+struct time *new_time(void);
+struct time *parse_time(struct tokenizer *t);
+struct number *eval_time(void);
+void print_time(struct time *t);
+void free_time(struct time *t);
 
 #endif

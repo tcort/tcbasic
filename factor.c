@@ -27,6 +27,7 @@
 #include "factor.h"
 #include "number.h"
 #include "rnd.h"
+#include "time_.h"
 #include "sin.h"
 #include "cos.h"
 #include "tan.h"
@@ -59,6 +60,9 @@ struct factor *new_factor(int type, void *value) {
 			break;
 		case RND:
 			f->u.r = (struct rnd *) value;
+			break;
+		case TIME:
+			f->u.time = (struct time *) value;
 			break;
 		case SIN:
 			f->u.sin = (struct sin *) value;
@@ -100,6 +104,7 @@ struct factor *parse_factor(struct tokenizer *t) {
 	struct var *v;
 	struct number *num;
 	struct rnd *r;
+	struct time *time;
 	struct sin *sin;
 	struct cos *cos;
 	struct tan *tan;
@@ -140,6 +145,11 @@ struct factor *parse_factor(struct tokenizer *t) {
 	r = parse_rnd(t);
 	if (r != NULL) {
 		return new_factor(RND, r);
+	}
+
+	time = parse_time(t);
+	if (time != NULL) {
+		return new_factor(TIME, time);
 	}
 
 	sin = parse_sin(t);
@@ -208,6 +218,9 @@ struct number * eval_factor(struct factor *f) {
 		case RND:
 			n = eval_rnd();
 			break;
+		case TIME:
+			n = eval_time();
+			break;
 		case SIN:
 			n = eval_sin(f->u.sin);
 			break;
@@ -261,6 +274,9 @@ void print_factor(struct factor *f) {
 		case RND:
 			print_rnd(f->u.r);
 			break;
+		case TIME:
+			print_time(f->u.time);
+			break;
 		case SIN:
 			print_sin(f->u.sin);
 			break;
@@ -308,6 +324,10 @@ void free_factor(struct factor *f) {
 			case RND:
 				free_rnd(f->u.r);
 				f->u.r = NULL;
+				break;
+			case TIME:
+				free_time(f->u.time);
+				f->u.time = NULL;
 				break;
 			case SIN:
 				free_sin(f->u.sin);

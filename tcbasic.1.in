@@ -84,6 +84,9 @@ Returns a random number in the range [0,1). The same sequence of numbers is
 returned in each program run. Use the RANDOMIZE statement to generate
 different sequences in each program run.
 .TP
+\fBTIME\fR
+Returns the number of seconds since midnight.
+.TP
 \fBSIN (expression)\fR
 Returns the sine of the given expression (measured in radians).
 .TP

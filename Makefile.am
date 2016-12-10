@@ -48,6 +48,7 @@ tcbasic_SOURCES = \
 	sqr.h		sqr.c \
 	tan.h		tan.c \
 	term.h		term.c \
+	time_.h		time_.c \
 	tokenizer.h	tokenizer.c \
 	var.h		var.c \
 	var_list.h	var_list.c

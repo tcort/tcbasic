@@ -46,6 +46,7 @@ struct token_info token_defs[] = {
 	{ "^RUN",                                            RUN        },
 	{ "^STOP",                                           STOP       },
 	{ "^RND",                                            RND        },
+	{ "^TIME",                                           TIME       },
 	{ "^SIN",                                            SIN        },
 	{ "^COS",                                            COS        },
 	{ "^TAN",                                            TAN        },

@@ -238,6 +238,14 @@ Example:
     30 IF C < 0.5 THEN PRINT "HEADS"
     40 IF C >= 0.5 THEN PRINT "TAILS"
 
+#### TIME
+
+Returns the number of seconds since midnight.
+
+Example:
+
+    10 PRINT TIME
+
 #### SIN (expression)
 
 Returns the sine of the given expression (measured in radians).
