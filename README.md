@@ -17,6 +17,9 @@ complete dialects of BASIC.
 `tcbasic` doesn't have any external dependencies. To compile it,
 one simply needs a standard C toolchain.
 
+The test suite requires `diff` and `sed`. The test suite optionally
+requires `cppcheck`.
+
 ## Building
 
 Standard autotools build:

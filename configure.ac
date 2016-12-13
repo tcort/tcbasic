@@ -46,5 +46,13 @@ if test "x$SED" = "x"; then
 	AC_MSG_NOTICE([sed is mandatory to run the tests])
 fi
 
+AC_ARG_VAR([CPPCHECK],[the 'cppcheck' program is used for some static analysis])
+AC_PATH_PROG([CPPCHECK],[cppcheck],[])
+if test "x$CPPCHECK" = "x"; then
+	AC_MSG_NOTICE([==> cppcheck command not found! See http://cppcheck.sourceforge.net/ ])
+	AC_MSG_NOTICE([==> Set CPPCHECK variable if present in non-standard path!])
+	AC_MSG_NOTICE([cppcheck static analysis will be skipped.])
+fi
+
 AC_CONFIG_FILES([Makefile tcbasic.1])
 AC_OUTPUT

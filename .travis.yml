@@ -1,11 +1,21 @@
 language: c
+complier:
+  - clang
+  - gcc
+
+addons:
+  apt:
+    packages:
+    - clang
+    - cppcheck
 
 before_script:
   - ./autogen
 
 script:
-  - ./configure
-  - make
-  - make check
+  - scan-build ./configure
+  - scan-build make
+  - scan-build make check
+  - scan-build make distcheck
 
 sudo: false

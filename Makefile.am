@@ -59,6 +59,7 @@ man_MANS = tcbasic.1
 TESTS = \
 	abs.sh \
 	coinflip.sh \
+	cppcheck.sh \
 	fib.sh \
 	functions.sh \
 	hello.sh \
@@ -67,6 +68,7 @@ TESTS = \
 	remainder.sh
 
 TESTS_ENVIRONMENT = \
+	CPPCHECK=$(CPPCHECK) \
 	DIFF=$(DIFF)  \
 	SED=$(SED)  \
 	TCB=$(top_builddir)/tcbasic    \
@@ -88,7 +90,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 
 EXTRA_DIST = \
 	$(man_MANS) \
-	test-runner.sh \
+	test-runner.sh	cppcheck.sh \
 	README.md 	CONTRIBUTING.md	HACKING.md \
 	abs.sh		abs.bas		abs.ex	\
 	coinflip.sh	coinflip.bas	coinflip.ex \
