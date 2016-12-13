@@ -44,8 +44,9 @@ struct str *new_str(char *value) {
 struct str *parse_str(struct tokenizer *t) {
 	token_get(t);
 	if (t->token.type == STR) {
+		size_t len = strlen(t->token.text+1);
 		char *s = strdup(t->token.text+1);
-		s[strlen(s) - 1] = '\0';
+		s[len - 1] = '\0'; /* chomp ending double quote */
 		return new_str(s);
 	} else {
 		token_unget(t);
