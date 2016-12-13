@@ -36,6 +36,7 @@
 #include "exp.h"
 #include "log.h"
 #include "abs.h"
+#include "sgn.h"
 #include "sqr.h"
 #include "var.h"
 
@@ -88,6 +89,9 @@ struct factor *new_factor(int type, void *value) {
 		case ABS:
 			f->u.abs = (struct abs *) value;
 			break;
+		case SGN:
+			f->u.sgn = (struct sgn *) value;
+			break;
 		case SQR:
 			f->u.sqr = (struct sqr *) value;
 			break;
@@ -113,6 +117,7 @@ struct factor *parse_factor(struct tokenizer *t) {
 	struct exp *exp;
 	struct log *log;
 	struct abs *abs;
+	struct sgn *sgn;
 	struct sqr *sqr;
 
 	v = parse_var(t);
@@ -192,6 +197,11 @@ struct factor *parse_factor(struct tokenizer *t) {
 		return new_factor(ABS, abs);
 	}
 
+	sgn = parse_sgn(t);
+	if (sgn != NULL) {
+		return new_factor(SGN, sgn);
+	}
+
 	sqr = parse_sqr(t);
 	if (sqr != NULL) {
 		return new_factor(SQR, sqr);
@@ -244,6 +254,9 @@ struct number * eval_factor(struct factor *f) {
 			break;
 		case ABS:
 			n = eval_abs(f->u.abs);
+			break;
+		case SGN:
+			n = eval_sgn(f->u.sgn);
 			break;
 		case SQR:
 			n = eval_sqr(f->u.sqr);
@@ -300,6 +313,9 @@ void print_factor(struct factor *f) {
 			break;
 		case ABS:
 			print_abs(f->u.abs);
+			break;
+		case SGN:
+			print_sgn(f->u.sgn);
 			break;
 		case SQR:
 			print_sqr(f->u.sqr);
@@ -360,6 +376,10 @@ void free_factor(struct factor *f) {
 			case ABS:
 				free_abs(f->u.abs);
 				f->u.abs = NULL;
+				break;
+			case SGN:
+				free_sgn(f->u.sgn);
+				f->u.sgn = NULL;
 				break;
 			case SQR:
 				free_sqr(f->u.sqr);

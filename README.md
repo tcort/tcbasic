@@ -310,6 +310,12 @@ Example:
 
     840 LET D = ABS(-2.0)
 
+#### SGN (expression)
+
+Returns the sign of the given expression. `1` if `expression > 0`, `0` if `expression = 0`, `-1` if `expression < 0`.
+
+    40 LET S = SGN(3.14159)
+
 #### SQR (expression)
 
 Returns the square root of the given expression.

@@ -55,6 +55,7 @@ struct token_info token_defs[] = {
 	{ "^EXP",                                            EXP        },
 	{ "^LOG",                                            LOG        },
 	{ "^ABS",                                            ABS        },
+	{ "^SGN",                                            SGN        },
 	{ "^SQR",                                            SQR        },
 	{ "^<=",                                             LTEQ       },
 	{ "^<>",                                             LTGT       },

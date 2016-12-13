@@ -111,6 +111,9 @@ Returns the natural logarithm of of the given expression.
 \fBABS (expression)\fR
 Returns the absolute value of the given expression.
 .TP
+\fBSGN (expression)\fR
+Returns the sign of the given expression. 1, 0, or -1 for positive, zero, or negative.
+.TP
 \fBSQR (expression)\fR
 Returns the square root of the given expression.
 .SH COMMANDS

@@ -42,6 +42,7 @@ tcbasic_SOURCES = \
 	relop.h		relop.c \
 	rnd.h		rnd.c \
 	runtime.h	runtime.c \
+	sgn.h		sgn.c \
 	sin.h		sin.c \
 	statement.h	statement.c \
 	str.h		str.c \
