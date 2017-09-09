@@ -124,6 +124,9 @@ Clears the program from memory and sets all variables to 0.
 \fBLIST\fR
 Prints the current program.
 .TP
+\fBRENUM\fR
+Renumber lines in memory.
+.TP
 \fBRUN\fR
 Executes the current program.
 .TP
