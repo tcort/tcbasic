@@ -32,9 +32,6 @@ Buffer *bf_alloc(size_t size, size_t incr);
 /* adds the character ch to the end of the given Buffer */
 void bf_addch(Buffer *buf, char ch);
 
-/* adds the string str to the end of the given Buffer */
-void bf_addstr(Buffer *buf, char *str);
-
 /* re-initializes the given Buffer, such that the next call to
    bf_addch will put the character at the start of the buffer */
 void bf_clear(Buffer *buf);

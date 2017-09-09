@@ -102,19 +102,6 @@ void bf_addch(Buffer *buf, char ch) {
 	buf->cursize++;
 }
 
-/* adds the string str to the end of the given Buffer */
-void bf_addstr(Buffer *buf, char *str) {
-
-	size_t i;
-
-	bf_valid(buf); /* check for valid Buffer */
-
-	for (i = 0; i < strlen(str); i++) {
-
-		bf_addch(buf, str[i]);
-	}
-}
-
 /* re-initializes the given Buffer, such that the next call to
    bf_addch will put the character at the start of the buffer */
 void bf_clear(Buffer *buf) {
