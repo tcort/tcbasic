@@ -64,7 +64,8 @@ TESTS = \
 	hello.sh \
 	mod.sh \
 	newton.sh \
-	remainder.sh
+	remainder.sh \
+	squares.sh
 
 TESTS_ENVIRONMENT = \
 	CPPCHECK=$(CPPCHECK) \
@@ -85,7 +86,8 @@ CLEANFILES = $(BUILT_SOURCES) \
 	hello.out \
 	mod.out \
 	newton.out \
-	remainder.out
+	remainder.out \
+	squares.sh
 
 EXTRA_DIST = \
 	$(man_MANS) \
@@ -98,5 +100,6 @@ EXTRA_DIST = \
 	hello.sh	hello.bas	hello.ex \
 	mod.sh		mod.bas		mod.ex \
 	newton.sh	newton.bas	newton.ex \
-	remainder.sh	remainder.bas	remainder.ex
+	remainder.sh	remainder.bas	remainder.ex \
+	squares.sh	squares.bas	squares.ex
 
