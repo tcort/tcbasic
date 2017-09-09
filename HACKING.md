@@ -2,6 +2,23 @@
 
 This file contains some notes for the maintainer.
 
+## Developer Setup
+
+### Software
+
+Install `cppcheck` and `valgrind`.
+
+### pre-commit hook
+
+`.git/hooks/pre-commit`
+```
+#!/bin/sh
+
+make clean
+make
+make distcheck
+```
+
 ## Release Tasks
 
 The following set of notes covers the final testing and release process.
