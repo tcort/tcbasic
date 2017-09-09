@@ -22,7 +22,6 @@ tcbasic_SOURCES = \
 	atn.h		atn.c \
 	buffer.h	buffer.c \
 	command.h	command.c \
-	compat.h	compat.c \
 	cos.h		cos.c \
 	cot.h		cot.c \
 			driver.c \

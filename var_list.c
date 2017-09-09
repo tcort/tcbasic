@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "compat.h"
 #include "eval.h"
 #include "tokenizer.h"
 
@@ -85,11 +84,7 @@ void eval_var_list(struct var_list *vl, char *line) {
 		char *s;
 		struct var *v;
 		v = cur->var;
-#if HAVE_STRSEP
 		s = strsep(&line, ",");
-#else
-		s = tcbasic_strsep(&line, ",");
-#endif
 		snprintf(let, len, "LET %c = %s", v->value, (s != NULL) ? s : "0");
 		eval(let);
 	}
