@@ -83,7 +83,6 @@ void runtime_set_line(struct line *item) {
 	struct line *list = lines;
 	struct line *head = list;
 	struct line *cur = list;
-	struct line *prev;
 
 	if (item == NULL || item->number <= 0) {
 		return;
@@ -100,6 +99,8 @@ void runtime_set_line(struct line *item) {
 		cur->next = NULL;
 		free_line(cur);
 	} else { /* item comes after 1st element */
+    	struct line *prev;
+
 		for (prev = cur, cur = cur->next; cur != NULL; prev = cur, cur = cur->next) {
 			if (cur->number == item->number) { /* item replaces current element */
 				prev->next = item;
