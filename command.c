@@ -51,6 +51,10 @@ struct command *parse_command(struct tokenizer *t) {
 			return new_command(RENUM);
 		case RUN:
 			return new_command(RUN);
+		case TROFF:
+			return new_command(TROFF);
+		case TRON:
+			return new_command(TRON);
 		case LIST:
 			return new_command(LIST);
 		case CLEAR:
@@ -80,7 +84,7 @@ void exec_command(struct command *cmd) {
 			runtime_reset();
 			break;
 		case LIST:
-			print_line(runtime_get_first_line());
+			print_lines(runtime_get_first_line());
 			break;
 		case RUN:
 			cur = runtime_get_first_line();
@@ -95,6 +99,12 @@ void exec_command(struct command *cmd) {
 					cur = runtime_get_line(r);
 				}
 			}
+			break;
+		case TROFF:
+			runtime_trace_off();
+			break;
+		case TRON:
+			runtime_trace_on();
 			break;
 	}
 }

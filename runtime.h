@@ -31,6 +31,10 @@ void runtime_reset(void);
 int runtime_continue(void);
 void runtime_stop(void);
 
+void runtime_trace_on(void);
+void runtime_trace_off(void);
+int runtime_is_tracing(void);
+
 void runtime_callstack_push(int number);
 int runtime_callstack_pop(void);
 

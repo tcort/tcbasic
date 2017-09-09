@@ -158,6 +158,22 @@ int runtime_continue(void) {
 
 /* *** *** *** */
 
+static int trace = 0;
+
+void runtime_trace_on(void) {
+	trace = 1;
+}
+
+void runtime_trace_off(void) {
+	trace = 0;
+}
+
+int runtime_is_tracing(void) {
+	return trace;
+}
+
+/* *** *** *** */
+
 struct stack *call_stack = NULL;
 
 struct stack {

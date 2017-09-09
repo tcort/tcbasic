@@ -33,6 +33,7 @@ struct line *new_line(struct statement *statement, struct number *number);
 void parse_line(struct tokenizer *t);
 int eval_line(struct line *l);
 void print_line(struct line *l);
+void print_lines(struct line *l);
 void free_line(struct line *l);
 
 #endif

@@ -95,10 +95,27 @@ int eval_line(struct line *l) {
 		return -1;
 	}
 
+	if (runtime_is_tracing()) {
+		printf("TR> ");
+		print_line(l);
+	}
+
 	return eval_statement(l->statement, l->number, (l->next != NULL) ? l->next->number : -1);
 }
 
 void print_line(struct line *l) {
+
+	if (l == NULL) {
+		return;
+	}
+
+	printf("%d ", l->number);
+	print_statement(l->statement);
+	printf("\n");
+
+}
+
+void print_lines(struct line *l) {
 
 	if (l == NULL) {
 		return;

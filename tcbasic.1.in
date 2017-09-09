@@ -126,6 +126,12 @@ Prints the current program.
 .TP
 \fBRUN\fR
 Executes the current program.
+.TP
+\fBTROFF\fR
+Turns off debug tracing.
+.TP
+\fBTRON\fR
+Turns on debug tracing.
 .SH AUTHORS
 See https://github.com/tcort/tcbasic/graphs/contributors
 .SH "REPORTING BUGS"

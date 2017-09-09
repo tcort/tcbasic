@@ -228,6 +228,25 @@ Example:
 
     RUN
 
+#### TROFF
+
+Turn off debug tracing.
+
+    TROFF
+
+#### TRON
+
+Turn on debug tracing. When on, debug tracing prints "TR> " followed by the line that is about to be executed. Use `TROFF` to turn tracing off.
+
+    10 PRINT "HELLO"
+    20 PRINT "GOODBYE"
+    TRON
+    RUN
+    TR> 10 PRINT "HELLO"
+    HELLO
+    TR> 20 PRINT "GOODBYE"
+    GOODBYE
+
 ### Built-in Functions
 
 #### RND
