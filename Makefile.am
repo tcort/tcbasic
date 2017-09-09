@@ -87,7 +87,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 	mod.out \
 	newton.out \
 	remainder.out \
-	squares.sh
+	squares.out
 
 EXTRA_DIST = \
 	$(man_MANS) \
