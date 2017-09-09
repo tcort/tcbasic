@@ -16,9 +16,7 @@ script:
   - scan-build ./configure
   - scan-build make
   - scan-build make check
+  - cat ./test-suite.log
   - scan-build make distcheck
-
-after_failure:
-  - find ./ -name test-suite.log -exec cat {} \;
 
 sudo: false
