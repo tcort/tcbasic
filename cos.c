@@ -30,7 +30,7 @@
 
 struct cos *new_cos(struct expression *e) {
 
-	struct cos *s = NULL;
+	struct cos *s;
 
 	s = (struct cos *) malloc(sizeof(struct cos));
 	if (s == NULL) {

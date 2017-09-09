@@ -30,7 +30,7 @@
 
 struct cot *new_cot(struct expression *e) {
 
-	struct cot *c = NULL;
+	struct cot *c;
 
 	c = (struct cot *) malloc(sizeof(struct cot));
 	if (c == NULL) {

@@ -32,7 +32,7 @@ struct number *new_number(char *s) {
 	int is_int = 0;
 	regex_t ireg;
 	regmatch_t matches[1];
-	struct number *n = NULL;
+	struct number *n;
 
 	n = (struct number *) malloc(sizeof(struct number));
 	if (n == NULL) {

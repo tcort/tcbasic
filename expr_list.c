@@ -28,7 +28,7 @@
 
 struct expr_list *new_expr_list(struct expr_item *expr_item, struct expr_list *list) {
 
-	struct expr_list *el = NULL;
+	struct expr_list *el;
 
 	el = (struct expr_list *) malloc(sizeof(struct expr_list));
 	if (el == NULL) {

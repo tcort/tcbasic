@@ -29,7 +29,7 @@
 
 struct time *new_time(void) {
 
-	struct time *t = NULL;
+	struct time *t;
 
 	t = (struct time *) malloc(sizeof(struct time));
 	if (t == NULL) {

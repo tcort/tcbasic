@@ -32,7 +32,7 @@
 
 struct var_list *new_var_list(struct var *var, struct var_list *list) {
 
-	struct var_list *vl = NULL;
+	struct var_list *vl;
 
 	vl = (struct var_list *) malloc(sizeof(struct var_list));
 	if (vl == NULL) {

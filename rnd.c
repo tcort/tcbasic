@@ -29,7 +29,7 @@
 
 struct rnd *new_rnd() {
 
-	struct rnd *r = NULL;
+	struct rnd *r;
 
 	r = (struct rnd *) malloc(sizeof(struct rnd));
 	if (r == NULL) {

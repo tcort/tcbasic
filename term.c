@@ -30,7 +30,7 @@
 
 struct term *new_term(struct factor *left, struct mulop *op, struct factor *right) {
 
-	struct term *t = NULL;
+	struct term *t;
 
 	t = (struct term *) malloc(sizeof(struct term));
 	if (t == NULL) {

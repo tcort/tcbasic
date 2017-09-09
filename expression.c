@@ -28,7 +28,7 @@
 
 struct expression *new_expression(struct addop *term1_op, struct term *term1, struct addop *term2_op, struct term *term2) {
 
-	struct expression *e = NULL;
+	struct expression *e;
 
 	e = (struct expression *) malloc(sizeof(struct expression));
 	if (e == NULL) {

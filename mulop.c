@@ -27,7 +27,7 @@
 
 struct mulop *new_mulop(int type) {
 
-	struct mulop *op = NULL;
+	struct mulop *op;
 
 	op = (struct mulop *) malloc(sizeof(struct mulop));
 	if (op == NULL) {

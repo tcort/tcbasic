@@ -30,7 +30,7 @@
 
 struct abs *new_abs(struct expression *e) {
 
-	struct abs *a = NULL;
+	struct abs *a;
 
 	a = (struct abs *) malloc(sizeof(struct abs));
 	if (a == NULL) {

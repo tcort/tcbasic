@@ -27,7 +27,7 @@
 
 struct str *new_str(char *value) {
 
-	struct str *s = NULL;
+	struct str *s;
 
 	s = (struct str *) malloc(sizeof(struct str));
 	if (s == NULL) {

@@ -30,7 +30,7 @@
 
 struct exp *new_exp(struct expression *e) {
 
-	struct exp *ex = NULL;
+	struct exp *ex;
 
 	ex = (struct exp *) malloc(sizeof(struct exp));
 	if (ex == NULL) {

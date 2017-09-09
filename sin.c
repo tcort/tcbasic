@@ -30,7 +30,7 @@
 
 struct sin *new_sin(struct expression *e) {
 
-	struct sin *s = NULL;
+	struct sin *s;
 
 	s = (struct sin *) malloc(sizeof(struct sin));
 	if (s == NULL) {

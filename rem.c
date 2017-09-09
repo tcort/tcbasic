@@ -27,7 +27,7 @@
 
 struct rem *new_rem(char *value) {
 
-	struct rem *r = NULL;
+	struct rem *r;
 
 	r = (struct rem *) malloc(sizeof(struct rem));
 	if (r == NULL) {

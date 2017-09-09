@@ -26,7 +26,7 @@
 
 struct addop *new_addop(int type) {
 
-	struct addop *op = NULL;
+	struct addop *op;
 
 	op = (struct addop *) malloc(sizeof(struct addop));
 	if (op == NULL) {

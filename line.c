@@ -31,7 +31,7 @@
 
 struct line *new_line(struct statement *statement, struct number *number) {
 
-	struct line *l = NULL;
+	struct line *l;
 
 	l = (struct line *) malloc(sizeof(struct line));
 	if (l == NULL) {

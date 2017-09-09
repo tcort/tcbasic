@@ -42,7 +42,7 @@
 
 struct factor *new_factor(int type, void *value) {
 
-	struct factor *f = NULL;
+	struct factor *f;
 
 	f = (struct factor *) malloc(sizeof(struct factor));
 	if (f == NULL) {

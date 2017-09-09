@@ -30,7 +30,7 @@
 
 struct sgn *new_sgn(struct expression *e) {
 
-	struct sgn *a = NULL;
+	struct sgn *a;
 
 	a = (struct sgn *) malloc(sizeof(struct sgn));
 	if (a == NULL) {

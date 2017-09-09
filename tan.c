@@ -30,7 +30,7 @@
 
 struct tan *new_tan(struct expression *e) {
 
-	struct tan *t = NULL;
+	struct tan *t;
 
 	t = (struct tan *) malloc(sizeof(struct tan));
 	if (t == NULL) {

@@ -30,7 +30,7 @@
 
 struct log *new_log(struct expression *e) {
 
-	struct log *l = NULL;
+	struct log *l;
 
 	l = (struct log *) malloc(sizeof(struct log));
 	if (l == NULL) {

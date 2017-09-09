@@ -29,7 +29,7 @@
 
 struct command *new_command(int type) {
 
-	struct command *cmd = NULL;
+	struct command *cmd;
 
 	cmd = (struct command *) malloc(sizeof(struct command));
 	if (cmd == NULL) {

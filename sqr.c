@@ -30,7 +30,7 @@
 
 struct sqr *new_sqr(struct expression *e) {
 
-	struct sqr *s = NULL;
+	struct sqr *s;
 
 	s = (struct sqr *) malloc(sizeof(struct sqr));
 	if (s == NULL) {

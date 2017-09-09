@@ -30,7 +30,7 @@
 
 struct atn *new_atn(struct expression *e) {
 
-	struct atn *a = NULL;
+	struct atn *a;
 
 	a = (struct atn *) malloc(sizeof(struct atn));
 	if (a == NULL) {

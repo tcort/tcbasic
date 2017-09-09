@@ -29,7 +29,7 @@
 
 struct var *new_var(char value) {
 
-	struct var *v = NULL;
+	struct var *v;
 
 	v = (struct var *) malloc(sizeof(struct var));
 	if (v == NULL) {

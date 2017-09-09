@@ -27,7 +27,7 @@
 
 struct relop *new_relop(int type) {
 
-	struct relop *op = NULL;
+	struct relop *op;
 
 	op = (struct relop *) malloc(sizeof(struct relop));
 	if (op == NULL) {

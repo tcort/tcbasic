@@ -40,7 +40,7 @@
 
 struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, void *arg4) {
 
-	struct statement *s = NULL;
+	struct statement *s;
 
 	s = (struct statement *) malloc(sizeof(struct statement));
 	if (s == NULL) {

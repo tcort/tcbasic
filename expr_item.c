@@ -28,7 +28,7 @@
 
 struct expr_item *new_expr_item(struct expression *e, struct str *str) {
 
-	struct expr_item *ei = NULL;
+	struct expr_item *ei;
 
 	ei = (struct expr_item *) malloc(sizeof(struct expr_item));
 	if (ei == NULL) {
