@@ -13,9 +13,18 @@ The idea is to consistently release great software.
 - Build with `scan-build`: `./configure && make clean && scan-build make`
 - Check the distribution `make distcheck`: `./configure && make distcheck`
 - Run `cppcheck` on the codebase: `cppcheck -I. --enable=all --error-exitcode=1 *.c`
-- Submit to coverity.
+- **TODO** valgrind.
 
-**TODO** valgrind.
+### Submit to coverity.
+
+- https://scan.coverity.com/projects/tcort-tcbasic
+
+```
+./configure; make clean
+../cov-analysis-linux64-2017.07/bin/cov-build --dir cov-int make -j 4
+tail cov-int/build-log.txt
+tar czvf tcbasic.tgz cov-int
+```
 
 ### Manual Testing
 
