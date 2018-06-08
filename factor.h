@@ -34,6 +34,7 @@ struct log;
 struct abs;
 struct sgn;
 struct sqr;
+struct int_;
 
 struct factor {
 	int type;
@@ -52,6 +53,7 @@ struct factor {
 		struct abs *abs;
 		struct sgn *sgn;
 		struct sqr *sqr;
+		struct int_ *int_;
 		struct var *v;
 	} u;
 };

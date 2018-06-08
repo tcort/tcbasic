@@ -15,10 +15,6 @@ Implement additional operators:
 * ^ operator (x^y means x to the power of y) -- remember to get order of operations right.
 * Document all operators (+,-,*,/,MOD,etc)
 
-Implement additional functions:
-
-* INT(x) - returns the integer part of floor(x)
-
 Implement language fundamentals:
 
 * Strings

@@ -332,6 +332,14 @@ Example:
 
     840 LET D = ABS(-2.0)
 
+#### INT (expression)
+
+Returns the integer portion of the given expression.
+
+Example:
+
+    905 LET T = INT(RND * 100) + 1
+
 #### SGN (expression)
 
 Returns the sign of the given expression. `1` if `expression > 0`, `0` if `expression = 0`, `-1` if `expression < 0`.

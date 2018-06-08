@@ -16,39 +16,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __TOKENIZER_H
-#define __TOKENIZER_H
+#ifndef __INT__H
+#define __INT__H
 
-enum token_types {
-	PRINT, IF, THEN, GOTO, INPUT, LET, GOSUB, RETURN, END, REM, RANDOMIZE,
-	CLEAR, LIST, RENUM, RUN, STOP, TROFF, TRON,
-	RND, TIME,
-	SIN, COS, TAN, COT, ATN, EXP, LOG, ABS, SGN, SQR, INT_,
-	LTEQ, LTGT, LT, GTEQ, GTLT, GT, EQ,
-	PLUS, MINUS, TIMES, DIVIDE, MOD,
-	COMMA, OPAREN, CPAREN,
-	STR, VAR, NUMBER,
-	SPACE, INVALID, EOS
+struct number;
+struct tokenizer;
+
+struct int_ {
+	struct expression *e;
 };
 
-enum lhs {
-	EXPRESSION
-};
-
-struct token {
-	enum token_types type;
-	char *text;
-};
-
-struct tokenizer {
-	char **s;
-	struct token token;
-};
-
-void token_get(struct tokenizer *t);
-void token_unget(struct tokenizer *t);
-
-void tokenizer_init(void);
-void tokenizer_exit(void);
+struct int_ *new_int(struct expression *e);
+struct int_ *parse_int(struct tokenizer *t);
+struct number *eval_int(struct int_ *i);
+void print_int(struct int_ *i);
+void free_int(struct int_ *i);
 
 #endif

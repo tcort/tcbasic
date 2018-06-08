@@ -13,7 +13,7 @@
 .\"
 .\" You should have received a copy of the GNU General Public License
 .\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
-.TH TCBASIC "1" "December 2016" "@PACKAGE_STRING@" "User Commands"
+.TH TCBASIC "1" "June 2018" "@PACKAGE_STRING@" "User Commands"
 .SH NAME
 tcbasic \- a small BASIC Interpreter written in C
 .SH SYNOPSIS
@@ -110,6 +110,9 @@ Returns the natural logarithm of of the given expression.
 .TP
 \fBABS (expression)\fR
 Returns the absolute value of the given expression.
+.TP
+\fBINT (expression)\fR
+Returns the integer portion of the given expression.
 .TP
 \fBSGN (expression)\fR
 Returns the sign of the given expression. 1, 0, or -1 for positive, zero, or negative.

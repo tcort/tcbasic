@@ -31,6 +31,7 @@ tcbasic_SOURCES = \
 	expression.h	expression.c \
 	eval.h		eval.c \
 	factor.h	factor.c \
+	int_.h		int_.c \
 	line.h		line.c \
 	log.h		log.c \
 	mulop.h		mulop.c \
@@ -62,6 +63,7 @@ TESTS = \
 	fib.sh \
 	functions.sh \
 	hello.sh \
+	int_.sh \
 	mod.sh \
 	newton.sh \
 	remainder.sh \
@@ -84,6 +86,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 	fib.out \
 	functions.out \
 	hello.out \
+	int_.out \
 	mod.out \
 	newton.out \
 	remainder.out \
@@ -98,6 +101,7 @@ EXTRA_DIST = \
 	fib.sh		fib.bas		fib.ex	\
 	functions.sh	functions.bas	functions.ex \
 	hello.sh	hello.bas	hello.ex \
+	int_.sh		int_.bas	int_.ex \
 	mod.sh		mod.bas		mod.ex \
 	newton.sh	newton.bas	newton.ex \
 	remainder.sh	remainder.bas	remainder.ex \
