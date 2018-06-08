@@ -1,6 +1,6 @@
 
 dnl    tcbasic - a small BASIC Interpreter written in C.
-dnl    Copyright (C) 2015, 2016, 2017  Thomas Cort <linuxgeek@gmail.com>
+dnl    Copyright (C) 2015, 2016, 2017, 2018  Thomas Cort <linuxgeek@gmail.com>
 dnl
 dnl    This program is free software: you can redistribute it and/or modify
 dnl    it under the terms of the GNU General Public License as published by
