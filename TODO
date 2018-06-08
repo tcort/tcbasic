@@ -15,6 +15,10 @@ Implement additional operators:
 * ^ operator (x^y means x to the power of y) -- remember to get order of operations right.
 * Document all operators (+,-,*,/,MOD,etc)
 
+Implement additional functions:
+
+* INT(x) - returns the integer part of floor(x)
+
 Implement language fundamentals:
 
 * Strings
@@ -25,6 +29,10 @@ Implement language standards / defacto standards:
 * Dartmouth BASIC
 * ECMA-55 Minimal BASIC
 * ECMA-116 Level 1 and 2
+
+Implement additional examples:
+
+* guess the number between 1 and 100 game
 
 Internals:
 
