@@ -82,3 +82,17 @@ Bump version in `configure.ac`
 ### Upload
 
 [Upload release tarball](https://github.com/tcort/tcbasic/releases)
+
+## Enhancing tcbasic
+
+Pointers on common programming tasks.
+
+### Implementing a new built-in function
+
+Using `SGN(x)` as an example:
+
+* create `sgn.c`, `sgn.h` and add them to `Makefile.am`.
+* Add to `factor.c`, `factor.h`
+* Add token to `tokenizer.c`, `tokenizer.h`
+* Add unit tests
+* Document in `README.md` and `tcbasic.1.in`
