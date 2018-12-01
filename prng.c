@@ -16,6 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "config.h"
+
+#include <stdlib.h>
+#include <sys/time.h>
+#include <time.h>
+
 #include "prng.h"
 
 static unsigned long tcb_seed = 1;
