@@ -26,7 +26,10 @@ AC_PROG_CC
 AC_HEADER_STDC
 AC_CHECK_LIB([m],[cos])
 AC_CHECK_HEADERS([getopt.h])
+AC_CHECK_FUNCS([arc4random])
+AC_CHECK_FUNCS([clock_gettime])
 AC_CHECK_FUNCS([getopt_long])
+AC_CHECK_FUNCS([gettimeofday])
 
 AC_CONFIG_HEADERS([config.h:config.in])
 

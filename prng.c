@@ -29,6 +29,46 @@ static unsigned long tcb_seed = 1;
 #define A 16807
 #define M 2147483647
 
+static int _seed_arc4random(void) {
+
+	return 0;
+}
+
+void tcb_randomize(void) {
+
+#if HAVE_CLOCK_GETTIME == 1 || HAVE_GETTIMEOFDAY == 1
+	int rc;
+#endif
+
+#if HAVE_CLOCK_GETTIME == 1
+	struct timespec ts;
+#endif
+
+#if HAVE_GETTIMEOFDAY == 1
+	struct timeval tv;
+#endif
+
+	tcb_srand((unsigned long) time(NULL));
+
+#if HAVE_GETTIMEOFDAY == 1
+	rc = gettimeofday(&tv, NULL);
+	if (rc == 0) {
+		tcb_srand(tv.tv_usec);
+	}
+#endif
+
+#if HAVE_CLOCK_GETTIME == 1
+	rc = clock_gettime(CLOCK_REALTIME, &ts);
+	if (rc == 0) {
+		tcb_srand(ts.tv_nsec);
+	}
+#endif
+
+#if HAVE_ARC4RANDOM == 1
+	tcb_srand(arc4random());
+#endif
+}
+
 void tcb_srand(unsigned long seed) {
 	tcb_seed = (seed == 0) ? 1 : seed;
 }

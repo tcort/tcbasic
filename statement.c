@@ -312,7 +312,7 @@ int eval_statement(struct statement *s, int number, int next_number) {
 		case REM:
 			break;
 		case RANDOMIZE:
-			tcb_srand((unsigned long) time(NULL));
+			tcb_randomize();
 			break;
 	}
 

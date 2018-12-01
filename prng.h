@@ -19,6 +19,7 @@
 #ifndef __PRNG_H
 #define __PRNG_H
 
+void tcb_randomize(void);
 void tcb_srand(unsigned long seed);
 float tcb_rand(void);
 
