@@ -26,10 +26,6 @@ Implement language standards / defacto standards:
 * ECMA-55 Minimal BASIC
 * ECMA-116 Level 1 and 2
 
-Implement additional examples:
-
-* guess the number between 1 and 100 game
-
 Internals:
 
 * Better representation of lines.
