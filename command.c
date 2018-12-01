@@ -111,28 +111,6 @@ void exec_command(struct command *cmd) {
 	}
 }
 
-void print_command(struct command *cmd) {
-
-	if (cmd == NULL) {
-		return;
-	}
-
-	switch (cmd->type) {
-		case CLEAR:
-			printf("CLEAR");
-			break;
-		case LIST:
-			printf("LIST");
-			break;
-		case RUN:
-			printf("RUN");
-			break;
-		default:
-			printf("?");
-			break;
-	}
-}
-
 void free_command(struct command *cmd) {
 	if (cmd != NULL) {
 		free(cmd);

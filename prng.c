@@ -29,11 +29,6 @@ static unsigned long tcb_seed = 1;
 #define A 16807
 #define M 2147483647
 
-static int _seed_arc4random(void) {
-
-	return 0;
-}
-
 void tcb_randomize(void) {
 
 #if HAVE_CLOCK_GETTIME == 1 || HAVE_GETTIMEOFDAY == 1

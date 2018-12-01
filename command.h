@@ -28,7 +28,6 @@ struct command {
 struct command *new_command(int type);
 struct command *parse_command(struct tokenizer *t);
 void exec_command(struct command *cmd);
-void print_command(struct command *cmd);
 void free_command(struct command *cmd);
 
 #endif
