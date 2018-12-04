@@ -63,9 +63,9 @@ Buffer *readaline(FILE *f, const char *prompt, Buffer *lbuf) {
 	do {
 		char ch;
 		ch = (char) fgetc(f);
-		if (ch == '\n' || feof(f)) {
+		if (ch == -1 || ch == '\n' || feof(f)) {
 
-			/* work until EOF or a newline */
+			/* work until error, EOF or a newline */
 			break;
 		}
 
