@@ -91,7 +91,7 @@ Example:
 
 #### GOTO expression
 
-Evaluates 'expression' and jumps to the corresponding line number.
+Evaluates 'expression' and jumps to the corresponding line number. It may appear with with or without whitespace between `GO` and `TO`. For example, both `GOTO 70` and `GO TO 70` are equivalent.
 
 Example:
 
@@ -115,7 +115,7 @@ Example:
 
 #### GOSUB expression
 
-Evaluates 'expression' and jumps to the corresponding line number after saving the current line number.
+Evaluates 'expression' and jumps to the corresponding line number after saving the current line number. It may appear with with or without whitespace between `GO` and `SUB`. For example, both `GOSUB 100` and `GO SUB 100` are equivalent.
 
 Example:
 
