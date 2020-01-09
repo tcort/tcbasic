@@ -89,6 +89,8 @@ void parse_line(struct tokenizer *t) {
 			return;
 		}
 	}
+
+	fprintf(stderr, "ERROR: INVALID STATEMENT\n");
 }
 
 int eval_line(struct line *l) {
