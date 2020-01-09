@@ -156,7 +156,7 @@ void token_unget(struct tokenizer *t) {
 void tokenizer_init() {
 	size_t i;
 	for (i = 0; i < NTOKEN_TYPES; i++) {
-		regcomp(&regexes[i], token_defs[i].regex_text, REG_EXTENDED);
+		regcomp(&regexes[i], token_defs[i].regex_text, REG_EXTENDED|REG_ICASE);
 	}
 }
 
