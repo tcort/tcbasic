@@ -187,6 +187,16 @@ Example:
     30 IF C < 0.5 THEN PRINT "HEADS"
     40 IF C >= 0.5 THEN PRINT "TAILS"
 
+#### CLS
+
+Clears the screen.
+
+Example:
+
+    10 REM Clear screen and print "Hello"
+    20 CLS
+    30 PRINT "Hello"
+
 ### Commands
 
 #### CLEAR
@@ -357,7 +367,7 @@ Example:
 ## License
 
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015, 2016, 2017, 2018  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016, 2017, 2018, 2020  Thomas Cort <linuxgeek@gmail.com>
     
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

@@ -1,6 +1,6 @@
 /*
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015, 2016, 2017, 2018  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016, 2017, 2018, 2020  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 
 enum token_types {
 	PRINT, IF, THEN, GOTO, INPUT, LET, GOSUB, RETURN, END, REM, RANDOMIZE,
-	CLEAR, LIST, RENUM, RUN, STOP, TROFF, TRON,
+	CLEAR, LIST, RENUM, RUN, STOP, TROFF, TRON, CLS,
 	RND, TIME,
 	SIN, COS, TAN, COT, ATN, EXP, LOG, ABS, SGN, SQR, INT_,
 	LTEQ, LTGT, LT, GTEQ, GTLT, GT, EQ,

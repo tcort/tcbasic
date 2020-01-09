@@ -1,6 +1,6 @@
 /*
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015, 2016, 2017, 2018  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016, 2017, 2018, 2020  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ static void print_version(void) {
 
 	fprintf(stdout, "%s\n", PACKAGE_STRING);
 	fprintf(stdout, "\n");
-	fprintf(stdout, "Copyright (C) 2015, 2016, 2017, 2018  Thomas Cort <linuxgeek@gmail.com>\n");
+	fprintf(stdout, "Copyright (C) 2015, 2016, 2017, 2018, 2020  Thomas Cort <linuxgeek@gmail.com>\n");
 	fprintf(stdout, "This is free software; see the source for copying conditions.  There is NO\n");
 	fprintf(stdout, "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n");
 	fprintf(stdout, "\n");

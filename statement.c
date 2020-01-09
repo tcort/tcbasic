@@ -1,6 +1,6 @@
 /*
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015, 2016, 2017, 2018  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016, 2017, 2018, 2020  Thomas Cort <linuxgeek@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -85,6 +85,8 @@ struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, vo
 			s->u.rem_stmt.rem = (struct rem *) arg1;
 			break;
 		case RANDOMIZE:
+			break;
+		case CLS:
 			break;
 	}
 
@@ -203,6 +205,8 @@ struct statement *parse_statement(struct tokenizer *t) {
 			return new_statement(REM, r, NULL, NULL, NULL);
 		case RANDOMIZE:
 			return new_statement(RANDOMIZE, NULL, NULL, NULL, NULL);
+		case CLS:
+			return new_statement(CLS, NULL, NULL, NULL, NULL);
 		default:
 			token_unget(t);
 			return NULL;
@@ -314,6 +318,10 @@ int eval_statement(struct statement *s, int number, int next_number) {
 		case RANDOMIZE:
 			tcb_randomize();
 			break;
+		case CLS:
+			puts("\x1b[2J");
+			puts("\x1b[H");
+			break;
 	}
 
 	return next;
@@ -371,6 +379,9 @@ void print_statement(struct statement *s) {
 		case RANDOMIZE:
 			printf("RANDOMIZE");
 			break;
+		case CLS:
+			printf("CLS");
+			break;
 	}
 
 }
@@ -424,6 +435,8 @@ void free_statement(struct statement *s) {
 				s->u.rem_stmt.rem = NULL;
 				break;
 			case RANDOMIZE:
+				break;
+			case CLS:
 				break;
 		}
 		free(s);
