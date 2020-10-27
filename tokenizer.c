@@ -74,6 +74,7 @@ struct token_info token_defs[] = {
 	{ "^\\-",                                            MINUS      },
 	{ "^\\*",                                            TIMES      },
 	{ "^\\/",                                            DIVIDE     },
+	{ "^\\\\",                                           IDIVIDE    },
 	{ "^MOD",                                            MOD        },
 	{ "^,",                                              COMMA      },
 	{ "^\\(",                                            OPAREN     },

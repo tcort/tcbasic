@@ -60,6 +60,7 @@ TESTS = \
 	abs.sh \
 	coinflip.sh \
 	cppcheck.sh \
+	division.sh \
 	fib.sh \
 	functions.sh \
 	hello.sh \
@@ -98,6 +99,7 @@ EXTRA_DIST = \
 	README.md 	CONTRIBUTING.md	HACKING.md \
 	abs.sh		abs.bas		abs.ex	\
 	coinflip.sh	coinflip.bas	coinflip.ex \
+	division.sh	division.bas	division.ex \
 	fib.sh		fib.bas		fib.ex	\
 	functions.sh	functions.bas	functions.ex \
 	hello.sh	hello.bas	hello.ex \

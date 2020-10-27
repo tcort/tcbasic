@@ -51,6 +51,8 @@ struct mulop *parse_mulop(struct tokenizer *t) {
 			return new_mulop(TIMES);
 		case DIVIDE:
 			return new_mulop(DIVIDE);
+		case IDIVIDE:
+			return new_mulop(IDIVIDE);
 		case MOD:
 			return new_mulop(MOD);
 		default:
@@ -71,6 +73,9 @@ void print_mulop(struct mulop *op) {
 			break;
 		case DIVIDE:
 			printf("/");
+			break;
+		case IDIVIDE:
+			printf("\\");
 			break;
 		case MOD:
 			printf("MOD");

@@ -164,6 +164,19 @@ struct number *multiply_number(struct number *x, struct number *y) {
 	return clone_number(&r);
 }
 
+struct number *idivide_number(struct number *x, struct number *y) {
+	struct number r;
+
+	if (x == NULL || y == NULL) {
+		return NULL;
+	}
+
+	r.type = INT;
+	r.value.ival = INT_VALUE(x) / INT_VALUE(y);
+
+	return clone_number(&r);
+}
+
 struct number *divide_number(struct number *x, struct number *y) {
 	struct number r;
 

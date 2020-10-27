@@ -88,6 +88,8 @@ struct number * eval_term(struct term *t) {
 
 	if (t->op != NULL && t->op->type == DIVIDE) {
 		result = divide_number(l, r);
+	} else if (t->op != NULL && t->op->type == IDIVIDE) {
+		result = idivide_number(l, r);
 	} else if (t->op != NULL && t->op->type == MOD) {
 		result = modulus_number(l, r);
 	} else {
