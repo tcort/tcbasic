@@ -84,6 +84,7 @@ TESTS_ENVIRONMENT = \
 CLEANFILES = $(BUILT_SOURCES) \
 	abs.out \
 	coinflip.out \
+	division.out \
 	fib.out \
 	functions.out \
 	hello.out \
