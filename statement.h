@@ -38,6 +38,9 @@ struct statement {
 			struct expression *right;
 			struct statement *statement;
 		} if_stmt;
+		struct shell_statement {
+			struct str *str;
+		} shell_stmt;
 		struct goto_statement {
 			struct expression *expression;
 		} goto_stmt;

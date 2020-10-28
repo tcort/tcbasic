@@ -35,6 +35,8 @@
 #include "number.h"
 #include "relop.h"
 #include "rem.h"
+#include "shell.h"
+#include "str.h"
 #include "var_list.h"
 #include "var.h"
 
@@ -55,6 +57,9 @@ struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, vo
 	switch (s->type) {
 		case PRINT:
 			s->u.print_stmt.expr_list = (struct expr_list *) arg1;
+			break;
+		case SHELL:
+			s->u.shell_stmt.str = (struct str *) arg1;
 			break;
 		case IF:
 			s->u.if_stmt.left = (struct expression *) arg1;
@@ -101,6 +106,7 @@ struct statement *parse_statement(struct tokenizer *t) {
 	struct relop *op;
 	struct rem *r;
 	struct statement *stmt;
+	struct str *str;
 	struct var *v;
 	struct var_list *vl;
 
@@ -112,6 +118,12 @@ struct statement *parse_statement(struct tokenizer *t) {
 				return NULL;
 			}
 			return new_statement(PRINT, el, NULL, NULL, NULL);
+		case SHELL:
+			str = parse_str(t);
+			if (str == NULL) {
+				return NULL;
+			}
+			return new_statement(SHELL, str, NULL, NULL, NULL);
 		case IF:
 			expr = parse_expression(t);
 			if (expr == NULL) {
@@ -239,6 +251,9 @@ int eval_statement(struct statement *s, int number, int next_number) {
 			eval_expr_list(s->u.print_stmt.expr_list);
 			printf("\n");
 			break;
+		case SHELL:
+			doshell(s->u.shell_stmt.str->value);
+			break;
 		case IF:
 			e1 = eval_expression(s->u.if_stmt.left);
 			e2 = eval_expression(s->u.if_stmt.right);
@@ -338,6 +353,10 @@ void print_statement(struct statement *s) {
 			printf("PRINT ");
 			print_expr_list(s->u.print_stmt.expr_list);
 			break;
+		case SHELL:
+			printf("SHELL ");
+			print_str(s->u.shell_stmt.str);
+			break;
 		case IF:
 			printf("IF ");
 			print_expression(s->u.if_stmt.left);
@@ -392,6 +411,10 @@ void free_statement(struct statement *s) {
 			case PRINT:
 				free_expr_list(s->u.print_stmt.expr_list);
 				s->u.print_stmt.expr_list = NULL;
+				break;
+			case SHELL:
+				free_str(s->u.shell_stmt.str);
+				s->u.shell_stmt.str = NULL;
 				break;
 			case IF:
 				free_expression(s->u.if_stmt.left);

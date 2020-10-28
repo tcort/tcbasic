@@ -16,39 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __TOKENIZER_H
-#define __TOKENIZER_H
+#ifndef __SHELL_H
+#define __SHELL_H
 
-enum token_types {
-	PRINT, IF, THEN, GOTO, INPUT, LET, GOSUB, RETURN, END, REM, RANDOMIZE,
-	CLEAR, LIST, RENUM, RUN, STOP, TROFF, TRON, CLS, SHELL,
-	RND, TIME,
-	SIN, COS, TAN, COT, ATN, EXP, LOG, ABS, SGN, SQR, INT_,
-	LTEQ, LTGT, LT, GTEQ, GTLT, GT, EQ,
-	PLUS, MINUS, TIMES, DIVIDE, IDIVIDE, MOD,
-	COMMA, OPAREN, CPAREN,
-	STR, VAR, NUMBER,
-	SPACE, INVALID, EOS
-};
-
-enum lhs {
-	EXPRESSION
-};
-
-struct token {
-	enum token_types type;
-	char *text;
-};
-
-struct tokenizer {
-	char **s;
-	struct token token;
-};
-
-void token_get(struct tokenizer *t);
-void token_unget(struct tokenizer *t);
-
-void tokenizer_init(void);
-void tokenizer_exit(void);
+int doshell(char *cmd);
 
 #endif

@@ -16,39 +16,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __TOKENIZER_H
-#define __TOKENIZER_H
+#include "config.h"
 
-enum token_types {
-	PRINT, IF, THEN, GOTO, INPUT, LET, GOSUB, RETURN, END, REM, RANDOMIZE,
-	CLEAR, LIST, RENUM, RUN, STOP, TROFF, TRON, CLS, SHELL,
-	RND, TIME,
-	SIN, COS, TAN, COT, ATN, EXP, LOG, ABS, SGN, SQR, INT_,
-	LTEQ, LTGT, LT, GTEQ, GTLT, GT, EQ,
-	PLUS, MINUS, TIMES, DIVIDE, IDIVIDE, MOD,
-	COMMA, OPAREN, CPAREN,
-	STR, VAR, NUMBER,
-	SPACE, INVALID, EOS
-};
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-enum lhs {
-	EXPRESSION
-};
+#include "shell.h"
 
-struct token {
-	enum token_types type;
-	char *text;
-};
+int doshell(char *cmd) {
 
-struct tokenizer {
-	char **s;
-	struct token token;
-};
+	int wstatus;
+	pid_t pid;
 
-void token_get(struct tokenizer *t);
-void token_unget(struct tokenizer *t);
+	pid = fork();
+	if (pid < 0) {
+		return -1;
+	} else if (pid == 0) {
+		execl("/bin/sh", "sh", "-c", cmd, NULL);
+		exit(EXIT_FAILURE);
+	}
 
-void tokenizer_init(void);
-void tokenizer_exit(void);
+	waitpid(pid, &wstatus, 0);
 
-#endif
+	return WEXITSTATUS(wstatus);
+}
+

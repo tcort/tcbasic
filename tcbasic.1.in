@@ -74,6 +74,9 @@ Ends the execution of the program.
 \fBSTOP\fR
 Exits the interpreter.
 .TP
+\fBSHELL\fR
+Executes a shell command.
+.TP
 \fBRANDOMIZE\fR
 Re-seeds the random number generator, causing RND to return a different
 sequence of random numbers.

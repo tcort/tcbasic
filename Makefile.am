@@ -43,6 +43,7 @@ tcbasic_SOURCES = \
 	rnd.h		rnd.c \
 	runtime.h	runtime.c \
 	sgn.h		sgn.c \
+	shell.h		shell.c \
 	sin.h		sin.c \
 	statement.h	statement.c \
 	str.h		str.c \
@@ -69,6 +70,7 @@ TESTS = \
 	newton.sh \
 	pemdas.sh \
 	remainder.sh \
+	shell.sh \
 	squares.sh
 
 TESTS_ENVIRONMENT = \
@@ -94,6 +96,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 	newton.out \
 	pemdas.out \
 	remainder.out \
+	shell.out \
 	squares.out
 
 EXTRA_DIST = \
@@ -111,5 +114,6 @@ EXTRA_DIST = \
 	newton.sh	newton.bas	newton.ex \
 	pemdas.sh	pemdas.bas	pemdas.ex \
 	remainder.sh	remainder.bas	remainder.ex \
+	shell.sh	shell.bas	shell.ex \
 	squares.sh	squares.bas	squares.ex
 

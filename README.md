@@ -175,6 +175,15 @@ Example:
 
     STOP
 
+#### SHELL
+
+Executes a shell command.
+
+Example:
+
+    100 PRINT "Current uptime:"
+    200 SHELL "uptime"
+
 #### RANDOMIZE
 
 Re-seeds the random number generator, causing RND to return a different sequence of random numbers.
