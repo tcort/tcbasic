@@ -1,0 +1,4 @@
+LET A = 2*3+5*7
+PRINT A
+LET A = 2*(3+5)*7
+PRINT A

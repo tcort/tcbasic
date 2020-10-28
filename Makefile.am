@@ -67,6 +67,7 @@ TESTS = \
 	int_.sh \
 	mod.sh \
 	newton.sh \
+	pemdas.sh \
 	remainder.sh \
 	squares.sh
 
@@ -91,6 +92,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 	int_.out \
 	mod.out \
 	newton.out \
+	pemdas.out \
 	remainder.out \
 	squares.out
 
@@ -107,6 +109,7 @@ EXTRA_DIST = \
 	int_.sh		int_.bas	int_.ex \
 	mod.sh		mod.bas		mod.ex \
 	newton.sh	newton.bas	newton.ex \
+	pemdas.sh	pemdas.bas	pemdas.ex \
 	remainder.sh	remainder.bas	remainder.ex \
 	squares.sh	squares.bas	squares.ex
 
