@@ -40,6 +40,7 @@ struct token_info token_defs[] = {
 	{ "^GO[ \t\f\r\n]*SUB",                              GOSUB      },
 	{ "^RETURN",                                         RETURN     },
 	{ "^SHELL",                                          SHELL      },
+	{ "^BEEP",                                           BEEP       },
 	{ "^END",                                            END        },
 	{ "^REM.*$",                                         REM        },
 	{ "^RANDOMIZE",                                      RANDOMIZE  },

@@ -175,7 +175,15 @@ Example:
 
     STOP
 
-#### SHELL
+#### BEEP
+
+System beep.
+
+Example:
+
+    100 BEEP
+
+#### SHELL cmd
 
 Executes a shell command.
 

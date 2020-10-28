@@ -74,7 +74,10 @@ Ends the execution of the program.
 \fBSTOP\fR
 Exits the interpreter.
 .TP
-\fBSHELL\fR
+\fBBEEP\fR
+System beep.
+.TP
+\fBSHELL cmd\fR
 Executes a shell command.
 .TP
 \fBRANDOMIZE\fR

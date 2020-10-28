@@ -61,6 +61,8 @@ struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, vo
 		case SHELL:
 			s->u.shell_stmt.str = (struct str *) arg1;
 			break;
+		case BEEP:
+			break;
 		case IF:
 			s->u.if_stmt.left = (struct expression *) arg1;
 			s->u.if_stmt.relop = (struct relop *) arg2;
@@ -118,6 +120,8 @@ struct statement *parse_statement(struct tokenizer *t) {
 				return NULL;
 			}
 			return new_statement(PRINT, el, NULL, NULL, NULL);
+		case BEEP:
+			return new_statement(BEEP, NULL, NULL, NULL, NULL);
 		case SHELL:
 			str = parse_str(t);
 			if (str == NULL) {
@@ -254,6 +258,9 @@ int eval_statement(struct statement *s, int number, int next_number) {
 		case SHELL:
 			doshell(s->u.shell_stmt.str->value);
 			break;
+		case BEEP:
+			putchar(7);
+			break;
 		case IF:
 			e1 = eval_expression(s->u.if_stmt.left);
 			e2 = eval_expression(s->u.if_stmt.right);
@@ -357,6 +364,9 @@ void print_statement(struct statement *s) {
 			printf("SHELL ");
 			print_str(s->u.shell_stmt.str);
 			break;
+		case BEEP:
+			printf("BEEP");
+			break;
 		case IF:
 			printf("IF ");
 			print_expression(s->u.if_stmt.left);
@@ -411,6 +421,8 @@ void free_statement(struct statement *s) {
 			case PRINT:
 				free_expr_list(s->u.print_stmt.expr_list);
 				s->u.print_stmt.expr_list = NULL;
+				break;
+			case BEEP:
 				break;
 			case SHELL:
 				free_str(s->u.shell_stmt.str);
