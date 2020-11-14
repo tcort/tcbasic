@@ -38,7 +38,6 @@ Testing:
 Other changes:
 
 * Better error handling / reporting.
-* Doxygen code comments
 
 Report and Fix Issues:
 

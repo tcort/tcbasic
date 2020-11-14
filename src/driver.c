@@ -31,7 +31,7 @@
 
 static void print_help(char *progname) {
 
-	fprintf(stdout, "%s - a small BASIC Interpreter written in C\n", PACKAGE_NAME);
+	fprintf(stdout, "%s - a small BASIC Interpreter written in C\n", PROJECT_NAME);
 	fprintf(stdout, "\n");
 	fprintf(stdout, "Usage: %s [filename]\n", progname);
 	fprintf(stdout, "\n");
@@ -39,14 +39,14 @@ static void print_help(char *progname) {
 	fprintf(stdout, " -h, -?            --help                  Print a helpful message and exit\n");
 	fprintf(stdout, " -v                --version               Print version information and exit\n");
 	fprintf(stdout, "\n");
-	fprintf(stdout, "Report bugs to %s\n", PACKAGE_BUGREPORT);
+	fprintf(stdout, "Report bugs to %s\n", PROJECT_BUGREPORT);
 
 	exit(0);
 }
 
 static void print_version(void) {
 
-	fprintf(stdout, "%s\n", PACKAGE_STRING);
+	fprintf(stdout, "%s\n", PROJECT_STRING);
 	fprintf(stdout, "\n");
 	fprintf(stdout, "Copyright (C) 2015, 2016, 2017, 2018, 2020  Thomas Cort <linuxgeek@gmail.com>\n");
 	fprintf(stdout, "This is free software; see the source for copying conditions.  There is NO\n");
@@ -115,10 +115,7 @@ int main(int argc, char *argv[]) {
 	bf_free(buf);
 
 	if (argc == 2) {
-		char *line;
-		line = strdup("RUN");
-		eval(line);
-		free(line);
+		eval("RUN");
 	}
 
 	if (fp != stdin) {

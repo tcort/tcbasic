@@ -13,7 +13,7 @@
 .\"
 .\" You should have received a copy of the GNU General Public License
 .\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
-.TH TCBASIC "1" "June 2018" "@PACKAGE_STRING@" "User Commands"
+.TH TCBASIC "1" "June 2018" "@PROJECT_NAME@ @PROJECT_VERSION@" "User Commands"
 .SH NAME
 tcbasic \- a small BASIC Interpreter written in C
 .SH SYNOPSIS

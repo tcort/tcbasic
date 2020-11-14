@@ -1,0 +1,10 @@
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+CTestTestfile.cmake
+DartConfiguration.tcl
+include
+Makefile
+tcbasic
+Testing
+*.out
