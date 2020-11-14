@@ -17,7 +17,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(tcbasic VERSION 0.0.0 LANGUAGES C)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -ansi -pedantic")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -Werror -Wextra -Wpedantic")
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/include/config.h.in"
