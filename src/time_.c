@@ -66,7 +66,7 @@ struct number *eval_time(void) {
 	time_t midnight;
 
 	time(&now); /* get current time */
-	t = *localtime(&now);
+	t = *localtime_r(&now, &t);
 
 	t.tm_hour = 0; /* rewind to midnight */
 	t.tm_min = 0;
