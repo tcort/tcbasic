@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 cmake_minimum_required(VERSION 3.10)
-project(tcbasic VERSION 0.0.0 LANGUAGES C)
+project(tcbasic VERSION 2.3.0 LANGUAGES C)
 
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -Werror -Wextra -Wpedantic")
 
