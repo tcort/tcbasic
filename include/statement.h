@@ -54,6 +54,15 @@ struct statement {
 		struct gosub_statement {
 			struct expression *expression;
 		} gosub_stmt;
+		struct for_statement {
+			struct var *var;
+			struct expression *initial;
+			struct expression *limit;
+			struct expression *step;
+		} for_stmt;
+		struct next_statement {
+			struct var *var;
+		} next_stmt;
 		struct rem_statement {
 			struct rem *rem;
 		} rem_stmt;

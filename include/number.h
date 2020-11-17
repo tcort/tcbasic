@@ -41,6 +41,7 @@ struct number *new_number_from_float(float f);
 struct number *parse_number(struct tokenizer *t);
 struct number *clone_number(struct number *n);
 struct number *add_number(struct number *x, struct number *y);
+struct number *subtract_number(struct number *x, struct number *y);
 struct number *multiply_number(struct number *x, struct number *y);
 struct number *divide_number(struct number *x, struct number *y);
 struct number *idivide_number(struct number *x, struct number *y);

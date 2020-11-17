@@ -26,6 +26,9 @@
 
 #include "line.h"
 #include "number.h"
+#include "statement.h"
+#include "tokenizer.h"
+#include "var.h"
 
 #include "runtime.h"
 
@@ -49,6 +52,21 @@ struct line *runtime_get_line(int number) {
 	}
 
 	return NULL;
+}
+
+int runtime_get_line_after_nearest_next(int for_line_number, char var) {
+
+	struct line *cur;
+
+	for (cur = runtime_get_line(for_line_number); cur != NULL; cur = cur->next) {
+		if (cur->statement->type == NEXT && cur->statement->u.next_stmt.var->value == var) {
+			return cur->next == NULL ? -1 : cur->next->number;
+		}
+
+	}
+
+	return -1;
+
 }
 
 void runtime_rm_line(int number) {
@@ -149,6 +167,36 @@ struct number *runtime_get_var(char var) {
 
 /* *** *** *** */
 
+#define NFORSTATES 26
+struct for_state for_states[NFORSTATES] = {
+	{ NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 },
+	{ NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 },
+	{ NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 },
+	{ NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 },
+	{ NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 },
+	{ NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 }, { NULL, NULL, 0 },
+	{ NULL, NULL, 0 }, { NULL, NULL, 0 }
+};
+
+void runtime_set_for_state(char var, struct number *limit, struct number *step, int target) {
+	int i = (var - 'A') % NFORSTATES;
+
+	free_number(for_states[i].limit);
+	for_states[i].limit = NULL;
+	free_number(for_states[i].step);
+	for_states[i].step = NULL;
+
+	for_states[i].limit = clone_number(limit);
+	for_states[i].step = clone_number(step);
+	for_states[i].target = target;
+}
+
+struct for_state *runtime_get_for_state(char var) {
+	return &for_states[(var - 'A') % NFORSTATES];
+}
+
+/* *** *** *** */
+
 int done = 0;
 
 void runtime_stop(void) {
@@ -223,6 +271,14 @@ void runtime_reset(void) {
 	for (i = 0; i < NVARS; i++) {
 		free_number(vars[i]);
 		vars[i] = NULL;
+	}
+
+	for (i = 0; i < NFORSTATES; i++) {
+		free_number(for_states[i].limit);
+		for_states[i].limit = NULL;
+		free_number(for_states[i].step);
+		for_states[i].step = NULL;
+		for_states[i].target = 0;
 	}
 
 	if (lines != NULL) {

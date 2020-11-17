@@ -4,7 +4,6 @@ Enhancements:
 
 Implement additional statements:
 
-* FOR/NEXT
 * READ/DATA/RESTORE
 * ON .. GOTO
 * DEF

@@ -76,6 +76,23 @@ Example:
     20 INPUT A,B
     30 PRINT "The product of ",A," and ",B," is ",A*B
 
+### FOR var = expression TO expression (STEP expression) / NEXT I
+
+Evaluates the first 'expression' and assigns the result to the index variable
+'var' when entering the loop. Before each iteration, the second expression is
+evaluated and compared to the index variable. If the limit is not exceeded,
+another iteration takes place. At the end of each iteration, the step
+'expression' is evaluated and added to the index variable. If a step 'expression'
+is not provided, the step defaults to `1`.
+
+Example:
+
+    10 PRINT "Squares of integers from 1 to 10"
+    20 FOR I = 1 TO 10
+    30 PRINT I^2
+    40 NEXT I
+    50 END
+
 ### GOSUB expression
 
 Evaluates 'expression' and jumps to the corresponding line number after saving the current line number. It may appear with with or without whitespace between `GO` and `SUB`. For example, both `GOSUB 100` and `GO SUB 100` are equivalent.

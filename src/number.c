@@ -135,6 +135,40 @@ struct number *add_number(struct number *x, struct number *y) {
 	return clone_number(&r);
 }
 
+struct number *subtract_number(struct number *x, struct number *y) {
+
+	struct number *neg;
+	struct number *yneg;
+	struct number *r;
+
+	if (x == NULL || y == NULL) {
+		return NULL;
+	}
+
+	neg = new_number_from_int(-1);
+	if (neg == NULL) {
+		return NULL;
+	}
+
+	yneg = multiply_number(neg, y);
+	if (yneg == NULL) {
+		free_number(neg);
+		return NULL;
+	}
+
+	free_number(neg);
+
+	r = add_number(x, yneg);
+	if (r == NULL) {
+		free_number(yneg);
+		return NULL;
+	}
+
+	free_number(yneg);
+	return r;
+
+}
+
 struct number *multiply_number(struct number *x, struct number *y) {
 	struct number r;
 

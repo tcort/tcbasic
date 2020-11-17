@@ -22,10 +22,20 @@
 struct number;
 struct line;
 
+struct for_state {
+	struct number *limit;
+	struct number *step;
+	int target;
+};
+
 struct line *runtime_get_first_line(void);
 struct line *runtime_get_line(int number);
 void runtime_set_line(struct line *item);
 void runtime_rm_line(int number);
+int runtime_get_line_after_nearest_next(int for_line_number, char var);
+
+void runtime_set_for_state(char v, struct number *limit, struct number *step, int target);
+struct for_state *runtime_get_for_state(char v);
 
 void runtime_reset(void);
 int runtime_continue(void);

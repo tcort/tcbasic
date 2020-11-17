@@ -84,6 +84,15 @@ struct statement *new_statement(int type, void *arg1, void *arg2, void *arg3, vo
 			break;
 		case RETURN:
 			break;
+		case FOR:
+			s->u.for_stmt.var = (struct var *) arg1;
+			s->u.for_stmt.initial = (struct expression *) arg2;
+			s->u.for_stmt.limit = (struct expression *) arg3;
+			s->u.for_stmt.step = (struct expression *) arg4;
+			break;
+		case NEXT:
+			s->u.next_stmt.var = (struct var *) arg1;
+			break;
 		case END:
 			break;
 		case STOP:
@@ -105,6 +114,7 @@ struct statement *parse_statement(struct tokenizer *t) {
 	struct expr_list *el;
 	struct expression *expr;
 	struct expression *expr2;
+	struct expression *expr3;
 	struct relop *op;
 	struct rem *r;
 	struct statement *stmt;
@@ -212,6 +222,64 @@ struct statement *parse_statement(struct tokenizer *t) {
 			return new_statement(END, NULL, NULL, NULL, NULL);
 		case STOP:
 			return new_statement(STOP, NULL, NULL, NULL, NULL);
+		case FOR:
+			v = parse_var(t);
+			if (v == NULL) {
+				return NULL;
+			}
+			token_get(t);
+			if (t->token.type != EQ) {
+				token_unget(t);
+				free_var(v);
+				v = NULL;
+				return NULL;
+			}
+			expr = parse_expression(t);
+			if (expr == NULL) {
+				free_var(v);
+				v = NULL;
+				return NULL;
+			}
+			token_get(t);
+			if (t->token.type != TO) {
+				token_unget(t);
+				free_expression(expr);
+				expr = NULL;
+				free_var(v);
+				v = NULL;
+				return NULL;
+			}
+			expr2 = parse_expression(t);
+			if (expr2 == NULL) {
+				free_expression(expr);
+				expr = NULL;
+				free_var(v);
+				v = NULL;
+				return NULL;
+			}
+			token_get(t);
+			if (t->token.type == STEP) {
+				expr3 = parse_expression(t);
+				if (expr3 == NULL) {
+					free_expression(expr2);
+					expr2 = NULL;
+					free_expression(expr);
+					expr = NULL;
+					free_var(v);
+					v = NULL;
+					return NULL;
+				}
+			} else {
+				token_unget(t);
+				expr3 = NULL;
+			}
+			return new_statement(FOR, v, expr, expr2, expr3);
+		case NEXT:
+			v = parse_var(t);
+			if (v == NULL) {
+				return NULL;
+			}
+			return new_statement(NEXT, v, NULL, NULL, NULL);
 		case REM:
 			token_unget(t);
 			r = parse_rem(t);
@@ -245,6 +313,7 @@ int eval_statement(struct statement *s, int number, int next_number) {
 	struct number *e1;
 	struct number *e2;
 	struct number *n;
+	struct for_state *fs;
 
 	if (s == NULL) {
 		return -1;
@@ -314,6 +383,85 @@ int eval_statement(struct statement *s, int number, int next_number) {
 			n = eval_expression(s->u.let_stmt.expression);
 			runtime_set_var(s->u.let_stmt.var->value, n);
 			free_number(n);
+			break;
+		case FOR:
+
+			e1 = eval_expression(s->u.for_stmt.limit);
+			if (e1 == NULL) {
+				next = -1;
+				break;
+			}
+
+			if (s->u.for_stmt.step == NULL) {
+				e2 = new_number_from_int(1);
+			} else {
+				e2 = eval_expression(s->u.for_stmt.step);
+			}
+
+			if (e2 == NULL) {
+				free_number(e2);
+				next = -1;
+				break;
+			}
+
+			runtime_set_for_state(s->u.for_stmt.var->value, e1, e2, next_number);
+
+			free_number(e2);
+			free_number(e1);
+
+			/* initialize index variable */
+			n = eval_expression(s->u.for_stmt.initial);
+			runtime_set_var(s->u.for_stmt.var->value, n);
+			free_number(n);
+
+			/* eval limit */
+			fs = runtime_get_for_state(s->u.next_stmt.var->value);
+			e1 = subtract_number(
+				runtime_get_var(s->u.for_stmt.var->value),
+				fs->limit
+			);
+
+			e2 = new_number_from_int(FLOAT_VALUE(fs->step) >= 0.0 ? 1 : -1);
+
+			n = multiply_number(e1, e2);
+			if (FLOAT_VALUE(n) <= 0.0) {
+				next = -1;
+			} else {
+				next = runtime_get_line_after_nearest_next(number, s->u.for_stmt.var->value);
+			}
+
+			free_number(n);
+			free_number(e2);
+			free_number(e1);
+
+			break;
+		case NEXT:
+			fs = runtime_get_for_state(s->u.next_stmt.var->value);
+			e1 = runtime_get_var(s->u.next_stmt.var->value);
+			e2 = fs->step;
+			n = add_number(e1, e2);
+			runtime_set_var(s->u.next_stmt.var->value, n);
+			free_number(n);
+
+			/* eval limit */
+			e1 = subtract_number(
+				runtime_get_var(s->u.next_stmt.var->value),
+				fs->limit
+			);
+
+			e2 = new_number_from_int(FLOAT_VALUE(fs->step) >= 0.0 ? 1 : -1);
+
+			n = multiply_number(e1, e2);
+			if (FLOAT_VALUE(n) <= 0.0) {
+				next = fs->target;
+			} else {
+				next = next_number;
+			}
+
+			free_number(n);
+			free_number(e2);
+			free_number(e1);
+
 			break;
 		case GOSUB:
 			if (next_number > 0) {
@@ -389,6 +537,22 @@ void print_statement(struct statement *s) {
 			printf(" = ");
 			print_expression(s->u.let_stmt.expression);
 			break;
+		case FOR:
+			printf("FOR ");
+			print_var(s->u.for_stmt.var);
+			printf(" = ");
+			print_expression(s->u.for_stmt.initial);
+			printf(" TO ");
+			print_expression(s->u.for_stmt.limit);
+			if (s->u.for_stmt.step != NULL) {
+				printf(" STEP ");
+				print_expression(s->u.for_stmt.step);
+			}
+			break;
+		case NEXT:
+			printf("NEXT ");
+			print_var(s->u.next_stmt.var);
+			break;
 		case GOSUB:
 			printf("GOSUB ");
 			print_expression(s->u.gosub_stmt.expression);
@@ -454,6 +618,20 @@ void free_statement(struct statement *s) {
 				s->u.let_stmt.var = NULL;
 				free_expression(s->u.let_stmt.expression);
 				s->u.let_stmt.expression = NULL;
+				break;
+			case FOR:
+				free_var(s->u.for_stmt.var);
+				s->u.for_stmt.var = NULL;
+				free_expression(s->u.for_stmt.initial);
+				s->u.for_stmt.initial = NULL;
+				free_expression(s->u.for_stmt.limit);
+				s->u.for_stmt.limit = NULL;
+				free_expression(s->u.for_stmt.step);
+				s->u.for_stmt.step = NULL;
+				break;
+			case NEXT:
+				free_var(s->u.next_stmt.var);
+				s->u.next_stmt.var = NULL;
 				break;
 			case GOSUB:
 				free_expression(s->u.gosub_stmt.expression);
