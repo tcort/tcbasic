@@ -79,6 +79,7 @@ struct token_info token_defs[] = {
 	{ "^\\\\",                                           IDIVIDE    },
 	{ "^MOD",                                            MOD        },
 	{ "^,",                                              COMMA      },
+	{ "^\\^",                                            CIRCUMFLEX	},
 	{ "^\\(",                                            OPAREN     },
 	{ "^\\)",                                            CPAREN     },
 	{ "^\"[^\"]*\"",                                     STR        },

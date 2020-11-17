@@ -10,11 +10,6 @@ Implement additional statements:
 * DEF
 * DIM
 
-Implement additional operators:
-
-* ^ operator (x^y means x to the power of y) -- remember to get order of operations right.
-* Document all operators (+,-,*,/,MOD,etc)
-
 Implement language fundamentals:
 
 * Strings
@@ -39,6 +34,3 @@ Other changes:
 
 * Better error handling / reporting.
 
-Report and Fix Issues:
-
-* https://github.com/tcort/tcbasic/issues

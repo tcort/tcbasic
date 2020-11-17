@@ -16,22 +16,52 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __FACTOR_H
-#define __FACTOR_H
+#ifndef __PRIMARY_H
+#define __PRIMARY_H
 
-struct tokenizer;
-struct primary;
+struct expression;
 struct number;
+struct rnd;
+struct time;
+struct var;
+struct sin;
+struct cos;
+struct tan;
+struct cot;
+struct atn;
+struct exp;
+struct log;
+struct abs;
+struct sgn;
+struct sqr;
+struct int_;
 
-struct factor {
-	struct primary *p1;
-	struct primary *p2;
+struct primary {
+	int type;
+	union primary_union {
+		struct expression *e;
+		struct number *n;
+		struct rnd *r;
+		struct time *time;
+		struct sin *sin;
+		struct cos *cos;
+		struct tan *tan;
+		struct cot *cot;
+		struct atn *atn;
+		struct exp *exp;
+		struct log *log;
+		struct abs *abs;
+		struct sgn *sgn;
+		struct sqr *sqr;
+		struct int_ *int_;
+		struct var *v;
+	} u;
 };
 
-struct factor *new_factor(struct primary *p1, struct primary *p2);
-struct factor *parse_factor(struct tokenizer *t);
-struct number *eval_factor(struct factor *f);
-void print_factor(struct factor *f);
-void free_factor(struct factor *f);
+struct primary *new_primary(int type, void *value);
+struct primary *parse_primary(struct tokenizer *t);
+struct number *eval_primary(struct primary *f);
+void print_primary(struct primary *f);
+void free_primary(struct primary *f);
 
 #endif

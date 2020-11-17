@@ -10,6 +10,6 @@
 1002 REM Uses Z as a temporary variable.
 1050 LET Y = 0.5 * X
 1100 LET Z = Y
-1200 LET Y = Y-(((Y*Y)-X)/(2*Y))
+1200 LET Y = Y-(((Y^2)-X)/(2*Y))
 1300 IF Z <> Y THEN GOTO 1100
 1400 RETURN

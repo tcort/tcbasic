@@ -1,5 +1,27 @@
 # tcbasic Language Reference
 
+## Operators
+
+### Arithmetic Operators
+
+- `+` - addition
+- `-` - subtraction
+- `*` - multiplication
+- `/` - division
+- `\` - integer division
+- `%` - modulus
+- `^` - exponentiation
+
+### Relational Operators
+
+- `<=` - less than or equal to
+- `<` - less than
+- `=` - equal to
+- `<>` - not equal to
+- `><` - not equal to
+- `>` - greater than
+- `>=` - greater than or equal to
+
 ## Statements
 
 ### REM remark

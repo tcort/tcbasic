@@ -235,6 +235,35 @@ struct number *modulus_number(struct number *x, struct number *y) {
 	return clone_number(&r);
 }
 
+struct number *pow_number(struct number *x, struct number *y) {
+	struct number r;
+
+	if (x == NULL || y == NULL) {
+		return NULL;
+	}
+
+
+	if (x->type == INT) {
+		if (y->type == INT) {
+			r.type = INT;
+			r.value.ival = (int) pow(x->value.ival, y->value.ival);
+		} else {
+			r.type = FLOAT;
+			r.value.fval = pow(x->value.ival, y->value.fval);
+		}
+	} else {
+		if (y->type == INT) {
+			r.type = FLOAT;
+			r.value.fval = pow(x->value.fval, y->value.ival);
+		} else {
+			r.type = FLOAT;
+			r.value.fval = pow(x->value.fval, y->value.fval);
+		}
+	}
+
+	return clone_number(&r);
+}
+
 void print_number(struct number *n) {
 	if (n == NULL) {
 		return;
