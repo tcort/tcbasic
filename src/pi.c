@@ -16,39 +16,58 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __TOKENIZER_H
-#define __TOKENIZER_H
+#include "config.h"
 
-enum token_types {
-	PRINT, IF, THEN, GOTO, INPUT, LET, GOSUB, RETURN, END, REM, RANDOMIZE,
-	CLEAR, LIST, RENUM, RUN, STOP, TROFF, TRON, CLS, SHELL, BEEP,
-	RND, TIME, FOR, TO, STEP, NEXT,
-	SIN, COS, TAN, COT, ATN, EXP, LOG, ABS, SGN, SQR, INT_,
-	LTEQ, LTGT, LT, GTEQ, GTLT, GT, EQ,
-	PLUS, MINUS, TIMES, DIVIDE, IDIVIDE, MOD,
-	CIRCUMFLEX, COMMA, OPAREN, CPAREN,
-	STR, VAR, NUMBER, PI,
-	SPACE, INVALID, EOS
-};
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-enum lhs {
-	EXPRESSION
-};
+#include "prng.h"
+#include "tokenizer.h"
 
-struct token {
-	enum token_types type;
-	char *text;
-};
+#include "number.h"
+#include "pi.h"
 
-struct tokenizer {
-	char **s;
-	struct token token;
-};
+struct pi *new_pi(void) {
 
-void token_get(struct tokenizer *t);
-void token_unget(struct tokenizer *t);
+	struct pi *r;
 
-void tokenizer_init(void);
-void tokenizer_exit(void);
+	r = (struct pi *) malloc(sizeof(struct pi));
+	if (r == NULL) {
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	memset(r, '\0', sizeof(struct pi));
 
-#endif
+	return r;
+}
+
+struct pi *parse_pi(struct tokenizer *t) {
+
+	token_get(t);
+	if (t->token.type != PI) {
+		token_unget(t);
+		return NULL;
+	}
+
+	return new_pi();
+}
+
+struct number *eval_pi(void) {
+	return new_number_from_float(3.14159265);
+}
+
+void print_pi(struct pi *r) {
+	if (r == NULL) {
+		return;
+	}
+
+	printf("π");
+}
+
+void free_pi(struct pi *r) {
+	if (r != NULL) {
+		free(r);
+	}
+}

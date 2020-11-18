@@ -42,6 +42,7 @@
 #include "sgn.h"
 #include "sqr.h"
 #include "var.h"
+#include "pi.h"
 
 struct primary *new_primary(int type, void *value) {
 
@@ -104,6 +105,9 @@ struct primary *new_primary(int type, void *value) {
 		case VAR:
 			f->u.v = (struct var *) value;
 			break;
+		case PI:
+			f->u.pi = (struct pi *) value;
+			break;
 	}
 
 	return f;
@@ -126,6 +130,7 @@ struct primary *parse_primary(struct tokenizer *t) {
 	struct sgn *sgn;
 	struct sqr *sqr;
 	struct int_ *int_;
+	struct pi *pi;
 
 	v = parse_var(t);
 	if (v != NULL) {
@@ -153,6 +158,11 @@ struct primary *parse_primary(struct tokenizer *t) {
 		return NULL;
 	}
 	token_unget(t);
+
+	pi = parse_pi(t);
+	if (pi != NULL) {
+		return new_primary(PI, pi);
+	}
 
 	r = parse_rnd(t);
 	if (r != NULL) {
@@ -279,6 +289,9 @@ struct number * eval_primary(struct primary *f) {
 		case VAR:
 			n = eval_var(f->u.v);
 			break;
+		case PI:
+			n = eval_pi();
+			break;
 	}
 
 	return n;
@@ -340,6 +353,9 @@ void print_primary(struct primary *f) {
 			break;
 		case VAR:
 			print_var(f->u.v);
+			break;
+		case PI:
+			print_pi(f->u.pi);
 			break;
 	}
 }
@@ -410,6 +426,10 @@ void free_primary(struct primary *f) {
 			case VAR:
 				free_var(f->u.v);
 				f->u.v = NULL;
+				break;
+			case PI:
+				free_pi(f->u.pi);
+				f->u.pi = NULL;
 				break;
 		}
 		free(f);

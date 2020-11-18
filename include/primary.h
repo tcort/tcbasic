@@ -35,6 +35,7 @@ struct abs;
 struct sgn;
 struct sqr;
 struct int_;
+struct pi;
 
 struct primary {
 	int type;
@@ -55,6 +56,7 @@ struct primary {
 		struct sqr *sqr;
 		struct int_ *int_;
 		struct var *v;
+		struct pi *pi;
 	} u;
 };
 

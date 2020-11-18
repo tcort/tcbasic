@@ -256,6 +256,17 @@ Turn on debug tracing. When on, debug tracing prints "TR> " followed by the line
 
 ## Built-in Functions
 
+### π
+
+Symbol evaluates to Pi (`3.14159265`)
+
+Example:
+
+    10 PRINT "Enter the radius of the circle"
+    20 INPUT r
+    30 LET c = 2 * π * r
+    40 PRINT "Circumference of circle with radius ",r," is ", c
+
 ### RND
 
 Returns a random number in the range [0,1). The same sequence of numbers is returned in each program run. Use the RANDOMIZE statement to generate different sequences in each program run.

@@ -44,7 +44,7 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples DESTINATION share/${PROJECT_NAM
 include(CTest)
 enable_testing()
 
-set (functional_tests abs coinflip division fib for functions hello int_ mod newton pemdas remainder shell squares)
+set (functional_tests abs coinflip division fib for functions hello int_ mod newton pemdas pi remainder shell squares)
 foreach(test ${functional_tests})
     add_test(NAME ${test}_exec COMMAND sh -c "${PROJECT_BINARY_DIR}/${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/tests/${test}.bas > ${PROJECT_BINARY_DIR}/tests_${test}.out")
     add_test(NAME ${test}_check COMMAND ${CMAKE_COMMAND} -E compare_files ${PROJECT_SOURCE_DIR}/tests/${test}.ex ${PROJECT_BINARY_DIR}/tests_${test}.out)
