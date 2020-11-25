@@ -29,46 +29,46 @@
 #include "number.h"
 #include "primary.h"
 
-struct factor *new_factor(struct primary *p1, struct primary *p2) {
+struct factor *new_factor(struct primary *p, struct factor *f) {
 
-	struct factor *f;
+	struct factor *r;
 
-	f = (struct factor *) malloc(sizeof(struct factor));
-	if (f == NULL) {
+	r = (struct factor *) malloc(sizeof(struct factor));
+	if (r == NULL) {
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-	memset(f, '\0', sizeof(struct factor));
+	memset(r, '\0', sizeof(struct factor));
 
-	f->p1 = p1;
-	f->p2 = p2;
+	r->p = p;
+	r->f = f;
 
-	return f;
+	return r;
 }
 
 struct factor *parse_factor(struct tokenizer *t) {
 
-	struct primary *p1;
-	struct primary *p2;
+	struct primary *p;
+	struct factor *f;
 
-	p1 = parse_primary(t);
-	if (p1 == NULL) {
+	p = parse_primary(t);
+	if (p == NULL) {
 		return NULL;
 	}
 
 	token_get(t);
 	if (t->token.type == CIRCUMFLEX) {
-		p2 = parse_primary(t);
-		if (p2 == NULL) {
-			free_primary(p1);
+		f = parse_factor(t);
+		if (f == NULL) {
+			free_primary(p);
 			return NULL;
 		}
 	} else {
-		p2 = NULL;
+		f = NULL;
 		token_unget(t);
 	}
 
-	return new_factor(p1, p2);
+	return new_factor(p, f);
 }
 
 struct number * eval_factor(struct factor *f) {
@@ -81,11 +81,11 @@ struct number * eval_factor(struct factor *f) {
 		return new_number_from_int(1);
 	}
 
-	n1 = eval_primary(f->p1);
-	if (f->p2 == NULL) {
+	n1 = eval_primary(f->p);
+	if (f->f == NULL) {
 		r = clone_number(n1);
 	} else {
-		n2 = eval_primary(f->p2);
+		n2 = eval_factor(f->f);
 		r = pow_number(n1, n2);
 	}
 
@@ -101,22 +101,22 @@ void print_factor(struct factor *f) {
 		return;
 	}
 
-	print_primary(f->p1);
-	if (f->p2 != NULL) {
+	print_primary(f->p);
+	if (f->f != NULL) {
 		printf("^");
-		print_primary(f->p1);
+		print_factor(f->f);
 	}
 }
 
 void free_factor(struct factor *f) {
 	if (f != NULL) {
-		if (f->p1 != NULL) {
-			free_primary(f->p1);
-			f->p1 = NULL;
+		if (f->p != NULL) {
+			free_primary(f->p);
+			f->p = NULL;
 		}
-		if (f->p2 != NULL) {
-			free_primary(f->p2);
-			f->p2 = NULL;
+		if (f->f != NULL) {
+			free_factor(f->f);
+			f->f = NULL;
 		}
 		free(f);
 	}

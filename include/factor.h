@@ -24,11 +24,11 @@ struct primary;
 struct number;
 
 struct factor {
-	struct primary *p1;
-	struct primary *p2;
+	struct primary *p;
+	struct factor *f;
 };
 
-struct factor *new_factor(struct primary *p1, struct primary *p2);
+struct factor *new_factor(struct primary *p, struct factor *f);
 struct factor *parse_factor(struct tokenizer *t);
 struct number *eval_factor(struct factor *f);
 void print_factor(struct factor *f);
