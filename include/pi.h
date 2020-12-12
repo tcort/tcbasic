@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __PI_H
-#define __PI_H
+#ifndef TCBASIC_PI_H
+#define TCBASIC_PI_H
 
 struct number;
 struct tokenizer;

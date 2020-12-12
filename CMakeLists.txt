@@ -17,6 +17,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(tcbasic VERSION 2.3.0 LANGUAGES C)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DEFAULT_SOURCE")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -Werror -Wextra -Wpedantic")
 
 configure_file (

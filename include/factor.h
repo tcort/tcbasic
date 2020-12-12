@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __FACTOR_H
-#define __FACTOR_H
+#ifndef TCBASIC_FACTOR_H
+#define TCBASIC_FACTOR_H
 
 struct tokenizer;
 struct primary;

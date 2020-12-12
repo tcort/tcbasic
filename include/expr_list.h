@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __EXPR_LIST_H
-#define __EXPR_LIST_H
+#ifndef TCBASIC_EXPR_LIST_H
+#define TCBASIC_EXPR_LIST_H
 
 struct expr_item;
 struct tokenizer;

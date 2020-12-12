@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __TERM_H
-#define __TERM_H
+#ifndef TCBASIC_TERM_H
+#define TCBASIC_TERM_H
 
 struct factor;
 struct mulop;

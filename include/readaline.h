@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __READALINE_H
-#define __READALINE_H
+#ifndef TCBASIC_READALINE_H
+#define TCBASIC_READALINE_H
 
 #include <stdio.h>
 

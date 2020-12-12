@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __COMMAND_H
-#define __COMMAND_H
+#ifndef TCBASIC_COMMAND_H
+#define TCBASIC_COMMAND_H
 
 struct tokenizer;
 

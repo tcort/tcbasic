@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __EVAL_H
-#define __EVAL_H
+#ifndef TCBASIC_EVAL_H
+#define TCBASIC_EVAL_H
 
 void eval(char *s);
 

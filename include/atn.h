@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __ATN_H
-#define __ATN_H
+#ifndef TCBASIC_ATN_H
+#define TCBASIC_ATN_H
 
 struct number;
 struct tokenizer;

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __SGN_H
-#define __SGN_H
+#ifndef TCBASIC_SGN_H
+#define TCBASIC_SGN_H
 
 struct number;
 struct tokenizer;

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __COS_H
-#define __COS_H
+#ifndef TCBASIC_COS_H
+#define TCBASIC_COS_H
 
 struct number;
 struct tokenizer;

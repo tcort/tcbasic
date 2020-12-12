@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __PRNG_H
-#define __PRNG_H
+#ifndef TCBASIC_PRNG_H
+#define TCBASIC_PRNG_H
 
 void tcb_randomize(void);
 void tcb_srand(unsigned long seed);

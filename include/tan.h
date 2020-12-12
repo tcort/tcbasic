@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __TAN_H
-#define __TAN_H
+#ifndef TCBASIC_TAN_H
+#define TCBASIC_TAN_H
 
 struct number;
 struct tokenizer;

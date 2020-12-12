@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RUNTIME_H
-#define __RUNTIME_H
+#ifndef TCBASIC_RUNTIME_H
+#define TCBASIC_RUNTIME_H
 
 struct number;
 struct line;

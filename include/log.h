@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __LOG_H
-#define __LOG_H
+#ifndef TCBASIC_LOG_H
+#define TCBASIC_LOG_H
 
 struct number;
 struct tokenizer;

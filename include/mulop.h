@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __MULOP_H
-#define __MULOP_H
+#ifndef TCBASIC_MULOP_H
+#define TCBASIC_MULOP_H
 
 struct mulop {
 	int type;

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __TOKENIZER_H
-#define __TOKENIZER_H
+#ifndef TCBASIC_TOKENIZER_H
+#define TCBASIC_TOKENIZER_H
 
 enum token_types {
 	PRINT, IF, THEN, GOTO, INPUT, LET, GOSUB, RETURN, END, REM, RANDOMIZE,

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __STATEMENT_H
-#define __STATEMENT_H
+#ifndef TCBASIC_STATEMENT_H
+#define TCBASIC_STATEMENT_H
 
 struct expr_list;
 struct expression;

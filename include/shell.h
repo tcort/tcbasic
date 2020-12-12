@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __SHELL_H
-#define __SHELL_H
+#ifndef TCBASIC_SHELL_H
+#define TCBASIC_SHELL_H
 
 int doshell(char *cmd);
 

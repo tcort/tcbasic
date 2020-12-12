@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __TIME_H
-#define __TIME_H
+#ifndef TCBASIC_TIME_H
+#define TCBASIC_TIME_H
 
 struct number;
 struct tokenizer;

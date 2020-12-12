@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RND_H
-#define __RND_H
+#ifndef TCBASIC_RND_H
+#define TCBASIC_RND_H
 
 struct number;
 struct tokenizer;

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __EXP_H
-#define __EXP_H
+#ifndef TCBASIC_EXP_H
+#define TCBASIC_EXP_H
 
 struct number;
 struct tokenizer;

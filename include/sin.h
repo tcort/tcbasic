@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __SIN_H
-#define __SIN_H
+#ifndef TCBASIC_SIN_H
+#define TCBASIC_SIN_H
 
 struct number;
 struct tokenizer;

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __EXPRESSION_H
-#define __EXPRESSION_H
+#ifndef TCBASIC_EXPRESSION_H
+#define TCBASIC_EXPRESSION_H
 
 struct addop;
 struct number;

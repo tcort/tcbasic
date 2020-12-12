@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __RELOP_H
-#define __RELOP_H
+#ifndef TCBASIC_RELOP_H
+#define TCBASIC_RELOP_H
 
 struct relop {
 	int type;

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __STR_H
-#define __STR_H
+#ifndef TCBASIC_STR_H
+#define TCBASIC_STR_H
 
 struct tokenizer;
 

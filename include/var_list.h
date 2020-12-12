@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __VAR_LIST_H
-#define __VAR_LIST_H
+#ifndef TCBASIC_VAR_LIST_H
+#define TCBASIC_VAR_LIST_H
 
 struct var;
 

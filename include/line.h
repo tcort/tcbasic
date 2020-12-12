@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __LINE_H
-#define __LINE_H
+#ifndef TCBASIC_LINE_H
+#define TCBASIC_LINE_H
 
 struct tokenizer;
 struct statement;

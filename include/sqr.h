@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __SQR_H
-#define __SQR_H
+#ifndef TCBASIC_SQR_H
+#define TCBASIC_SQR_H
 
 struct number;
 struct tokenizer;

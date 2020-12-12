@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __ABS_H
-#define __ABS_H
+#ifndef TCBASIC_ABS_H
+#define TCBASIC_ABS_H
 
 struct number;
 struct tokenizer;

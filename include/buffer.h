@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __BUFFER_H
-#define __BUFFER_H
+#ifndef TCBASIC_BUFFER_H
+#define TCBASIC_BUFFER_H
 
 typedef struct Buffer {
 	char *buf;      /* pointer returned by malloc */

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __ADDOP_H
-#define __ADDOP_H
+#ifndef TCBASIC_ADDOP_H
+#define TCBASIC_ADDOP_H
 
 struct tokenizer;
 

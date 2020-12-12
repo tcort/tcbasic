@@ -16,15 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __CONFIG_H
-#define __CONFIG_H
+#ifndef TCBASIC_CONFIG_H
+#define TCBASIC_CONFIG_H
 
 #define PROJECT_NAME "@PROJECT_NAME@"
 #define PROJECT_VERSION "@PROJECT_VERSION@"
 #define PROJECT_STRING "@PROJECT_NAME@ @PROJECT_VERSION@"
 
 #define PROJECT_BUGREPORT "https://github.com/tcort/tcbasic/issues"
-
-#define _DEFAULT_SOURCE
 
 #endif

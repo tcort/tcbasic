@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __PRIMARY_H
-#define __PRIMARY_H
+#ifndef TCBASIC_PRIMARY_H
+#define TCBASIC_PRIMARY_H
 
 struct expression;
 struct number;

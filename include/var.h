@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __VAR_H
-#define __VAR_H
+#ifndef TCBASIC_VAR_H
+#define TCBASIC_VAR_H
 
 struct number;
 struct tokenizer;

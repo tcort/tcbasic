@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __NUMBER_H
-#define __NUMBER_H
+#ifndef TCBASIC_NUMBER_H
+#define TCBASIC_NUMBER_H
 
 struct tokenizer;
 
