@@ -121,15 +121,16 @@ void print_line(struct line *l) {
 
 void print_lines(struct line *l) {
 
+	struct line *cur;
+
 	if (l == NULL) {
 		return;
 	}
 
-	printf("%d ", l->number);
-	print_statement(l->statement);
-	printf("\n");
+	for (cur = l; cur != NULL; cur = cur->next) {
+		print_line(cur);
+	}
 
-	print_line(l->next);
 }
 
 void free_line(struct line *l) {
