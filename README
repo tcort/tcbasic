@@ -12,6 +12,7 @@ Version 3.0.0 (Build 0)
 
 The following files are included in the source code distribution:
 
+- `AUTHORS` list of people who've developed this project
 - `COPYING` license terms and conditions
 - `ChangeLog` long form list of recent changes
 - `HACKING` notes for developers

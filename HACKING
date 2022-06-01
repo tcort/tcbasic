@@ -2,6 +2,10 @@
 
 This file lists important information for anyone working on developing this software.
 
+## Every new Contributor
+
+- should go in `AUTHORS`
+
 ## Every Change
 
 - should have a user story in `proj/`
