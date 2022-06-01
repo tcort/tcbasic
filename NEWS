@@ -1,13 +1,10 @@
-# ChangeLog
+# News
 
-This file lists changes to this project.
+This file lists important user visible changes to this project.
 
-## 2022-06-01
+## Version 3.0.0 (Build 0)
 
-* US00003 Add NEWS file
-* US00002 Add COPYING file
-* US00001 Add ChangeLog file
-* US00000 Add user stories + templates to `proj/` directory.
+* fresh start implementing Minimal BASIC standards
 
 ## License
 
