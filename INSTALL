@@ -1,16 +1,26 @@
-# ChangeLog
+# Installation
 
-This file lists changes to this project.
+This file provides instructions for compiling and installing the software.
 
-## 2022-06-01
+## Requirements
 
-* US00006 Add INSTALL file
-* US00005 Add HACKING file
-* US00004 Add README file
-* US00003 Add NEWS file
-* US00002 Add COPYING file
-* US00001 Add ChangeLog file
-* US00000 Add user stories + templates to `proj/` directory.
+C compiler and standard build tools (make, sh, ...).
+
+## Building
+
+Standard autotools build:
+
+```
+$ ./configure
+$ make
+$ make check
+```
+
+## Installation
+
+```
+# make install
+```
 
 ## License
 
