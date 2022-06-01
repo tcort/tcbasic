@@ -22,8 +22,9 @@ AM_INIT_AUTOMAKE([-Wall foreign])
 AC_LANG([C])
 AC_PROG_CC
 
-AC_CHECK_HEADERS([stdlib.h])
-AC_CHECK_DECLS([EXIT_SUCCESS,EXIT_FAILURE], [], [], [[#include <stdlib.h>]])
+AC_CHECK_HEADERS([fcntl.h stdlib.h unistd.h])
+AC_CHECK_FUNCS([close exit free malloc open read write])
+AC_CHECK_DECLS([O_RDONLY], [], [], [[#include <fcntl.h>]])
 
 
 AC_CONFIG_HEADERS([config.h:config.in])

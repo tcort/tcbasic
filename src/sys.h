@@ -18,18 +18,33 @@
 
 */
 
-#include "config.h"
-#include "sys.h"
+#ifndef TC_SYS_H
+#define TC_SYS_H
 
-/*
- * Main Program Entry Point
- *
- * Parameters:
- *  - argc denotes the length of argv[]
- *  - argv[] contains a list of command line fragments
- *
- * Return: exit code
- */
-int main(int argc, char *argv[]) {
-	return TC_EXIT_SUCCESS;
-}
+/* EXIT CODES */
+#define TC_EXIT_SUCCESS (0)
+#define TC_EXIT_FAILURE (1)
+
+/* FILE NUMBERS */
+#define TC_STDIN  (0)
+#define TC_STDOUT (1)
+#define TC_STDERR (2)
+
+/* RETURN CODES */
+#define TC_OK (0)
+#define TC_ERR (-1)
+#define TC_EOF (-2)
+
+/* MISC */
+#define TC_NULL ((void *) 0)
+
+/* prototypes */
+void tc_exit(int exit_code);
+int tc_open_reader(char *filepath);
+char tc_getc(int fd);
+int tc_putc(int fd, char ch);
+int tc_close(int fd);
+void *tc_malloc(int size);
+void *tc_free(void *m);
+
+#endif

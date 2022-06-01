@@ -15,4 +15,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 bin_PROGRAMS = tcbasic
-tcbasic_SOURCES = main.c
+tcbasic_SOURCES = main.c \
+	str.c str.h \
+	sys.c sys.h

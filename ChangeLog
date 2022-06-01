@@ -4,6 +4,7 @@ This file lists changes to this project.
 
 ## 2022-06-01 - Thomas Cort
 
+* US0000B Add an abstraction layer for i/o and memory management
 * US0000A Add simple autotools build system
 * US00009 Add THANKS file
 * US00008 Add TODO file
@@ -14,7 +15,7 @@ This file lists changes to this project.
 * US00003 Add NEWS file
 * US00002 Add COPYING file
 * US00001 Add ChangeLog file
-* US00000 Add user stories + templates to `proj/` directory.
+* US00000 Add user stories + templates to `proj/` directory
 
 ## License
 

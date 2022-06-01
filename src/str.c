@@ -19,17 +19,20 @@
 */
 
 #include "config.h"
-#include "sys.h"
+#include "str.h"
 
 /*
- * Main Program Entry Point
+ * fills memory pointed to by s with ch in every byte
  *
  * Parameters:
- *  - argc denotes the length of argv[]
- *  - argv[] contains a list of command line fragments
- *
- * Return: exit code
+ *  s - pointer to memory to set
+ *  ch - character to set every byte to
+ *  len - length of memory to overwrite
  */
-int main(int argc, char *argv[]) {
-	return TC_EXIT_SUCCESS;
+void tc_memset(char *s, char ch, int len) {
+	int i;
+
+	for (i = 0; i < len; i++) {
+		s[i] = ch;
+	}
 }

@@ -18,18 +18,14 @@
 
 */
 
-#include "config.h"
-#include "sys.h"
+#ifndef TC_STR_H
+#define TC_STR_H
 
-/*
- * Main Program Entry Point
- *
- * Parameters:
- *  - argc denotes the length of argv[]
- *  - argv[] contains a list of command line fragments
- *
- * Return: exit code
- */
-int main(int argc, char *argv[]) {
-	return TC_EXIT_SUCCESS;
-}
+/* CHARACTER CONSTANTS */
+#define TC_ENDSTR ('\0')
+#define TC_NEWLINE ('\n')
+
+/* prototypes */
+void tc_memset(char *s, char ch, int len);
+
+#endif
