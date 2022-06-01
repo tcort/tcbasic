@@ -4,6 +4,7 @@ This file lists changes to this project.
 
 ## 2022-06-01 - Thomas Cort
 
+* US0000A Add simple autotools build system
 * US00009 Add THANKS file
 * US00008 Add TODO file
 * US00007 Add AUTHORS file
