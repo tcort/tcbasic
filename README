@@ -14,6 +14,7 @@ The following files are included in the source code distribution:
 
 - `COPYING` license terms and conditions
 - `ChangeLog` long form list of recent changes
+- `HACKING` notes for developers
 - `NEWS` highlights important user facing changes
 - `README` this file
 

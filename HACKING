@@ -1,0 +1,33 @@
+# Hacking
+
+This file lists important information for anyone working on developing this software.
+
+## Every Change
+
+- should have a user story in `proj/`
+- should be documented in `ChangeLog`
+- should have an entry in `NEWS` if it's user facing
+- should mention the user story number in the commit message
+
+## Every Release
+
+- document in `ChangeLog`
+- document in `NEWS`
+- versioning should follow semantic versioning spec
+- build number should be incremented for each release
+- bump version number in `README`
+- bump version number in `configure.ac`
+- create a tag in the scm
+ - `git tag -a v1.2.3 -m "Version 1.2.3 Build 42"`
+
+## License
+
+SPDX identifier: `FSFAP`
+
+```
+Copyright 2022 Thomas Cort
+
+Copying and distribution of this file, with or without modification, are
+permitted in any medium without royalty, provided the copyright notice and
+this notice are preserved. This file is offered as-is, without any warranty.
+```
