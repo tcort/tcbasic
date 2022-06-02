@@ -4,6 +4,7 @@ This file lists changes to this project.
 
 ## 2022-06-02 - Thomas Cort
 
+* US0000D Add command line argument processing
 * US0000C Add a test suite
 
 ## 2022-06-01 - Thomas Cort

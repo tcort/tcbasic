@@ -16,6 +16,7 @@
 
 bin_PROGRAMS = tcbasic
 tcbasic_SOURCES = main.c \
+	args.c args.h \
 	io.c io.h \
 	str.c str.h \
 	sys.c sys.h

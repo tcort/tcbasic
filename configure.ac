@@ -16,7 +16,11 @@
 
 AC_PREREQ(2.59)
 AC_INIT([tcbasic], [3.0.0], [tcedit@tcort.dev])
-AC_DEFINE([PACKAGE_BUILD], [0], [build number])
+AC_DEFINE([PACKAGE_BUILD], ["0"], [build number])
+AC_DEFINE([PACKAGE_AUTHOR], ["Thomas Cort"], [name of software author])
+AC_DEFINE([PACKAGE_COPYRIGHT], ["Copyright (C) 2022  Thomas Cort"], [copyright year + copyright holder])
+AC_DEFINE([PACKAGE_LICENSE], ["License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law."], [short license info])
+
 AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
 
 AC_LANG([C])

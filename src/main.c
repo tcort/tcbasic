@@ -19,6 +19,7 @@
 */
 
 #include "config.h"
+#include "args.h"
 #include "sys.h"
 
 /*
@@ -31,5 +32,51 @@
  * Return: exit code
  */
 int main(int argc, char *argv[]) {
+
+	struct tc_prog_arg *arg;
+
+	static struct tc_prog_arg args[] = {
+		TC_PROG_ARG_HELP,
+		TC_PROG_ARG_VERSION,
+		TC_PROG_ARG_END
+	};
+
+	static struct tc_prog_example examples[] = {
+		{ .command = "tcbasic foo.bas", .description = "execute foo.bas" },
+		TC_PROG_EXAMPLE_END
+	};
+
+	static struct tc_prog prog = {
+		.program = "tcbasic",
+		.usage = "[OPTIONS] FILE.BAS",
+		.description = "an interpreter for the programming language BASIC",
+		.build = PACKAGE_BUILD,
+		.version = PACKAGE_VERSION,
+		.copyright = PACKAGE_COPYRIGHT,
+		.license = PACKAGE_LICENSE,
+		.author =  PACKAGE_AUTHOR,
+		.args = args,
+		.examples = examples
+	};
+
+	while ((arg = tc_args_process(&prog, argc, argv)) != TC_NULL) {
+		switch (arg->arg) {
+			case 'h':
+				tc_args_show_help(&prog);
+				break;
+			case 'V':
+				tc_args_show_version(&prog);
+				break;
+		}
+
+	}
+
+	argc -= argi;
+	argv += argi;
+
+	if (argc != 1) {
+		tc_args_show_usage(&prog);
+	}
+
 	return TC_EXIT_SUCCESS;
 }

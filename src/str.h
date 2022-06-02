@@ -27,6 +27,8 @@
 
 /* prototypes */
 void tc_memset(char *s, char ch, int len);
+int tc_streql(char *x, char *y);
+int tc_strneql(char *x, char *y, int n);
 int tc_strlen(char *s);
 
 #endif
