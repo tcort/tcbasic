@@ -1,3 +1,4 @@
+*/.dirstamp
 Makefile
 Makefile.in
 aclocal.m4
@@ -18,3 +19,9 @@ src/Makefile.in
 src/*.o
 src/tcbasic
 stamp-h1
+test-driver
+tests/.deps
+tests/*.log
+tests/*.o
+tests/*.trs
+tests/*.check

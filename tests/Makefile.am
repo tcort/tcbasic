@@ -14,4 +14,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-SUBDIRS = src tests
+AM_CPPFLAGS = -I$(top_srcdir)/src
+
+check_PROGRAMS = str.check
+
+str_check_SOURCES = check.c \
+	$(top_srcdir)/src/io.c $(top_srcdir)/src/io.h \
+	$(top_srcdir)/src/str.c $(top_srcdir)/src/str.h \
+	$(top_srcdir)/src/sys.c $(top_srcdir)/src/sys.h \
+	str.check.c
+
+TESTS = $(check_PROGRAMS)

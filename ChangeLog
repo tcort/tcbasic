@@ -2,6 +2,10 @@
 
 This file lists changes to this project.
 
+## 2022-06-02 - Thomas Cort
+
+* US0000C Add a test suite
+
 ## 2022-06-01 - Thomas Cort
 
 * US0000B Add an abstraction layer for i/o and memory management

@@ -18,15 +18,40 @@
 
 */
 
-#ifndef TC_STR_H
-#define TC_STR_H
+#include "config.h"
+#include "check.h"
+#include "io.h"
+#include "str.h"
+#include "sys.h"
 
-/* CHARACTER CONSTANTS */
-#define TC_ENDSTR ('\0')
-#define TC_NEWLINE ('\n')
+/*
+ * Execute a series of checks in 'checks'
+ *
+ * Parameters:
+ *  checks - a list of checks to perform
+ *
+ * Returns TC_CHECK_PASS if all return it, otherwise return on first fail/skip
+ */
+int tc_check(struct check *checks) {
+	int i;
 
-/* prototypes */
-void tc_memset(char *s, char ch, int len);
-int tc_strlen(char *s);
+	if (checks == TC_NULL) {
+		tc_puts(TC_STDERR, "list of checks is NULL\n");
+		return TC_CHECK_FAIL;
+	}
 
-#endif
+	for (i = 0; checks[i].message != TC_NULL; i++) {
+		int rc;
+
+		rc = checks[i].fn();
+		if (rc == 0) {
+			tc_puts(TC_STDERR, "check \"");
+			tc_puts(TC_STDERR, checks[i].message);
+			tc_puts(TC_STDERR, "\" failed\n");
+			return rc;
+		}
+	}
+
+	return TC_CHECK_PASS;
+}
+

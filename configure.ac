@@ -17,7 +17,7 @@
 AC_PREREQ(2.59)
 AC_INIT([tcbasic], [3.0.0], [tcedit@tcort.dev])
 AC_DEFINE([PACKAGE_BUILD], [0], [build number])
-AM_INIT_AUTOMAKE([-Wall foreign])
+AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
 
 AC_LANG([C])
 AC_PROG_CC
@@ -29,6 +29,6 @@ AC_CHECK_DECLS([O_RDONLY], [], [], [[#include <fcntl.h>]])
 
 AC_CONFIG_HEADERS([config.h:config.in])
 
-AC_CONFIG_FILES([ Makefile src/Makefile ])
+AC_CONFIG_FILES([ Makefile src/Makefile tests/Makefile ])
 
 AC_OUTPUT

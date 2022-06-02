@@ -18,15 +18,10 @@
 
 */
 
-#ifndef TC_STR_H
-#define TC_STR_H
-
-/* CHARACTER CONSTANTS */
-#define TC_ENDSTR ('\0')
-#define TC_NEWLINE ('\n')
+#ifndef TC_IO_H
+#define TC_IO_H
 
 /* prototypes */
-void tc_memset(char *s, char ch, int len);
-int tc_strlen(char *s);
+int tc_puts(int fd, char *s);
 
 #endif

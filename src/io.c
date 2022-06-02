@@ -18,15 +18,31 @@
 
 */
 
-#ifndef TC_STR_H
-#define TC_STR_H
+#include "config.h"
+#include "io.h"
+#include "str.h"
+#include "sys.h"
 
-/* CHARACTER CONSTANTS */
-#define TC_ENDSTR ('\0')
-#define TC_NEWLINE ('\n')
+/*
+ * Write string s to file descriptor fd
+ *
+ * Parameters:
+ *  fd - file descriptor to write to
+ *  s - NUL terminated string to write
+ *
+ * Returns TC_OK upon success, TC_ERR upon error.
+ */
+int tc_puts(int fd, char *s) {
 
-/* prototypes */
-void tc_memset(char *s, char ch, int len);
-int tc_strlen(char *s);
+	int rc;
+	int i;
 
-#endif
+	for (i = 0; i < tc_strlen(s); i++) {
+		rc = tc_putc(fd, s[i]);
+		if (rc == TC_ERR) {
+			return TC_ERR;
+		}
+	}
+
+	return TC_OK;
+}

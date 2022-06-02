@@ -18,15 +18,21 @@
 
 */
 
-#ifndef TC_STR_H
-#define TC_STR_H
+#ifndef TC_CHECK_H
+#define TC_CHECK_H
 
-/* CHARACTER CONSTANTS */
-#define TC_ENDSTR ('\0')
-#define TC_NEWLINE ('\n')
+/* EXIT CODES */
+#define TC_CHECK_PASS (0)
+#define TC_CHECK_FAIL (1)
+#define TC_CHECK_SKIP (77)
+
+/* check function and message */
+struct check {
+	int (*fn)(void);
+	char *message;
+};
 
 /* prototypes */
-void tc_memset(char *s, char ch, int len);
-int tc_strlen(char *s);
+int tc_check(struct check *checks);
 
 #endif

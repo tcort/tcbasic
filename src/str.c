@@ -20,6 +20,7 @@
 
 #include "config.h"
 #include "str.h"
+#include "sys.h"
 
 /*
  * fills memory pointed to by s with ch in every byte
@@ -35,4 +36,27 @@ void tc_memset(char *s, char ch, int len) {
 	for (i = 0; i < len; i++) {
 		s[i] = ch;
 	}
+}
+
+/*
+ * Computes the length of a string.
+ *
+ * Parameters:
+ *  s - NUL terminated string to find the length of
+ *
+ * Return the length of string s
+ */
+int tc_strlen(char *s) {
+	int n;
+
+	if (s == TC_NULL) {
+		return 0;
+	}
+
+	n = 0;
+	while (s[n] != TC_ENDSTR) {
+		n++;
+	}
+
+	return n;
 }
