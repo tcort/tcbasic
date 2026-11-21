@@ -84,7 +84,7 @@ struct number *eval_abs(struct abs *a) {
 	if (n->type == INT) {
 		n->value.ival = abs(n->value.ival);
 	} else { /* float */
-		n->value.fval = fabsf(n->value.fval);
+		n->value.fval = fabs(n->value.fval);
 	}
 
 	return n;

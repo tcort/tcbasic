@@ -52,7 +52,7 @@ struct number *new_number(char *s) {
 		n->value.ival = atoi(s);
 	} else {
 		n->type = FLOAT;
-		n->value.fval = (float) atof(s);
+		n->value.fval = (double) atof(s);
 	}
 
 	return n;
@@ -68,7 +68,7 @@ struct number *new_number_from_int(int i) {
 	return clone_number(&r);
 }
 
-struct number *new_number_from_float(float f) {
+struct number *new_number_from_float(double f) {
 
 	struct number r;
 

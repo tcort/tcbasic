@@ -28,16 +28,16 @@ struct number {
 	} type;
 	union number_value {
 		int ival;
-		float fval;
+		double fval;
 	} value;
 };
 
 #define INT_VALUE(n) (n->type == INT ? n->value.ival : (int)n->value.fval)
-#define FLOAT_VALUE(n) (n->type == FLOAT ? n->value.fval : (float) n->value.ival)
+#define FLOAT_VALUE(n) (n->type == FLOAT ? n->value.fval : (double) n->value.ival)
 
 struct number *new_number(char *s);
 struct number *new_number_from_int(int i);
-struct number *new_number_from_float(float f);
+struct number *new_number_from_float(double f);
 struct number *parse_number(struct tokenizer *t);
 struct number *clone_number(struct number *n);
 struct number *add_number(struct number *x, struct number *y);

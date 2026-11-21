@@ -309,7 +309,7 @@ int eval_statement(struct statement *s, int number, int next_number) {
 	Buffer *buf;
 	int next = -1;
 	int r;
-	float f1, f2;
+	double f1, f2;
 	struct number *e1;
 	struct number *e2;
 	struct number *n;
