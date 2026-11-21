@@ -61,7 +61,7 @@ Buffer *readaline(FILE *f, const char *prompt, Buffer *lbuf) {
 	}
 
 	do {
-		char ch;
+		int ch;
 		ch = (char) fgetc(f);
 		if (ch == -1 || ch == '\n' || feof(f)) {
 
