@@ -9,7 +9,7 @@
 - `*` - multiplication
 - `/` - division
 - `\` - integer division
-- `%` - modulus
+- `MOD` - modulus
 - `^` - exponentiation
 
 ### Relational Operators
