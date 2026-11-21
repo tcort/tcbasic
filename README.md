@@ -64,7 +64,7 @@ See `LANG.md`
 See `COPYING` for the full license. Here's a summary:
 
     tcbasic - a small BASIC Interpreter written in C.
-    Copyright (C) 2015, 2016, 2017, 2018, 2020  Thomas Cort <linuxgeek@gmail.com>
+    Copyright (C) 2015, 2016, 2017, 2018, 2020, 2026  Thomas Cort <linuxgeek@gmail.com>
     
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
