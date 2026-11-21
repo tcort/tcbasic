@@ -104,7 +104,12 @@ void runtime_set_line(struct line *item) {
 	struct line *head = list;
 	struct line *cur = list;
 
-	if (item == NULL || item->number <= 0) {
+	if (item == NULL) { /* nothing to do */
+		return;
+	} else if (item->number <= 0) { /* invalid line number -- e.g. '0 PRINT "HELLO"` */
+		item->next = NULL;
+		free_line(item);
+		item = NULL;
 		return;
 	}
 
