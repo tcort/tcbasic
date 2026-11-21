@@ -247,7 +247,7 @@ void runtime_callstack_push(int val) {
 	call_stack = s;
 }
 
-int runtime_callstack_pop() {
+int runtime_callstack_pop(void) {
 
 	struct stack *old;
 	int val;

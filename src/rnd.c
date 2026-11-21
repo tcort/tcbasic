@@ -29,7 +29,7 @@
 #include "number.h"
 #include "rnd.h"
 
-struct rnd *new_rnd() {
+struct rnd *new_rnd(void) {
 
 	struct rnd *r;
 

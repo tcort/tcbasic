@@ -162,14 +162,14 @@ void token_unget(struct tokenizer *t) {
 }
 
 
-void tokenizer_init() {
+void tokenizer_init(void) {
 	size_t i;
 	for (i = 0; i < NTOKEN_TYPES; i++) {
 		regcomp(&regexes[i], token_defs[i].regex_text, REG_EXTENDED|REG_ICASE);
 	}
 }
 
-void tokenizer_exit() {
+void tokenizer_exit(void) {
 	size_t i;
 	for (i = 0; i < NTOKEN_TYPES; i++) {
 		regfree(&regexes[i]);
