@@ -71,6 +71,7 @@ struct number *eval_time(void) {
 	t.tm_hour = 0; /* rewind to midnight */
 	t.tm_min = 0;
 	t.tm_sec = 0;
+	t.tm_isdst = -1;
 
 	midnight = mktime(&t); /* get unix timestamp for midnight today */
 
