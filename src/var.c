@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,7 +41,7 @@ struct var *new_var(char value) {
 	}
 	memset(v, '\0', sizeof(struct var));
 
-	v->value = value;
+	v->value = toupper(value);
 
 	return v;
 }
