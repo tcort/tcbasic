@@ -218,24 +218,8 @@ struct number *divide_number(struct number *x, struct number *y) {
 		return NULL;
 	}
 
-
-	if (x->type == INT) {
-		if (y->type == INT) {
-			r.type = INT;
-			r.value.ival = x->value.ival / y->value.ival;
-		} else {
-			r.type = FLOAT;
-			r.value.fval = x->value.ival / y->value.fval;
-		}
-	} else {
-		if (y->type == INT) {
-			r.type = FLOAT;
-			r.value.fval = x->value.fval / y->value.ival;
-		} else {
-			r.type = FLOAT;
-			r.value.fval = x->value.fval / y->value.fval;
-		}
-	}
+	r.type = FLOAT;
+	r.value.fval = FLOAT_VALUE(x) / FLOAT_VALUE(y);
 
 	return clone_number(&r);
 }

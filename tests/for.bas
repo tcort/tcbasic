@@ -4,7 +4,7 @@
 40 NEXT I
 50 PRINT A
 60 LET N = 100
-70 LET B = (N * (N + 1)) / 2
+70 LET B = (N * (N + 1)) \ 2
 80 PRINT B
 100 FOR I = 0 TO (5+5) STEP 1+1
 150 PRINT I
