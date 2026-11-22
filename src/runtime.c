@@ -275,7 +275,7 @@ void runtime_reset(void) {
 	int i;
 	for (i = 0; i < NVARS; i++) {
 		free_number(vars[i]);
-		vars[i] = NULL;
+		vars[i] = new_number_from_int(0);
 	}
 
 	for (i = 0; i < NFORSTATES; i++) {
