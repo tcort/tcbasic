@@ -147,14 +147,6 @@ Example:
     30 REM Nothing is executed after the 'END' statement is executed.
     40 PRINT "Nothing to see here"
 
-### STOP
-
-Exits the interpreter.
-
-Example:
-
-    STOP
-
 ### BEEP
 
 System beep.
@@ -195,6 +187,9 @@ Example:
     30 PRINT "Hello"
 
 ## Commands
+
+Commands are issued to the interpreter in interactive mode. They are not
+recognized in batch mode.
 
 ### CLEAR
 
@@ -253,6 +248,14 @@ Turn on debug tracing. When on, debug tracing prints "TR> " followed by the line
     HELLO
     TR> 20 PRINT "GOODBYE"
     GOODBYE
+
+### STOP
+
+Exits the interpreter.
+
+Example:
+
+    STOP
 
 ## Built-in Functions
 
